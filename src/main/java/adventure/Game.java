@@ -29,7 +29,7 @@ public class Game{
             file = scnr.nextLine();
         } else {
             file = "default.json";
-        }
+        } 
 
         /* 3. Parse the file the user specified to create the
         adventure, or load your default adventure*/
