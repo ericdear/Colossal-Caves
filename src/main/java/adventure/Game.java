@@ -1,6 +1,14 @@
 package adventure;
 import java.util.Scanner;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+ 
+import java.io.FileReader;
+import java.util.Iterator;
+import java.io.IOException;
+
 public class Game{
 
     /* this is the class that runs the game.
@@ -15,6 +23,7 @@ public class Game{
         Scanner scnr = new Scanner(System.in);
         String input = "";
         String file;
+        boolean running = true;
 
         // 1. Print a welcome message to the user
         System.out.println("Welcome to Eric's Colossal Caves!");
@@ -33,12 +42,18 @@ public class Game{
 
         /* 3. Parse the file the user specified to create the
         adventure, or load your default adventure*/
+        
+        /*theGame.loadAdventureJson(file);*/
+
 
         // 4. Print the beginning of the adventure
 
         // 5. Begin game loop here
+        /*while(running) {
 
-        // 6. Get the user input. You'll need a Scanner
+        }*/
+
+        // 6. Get the user input. You'll need a Scanner 
 
         /* 7+. Use a game instance method to parse the user
         input to learn what the user wishes to do*/
@@ -52,7 +67,7 @@ public class Game{
     /* you must have these instance methods and may need more*
 
     public JSONObject loadAdventureJson(String filename){
-
+        
     }
     public Adventure generateAdventure(JSONObject obj) {
         
