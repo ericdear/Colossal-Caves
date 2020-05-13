@@ -1,4 +1,5 @@
 package adventure;
+//import arrayList
 
 public class Room{
     /* you will need to add some private member variables */

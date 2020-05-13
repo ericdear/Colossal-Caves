@@ -1,7 +1,15 @@
 package adventure;
 import java.util.Scanner;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Iterator;
 
 public class Game{
 
@@ -37,7 +45,9 @@ public class Game{
         /* 3. Parse the file the user specified to create the
         adventure, or load your default adventure*/
         
-        /*theGame.loadAdventureJson(file);*/
+        theGame.loadAdventureJson(file);
+
+        
 
 
         // 4. Print the beginning of the adventure
@@ -58,12 +68,37 @@ public class Game{
         repeat the steps above*/
     }
 
-    /* you must have these instance methods and may need more*
+    /* you must have these instance methods and may need more*/
 
     public JSONObject loadAdventureJson(String filename){
-        
+        try {
+            
+            JSONParser parser = new JSONParser();
+            Reader reader = new FileReader("example_adventure.json");
+
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            System.out.println(jsonObject);
+
+            String name = (String) jsonObject.get("name");
+            System.out.println(name);
+
+            long age = (Long) jsonObject.get("age");
+            System.out.println(age);
+
+            // loop array
+            JSONArray msg = (JSONArray) jsonObject.get("messages");
+            Iterator<String> iterator = msg.iterator();
+            while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (jsonObject);
     }
-    public Adventure generateAdventure(JSONObject obj) {
+    /*public Adventure generateAdventure(JSONObject obj) {
         
     }*/
 
