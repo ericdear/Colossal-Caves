@@ -1,20 +1,14 @@
 package adventure;
 import java.util.Scanner;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
- 
-import java.io.FileReader;
-import java.util.Iterator;
-import java.io.IOException;
+
 
 public class Game{
 
     /* this is the class that runs the game.
     You may need some member variables */
 
-    public static void main(String args[]){
+    public static void main(String[] args) {
 
         /* You will need to instantiate an object of type
         game as we're going to avoid using static methods
@@ -38,7 +32,7 @@ public class Game{
             file = scnr.nextLine();
         } else {
             file = "default.json";
-        } 
+        }
 
         /* 3. Parse the file the user specified to create the
         adventure, or load your default adventure*/

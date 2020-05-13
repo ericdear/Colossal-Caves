@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.29">
+<file name="/mnt/c/Users/Asus/Documents/CIS2430/A1/project/src/main/java/adventure/Adventure.java">
+<error line="1" severity="error" message="File does not end with a newline." source="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
+</file>
+<file name="/mnt/c/Users/Asus/Documents/CIS2430/A1/project/src/main/java/adventure/Game.java">
+</file>
+<file name="/mnt/c/Users/Asus/Documents/CIS2430/A1/project/src/main/java/adventure/Item.java">
+<error line="1" severity="error" message="File does not end with a newline." source="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
+</file>
+<file name="/mnt/c/Users/Asus/Documents/CIS2430/A1/project/src/main/java/adventure/Room.java">
+<error line="1" severity="error" message="File does not end with a newline." source="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
+</file>
+</checkstyle>
