@@ -134,26 +134,26 @@ public class Game{
 
         //get all the rooms in an array
         JSONArray roomList = new JSONArray();
+        JSONArray itemList = new JSONArray();
         roomList = (JSONArray) obj.get("room");
-
+        itemList = (JSONArray) obj.get("item");
         ArrayList <JSONObject> rooms = new ArrayList();
+        ArrayList <JSONObject> items = new ArrayList();
 
         try {
-			
-            Iterator<JSONObject> iterator = roomList.iterator();
-            
+            Iterator<JSONObject> roomIterator = roomList.iterator();
+            Iterator<JSONObject> itemIterator = itemList.iterator();
             // goes through the rooms, passes the room array and the starting room to adventure
-			while (iterator.hasNext()) {
-                currentRoom = iterator.next();
+			while (roomIterator.hasNext()) {
+                currentRoom = roomIterator.next();
                 rooms.add(currentRoom);
+                items.add(itemIterator.next());
             }
-            adventure.setRoomList(rooms);
-
+            adventure.setRoomList(rooms,items);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        
         return(adventure);
     }
 

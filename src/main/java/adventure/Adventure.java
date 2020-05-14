@@ -18,7 +18,7 @@ public class Adventure{
         We will be using them to test your code */
 
 
-    public void setRoomList(ArrayList <JSONObject> newRooms) {
+    public void setRoomList(ArrayList <JSONObject> newRooms, ArrayList <JSONObject> items) {
         int i;
         JSONObject tempObject;
         roomList = new ArrayList();
@@ -33,8 +33,38 @@ public class Adventure{
             if(tempObject.containsKey("start")) {
                 currentRoom = roomList.get(i);
             }
+
+            //FIXME
+            //if the tempObject contains loot, get the JSONArray of it
+            //iterate through the JSONArray making it a ArrayList of JSONObjects
+            //go through the items in the room (tempObject is the room) and check if the object.get("id") matches any object.get("id") in the items arrayList
+            //if it does, send the JSONObject to currentRoom.setRoomItems(Object);
+            //make sure you give it the object from the items array because it has more data
+
+            //put items in the room into an array
+            if(newRoom.containsKey("loot")) {
+                roomItems = new ArrayList();
+                JSONArray items = new JSONArray();
+                items = (JSONArray) newRoom.get("loot");
+            
+                JSONObject tempLoot = new JSONObject();
+                try {
+                    Iterator<JSONObject> iterator = items.iterator();
+                    // goes through the items
+			            while (iterator.hasNext()) {
+                        tempLoot = iterator.next();
+                        System.out.println(tempLoot.get("id"));
+                        //roomItems.add(tempLoot.get("id"));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
     }
+
 /*
     public ArrayList <Room> listAllRooms(){
         //make an array of type Room
