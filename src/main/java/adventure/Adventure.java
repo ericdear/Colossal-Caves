@@ -1,13 +1,16 @@
 package adventure;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
 public class Adventure{
     /* you will need to add some private member variables */
-    private JSONArray rooms;
-    private JSONObject currentRoom;
+    private ArrayList <Room> roomList;
+    private Room currentRoom;
+    
 
     /* ======== Required public methods ========== */
         /* note,  you don't have to USE all of these
@@ -15,22 +18,39 @@ public class Adventure{
         We will be using them to test your code */
 
 
-    public void setRooms(JSONArray newRooms, JSONObject newRoom) {
-        rooms = newRooms;
-        currentRoom = newRoom;
+    public void setRoomList(ArrayList <JSONObject> newRooms) {
+        int i;
+        JSONObject tempObject;
+        roomList = new ArrayList();
+        Room tempRoom;
+        for(i = 0; i < newRooms.size(); i++) {
+            //create all the rooms and put into arraylist
+            tempObject = newRooms.get(i);
+            tempRoom = new Room(tempObject);
+            roomList.add(tempRoom);
+
+            //set the current room to the room with the start key
+            if(tempObject.containsKey("start")) {
+                currentRoom = roomList.get(i);
+            }
+        }
     }
 /*
     public ArrayList <Room> listAllRooms(){
-        
+        //make an array of type Room
+        //dont exaclty need to use
     }*/
 /*
     public ArrayList <Item> listAllItems(){
 
     }
 */
+    public Room getCurrentRoom() {
+        return(currentRoom);
+    }
+
     public String getCurrentRoomDescription(){
-        String description = (String) currentRoom.get("short_description");
-        return(description);
+        return(currentRoom.getShortDescription());
     }
 
     /* you may wish to add additional methods*/

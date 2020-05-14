@@ -2,6 +2,9 @@ package adventure;
 
 public class Item{
     /* you will need to add some private member variables */
+    private int id;
+    private String name;
+    private String description;
 
     /* required public methods *
 
