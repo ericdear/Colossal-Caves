@@ -16,6 +16,8 @@ public class Game{
     /* this is the class that runs the game.
     You may need some member variables */
 
+    private int room = 0;
+
     public static void main(String[] args) {
 
         /* You will need to instantiate an object of type
@@ -44,11 +46,10 @@ public class Game{
 
         /* 3. Parse the file the user specified to create the
         adventure, or load your default adventure*/
-        
-        theGame.loadAdventureJson(file);
+        JSONObject adventureObject = theGame.loadAdventureJson(file);
 
-        
-
+        Adventure adventure = theGame.generateAdventure(adventureObject);
+        System.out.println("Room description: " + adventure.getCurrentRoomDescription());
 
         // 4. Print the beginning of the adventure
 
@@ -71,35 +72,55 @@ public class Game{
     /* you must have these instance methods and may need more*/
 
     public JSONObject loadAdventureJson(String filename){
+        JSONObject jsonObject = new JSONObject();
+        JSONObject adventure = new JSONObject();
         try {
             
             JSONParser parser = new JSONParser();
-            Reader reader = new FileReader("example_adventure.json");
+            Reader reader = new FileReader("./src/main/java/adventure/example_adventure.json");
+            jsonObject  = (JSONObject) parser.parse(reader);
+            
+            //System.out.println(jsonObject);
 
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-            System.out.println(jsonObject);
+            //String name = (String) jsonObject.get("name");
+            //System.out.println(name);
 
-            String name = (String) jsonObject.get("name");
-            System.out.println(name);
-
-            long age = (Long) jsonObject.get("age");
-            System.out.println(age);
-
-            // loop array
-            JSONArray msg = (JSONArray) jsonObject.get("messages");
-            Iterator<String> iterator = msg.iterator();
-            while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-            }
+            // A JSON array. JSONObject supports java.util.List interface.
+            
+            adventure = (JSONObject) jsonObject.get("adventure");
+			
+            
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return (jsonObject);
+        return(adventure);
     }
-    /*public Adventure generateAdventure(JSONObject obj) {
+
+    public Adventure generateAdventure(JSONObject obj) {
+        //make the adventure and json object
+        Adventure adventure = new Adventure();
+        JSONObject temp = new JSONObject();
+        //get all the rooms in an array
+        JSONArray roomList = new JSONArray();
+        roomList = (JSONArray) obj.get("room");
+        try {
+			
+            Iterator<JSONObject> iterator = roomList.iterator();
+            
+            // goes through the rooms, passes the room array and the starting room to adventure
+			while (iterator.hasNext()) {
+                temp = iterator.next();
+                if(temp.containsKey("start")) {
+                    adventure.setRooms(roomList, temp);
+                }
+                //System.out.println("\n" + iterator.next());
+            }
+        } catch (Exception e) {}
+
         
-    }*/
+        return(adventure);
+    }
 
 }

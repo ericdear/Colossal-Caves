@@ -3,6 +3,7 @@ package adventure;
 
 public class Room{
     /* you will need to add some private member variables */
+    
 
     /* required public methods *
 
