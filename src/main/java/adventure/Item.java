@@ -9,19 +9,17 @@ public class Item{
     private long id;
     private String name;
     private String description;
-    private long roomId;
+    private Room room;
 
     /* required public methods */
 
-    public Item(long tempId, String tempName, String tempDescription, long tempRoomId) {
+    public Item() {}
+
+    public Item(long tempId, String tempName, String tempDescription, Room tempRoomId) {
         id = tempId;
         name = tempName;
         description = tempDescription;
-        roomId = tempRoomId;
-    }
-
-    public void setItemsRoom() {
-
+        room = tempRoomId;
     }
 
     public long getId() {
@@ -35,11 +33,11 @@ public class Item{
     public String getLongDescription(){
         return(description);
     }
-/*
+
     public Room getContainingRoom(){
         //returns a reference to the room that contains the item
-        return(roomId);
-    }*/
+        return(room);
+    }
 
     /* you may wish to add some helper methods*/
 }

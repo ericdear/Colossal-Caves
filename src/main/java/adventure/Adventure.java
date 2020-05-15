@@ -14,6 +14,7 @@ import java.util.Iterator;
 public class Adventure{
     /* you will need to add some private member variables */
     private ArrayList <Room> roomList;
+    private ArrayList <Item> allItems;
     private Room currentRoom;
     
 
@@ -39,55 +40,52 @@ public class Adventure{
                 currentRoom = roomList.get(i);
             }
 
-            //FIXME
-            //if the tempObject contains loot, get the JSONArray of it
-            //iterate through the JSONArray making it a ArrayList of JSONObjects
+            checkLoot(tempObject, tempRoom, items);
+            //checkEntrance
+        }
+    }
 
-            if(tempObject.containsKey("loot")) {
-                ArrayList <JSONObject> roomItems = new ArrayList();
 
-                JSONArray loot = new JSONArray();
-                loot = (JSONArray) tempObject.get("loot");
-            
-                JSONObject tempLoot = new JSONObject();
-                try {
-                    Iterator<JSONObject> iterator = loot.iterator();
-                    // goes through the items
-			        while (iterator.hasNext()) {
-                        roomItems.add(iterator.next());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    public void checkLoot(JSONObject tempObject, Room tempRoom, ArrayList <JSONObject> items) {
+        //if the tempObject contains loot, get the JSONArray of it
+        //iterate through the JSONArray making it a ArrayList of JSONObjects
+        if(tempObject.containsKey("loot")) {
+            ArrayList <JSONObject> roomItems = new ArrayList();
+            JSONArray loot = (JSONArray) tempObject.get("loot");
 
-                //ArrayList roomItems holds loot found in tempObject, ArrayList items holds the list of all items
-                //go through the items in the room (tempObject is the room) and check if the object.get("id") matches any object.get("id") in the items arrayList
-                //if it does, send the JSONObject to currentRoom.setRoomItems(Object);
-                //make sure you give it the object from the items array because it has more data
-                for(int j = 0; j < roomItems.size(); j++) {
-                    for(int k = 0; k < items.size(); k++) {
-                        JSONObject item1 = roomItems.get(j);
-                        JSONObject item2 = items.get(k);
-                        if(item1.get("id") == item2.get("id")) {
-                            System.out.println("Match!!!");
-                            tempRoom.setRoomItem(item2);
-                        }
+            for(Object current_item : loot) {
+                roomItems.add((JSONObject) current_item);
+            }
+
+            //ArrayList roomItems holds loot found in tempObject, ArrayList items holds the list of all items
+            //go through the items in the room (tempObject is the room) and check if the object.get("id") matches any object.get("id") in the items arrayList
+            //if it does, send the JSONObject to currentRoom.setRoomItems(Object);
+            //make sure you give it the object from the items array because it has more data
+            allItems = new ArrayList();
+            for(int j = 0; j < roomItems.size(); j++) {
+                for(int k = 0; k < items.size(); k++) {
+                    JSONObject item1 = roomItems.get(j);
+                    JSONObject item2 = items.get(k);
+
+                    allItems.add(new Item((long)item2.get("id"), (String)item2.get("name"), (String)item2.get("desc"),(Room) tempRoom));
+                    if(item1.get("id") == item2.get("id")) {
+                        tempRoom.setRoomItem(item2, tempRoom);
                     }
                 }
             }
         }
     }
 
-/*
     public ArrayList <Room> listAllRooms(){
         //make an array of type Room
         //dont exaclty need to use
-    }*/
-/*
-    public ArrayList <Item> listAllItems(){
-
+        return(roomList);
     }
-*/
+
+    public ArrayList <Item> listAllItems(){
+        return(allItems);
+    }
+
     public Room getCurrentRoom() {
         return(currentRoom);
     }

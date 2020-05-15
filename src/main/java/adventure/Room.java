@@ -17,48 +17,38 @@ public class Room{
     private String name;
     private String short_description;
     private String long_description;
-    //private ArrayList <Entrance> entrance;
+    private ArrayList <Entrance> roomEntrances;
     private ArrayList <Item> roomItems;
-    private ArrayList <Item> allItems;
 
     /* required public methods */
 
     public Room(JSONObject newRoom) {
         roomItems = new ArrayList();
+        roomEntrances = new ArrayList();
         id = (long) newRoom.get("id");
         name = (String) newRoom.get("name");
         short_description = (String) newRoom.get("short_description");
         long_description = (String) newRoom.get("long_description");
-        //entrance
-
-        //set all loot 
-        
-        
     }
 
-/*
-    public ArrayList <Item> listItems(){
+
+    public ArrayList <Item> listItems(){ //need to have
         //lists all the items in the room
+        return(roomItems);
+    }
 
-    }*/
-    /*public void setAllItems(ArrayList <JSONObject> items) {
-        JSONObject item;
-        for(int i = 0; i < items.size(); i++) {
-            item = items.get(i);
-
-            Item temp = new Item( (long)item.get("id"), (String)item.get("name"), (String)item.get("desc"));
-            allItems = new ArrayList();
-            allItems.add(temp);
-        }
-    }*/
-
-    public void setRoomItem(JSONObject tempItem) {//FIXME: need to set the room items. need to get the the arraylist of all rooms
+    public void setRoomItem(JSONObject tempItem, Room room) {//FIXME make it send in the Room
         //create a Item object
         //u will have to provide the id name and desc, and the id of the room it belongs to. the id is a long in this class
-        Item item = new Item((long)tempItem.get("id"), (String)tempItem.get("name"), (String)tempItem.get("desc"), id);
+        Item item = new Item((long)tempItem.get("id"), (String)tempItem.get("name"), (String)tempItem.get("desc"),(Room) room);//chage this id to room
         
         //add the item to the roomItems ArrayList!
         roomItems.add(item);
+    }
+
+    public void setRoomEntrances(JSONObject tempEntrance) {
+        Entrance entrance = new Entrance((long)tempEntrance.get("id"), (String)tempEntrance.get("dir"));
+        roomEntrances.add(entrance);
     }
 
     public long getId(){
@@ -76,9 +66,26 @@ public class Room{
     public String getLongDescription(){
         return(long_description);
     }
+
+    public void printRoomItems() {
+        for(int i = 0; i < roomItems.size(); i++) {
+            Item item = roomItems.get(i);
+            System.out.println("There is a " + item.getName() + " here.");
+        }
+    }
+
+    public String searchItemDescription(String itemSearched) {
+        for(int i = 0; i < roomItems.size(); i++) {
+            Item item = roomItems.get(i);
+            if(itemSearched.equals(item.getName())) {
+                return(item.getLongDescription());
+            }
+        }
+        return("Item " + itemSearched + " not found.");
+    }
 /*
     public Room getConnectedRoom(String direction) {
-
+        
     }*/
 
     /* you may wish to add some helper methods*/

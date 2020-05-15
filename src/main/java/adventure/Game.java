@@ -54,6 +54,9 @@ public class Game{
         Room room = adventure.getCurrentRoom();
         System.out.println("You are in " + room.getName());
 
+        //print items in the room
+        room.printRoomItems();
+
         // 4. Print the beginning of the adventure
         String inputLine;
         String item;
@@ -72,6 +75,8 @@ public class Game{
                     item = inputScanner.next();
                     //they are looking at an item
                     //check to see if that matches an item in the room
+                    System.out.println(room.searchItemDescription(item));
+
                 } else {//if they just typed look
                     System.out.println(room.getLongDescription());
                 }
@@ -104,13 +109,6 @@ public class Game{
                 fileFound = true;
                 jsonObject  = (JSONObject) parser.parse(reader);
                 
-                //System.out.println(jsonObject);
-    
-                //String name = (String) jsonObject.get("name");
-                //System.out.println(name);
-    
-                // A JSON array. JSONObject supports java.util.List interface.
-                
                 adventure = (JSONObject) jsonObject.get("adventure");
                 
                 
@@ -128,36 +126,24 @@ public class Game{
     }
 
     public Adventure generateAdventure(JSONObject obj) {
-        //make the adventure and json object
+        //make the adventure and jsonobject arrayLists
         Adventure adventure = new Adventure();
-        JSONObject currentRoom = new JSONObject();
-
-        //get all the rooms in an array
-        JSONArray roomList = new JSONArray();
-        JSONArray itemList = new JSONArray();
-        roomList = (JSONArray) obj.get("room");
-        itemList = (JSONArray) obj.get("item");
         ArrayList <JSONObject> rooms = new ArrayList();
         ArrayList <JSONObject> items = new ArrayList();
         
-
-        try {
-            Iterator<JSONObject> roomIterator = roomList.iterator();
-            Iterator<JSONObject> itemIterator = itemList.iterator();
-            JSONObject tempItem = new JSONObject();
-            // goes through the rooms, passes the room array and the starting room to adventure
-			while (roomIterator.hasNext()) {
-                currentRoom = roomIterator.next();
-                rooms.add(currentRoom);
-            }
-            while (itemIterator.hasNext()) {
-                items.add(itemIterator.next());
-            }
-            adventure.setRoomList(rooms,items);
-        } catch (Exception e) {
-            e.printStackTrace();
+        //get the list of rooms
+        JSONArray roomList = (JSONArray) obj.get("room");
+        for(Object currentRoom : roomList) {
+            rooms.add((JSONObject)currentRoom);
         }
 
+        //get the list of items
+        JSONArray itemList = (JSONArray) obj.get("item");
+        for(Object currentItem : itemList) {
+            items.add((JSONObject)currentItem);
+        }
+        
+        adventure.setRoomList(rooms,items);
         return(adventure);
     }
 
