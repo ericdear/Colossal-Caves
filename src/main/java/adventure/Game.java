@@ -17,7 +17,7 @@ public class Game{
     /* this is the class that runs the game.
     You may need some member variables */
 
-    private int room = 0;
+    
 
     public static void main(String[] args) {
 
@@ -139,14 +139,18 @@ public class Game{
         itemList = (JSONArray) obj.get("item");
         ArrayList <JSONObject> rooms = new ArrayList();
         ArrayList <JSONObject> items = new ArrayList();
+        
 
         try {
             Iterator<JSONObject> roomIterator = roomList.iterator();
             Iterator<JSONObject> itemIterator = itemList.iterator();
+            JSONObject tempItem = new JSONObject();
             // goes through the rooms, passes the room array and the starting room to adventure
 			while (roomIterator.hasNext()) {
                 currentRoom = roomIterator.next();
                 rooms.add(currentRoom);
+            }
+            while (itemIterator.hasNext()) {
                 items.add(itemIterator.next());
             }
             adventure.setRoomList(rooms,items);

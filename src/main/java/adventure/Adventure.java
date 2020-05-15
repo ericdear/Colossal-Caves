@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Iterator;
+
 
 public class Adventure{
     /* you will need to add some private member variables */
@@ -37,31 +42,39 @@ public class Adventure{
             //FIXME
             //if the tempObject contains loot, get the JSONArray of it
             //iterate through the JSONArray making it a ArrayList of JSONObjects
-            //go through the items in the room (tempObject is the room) and check if the object.get("id") matches any object.get("id") in the items arrayList
-            //if it does, send the JSONObject to currentRoom.setRoomItems(Object);
-            //make sure you give it the object from the items array because it has more data
 
-            //put items in the room into an array
-            if(newRoom.containsKey("loot")) {
-                roomItems = new ArrayList();
-                JSONArray items = new JSONArray();
-                items = (JSONArray) newRoom.get("loot");
+            if(tempObject.containsKey("loot")) {
+                ArrayList <JSONObject> roomItems = new ArrayList();
+
+                JSONArray loot = new JSONArray();
+                loot = (JSONArray) tempObject.get("loot");
             
                 JSONObject tempLoot = new JSONObject();
                 try {
-                    Iterator<JSONObject> iterator = items.iterator();
+                    Iterator<JSONObject> iterator = loot.iterator();
                     // goes through the items
-			            while (iterator.hasNext()) {
-                        tempLoot = iterator.next();
-                        System.out.println(tempLoot.get("id"));
-                        //roomItems.add(tempLoot.get("id"));
+			        while (iterator.hasNext()) {
+                        roomItems.add(iterator.next());
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
 
+                //ArrayList roomItems holds loot found in tempObject, ArrayList items holds the list of all items
+                //go through the items in the room (tempObject is the room) and check if the object.get("id") matches any object.get("id") in the items arrayList
+                //if it does, send the JSONObject to currentRoom.setRoomItems(Object);
+                //make sure you give it the object from the items array because it has more data
+                for(int j = 0; j < roomItems.size(); j++) {
+                    for(int k = 0; k < items.size(); k++) {
+                        JSONObject item1 = roomItems.get(j);
+                        JSONObject item2 = items.get(k);
+                        if(item1.get("id") == item2.get("id")) {
+                            System.out.println("Match!!!");
+                            tempRoom.setRoomItem(item2);
+                        }
+                    }
+                }
+            }
         }
     }
 

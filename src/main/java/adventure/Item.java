@@ -35,11 +35,11 @@ public class Item{
     public String getLongDescription(){
         return(description);
     }
-
+/*
     public Room getContainingRoom(){
         //returns a reference to the room that contains the item
         return(roomId);
-    }
+    }*/
 
     /* you may wish to add some helper methods*/
 }

@@ -52,10 +52,13 @@ public class Room{
         }
     }*/
 
-    public void setRoomItem(JSONObject item) {//FIXME: need to set the room items. need to get the the arraylist of all rooms
+    public void setRoomItem(JSONObject tempItem) {//FIXME: need to set the room items. need to get the the arraylist of all rooms
         //create a Item object
         //u will have to provide the id name and desc, and the id of the room it belongs to. the id is a long in this class
+        Item item = new Item((long)tempItem.get("id"), (String)tempItem.get("name"), (String)tempItem.get("desc"), id);
+        
         //add the item to the roomItems ArrayList!
+        roomItems.add(item);
     }
 
     public long getId(){
