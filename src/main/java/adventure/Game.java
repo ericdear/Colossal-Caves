@@ -60,6 +60,7 @@ public class Game{
         // 4. Print the beginning of the adventure
         String inputLine;
         String item;
+        String direction;
         // 5. Begin game loop here
         while(running) {
             //propt the user for a command
@@ -79,6 +80,23 @@ public class Game{
 
                 } else {//if they just typed look
                     System.out.println(room.getLongDescription());
+                }
+            } else if(input.equals("go")) {
+                if(inputScanner.hasNext()) {
+                    direction = inputScanner.next();
+                    
+                    if(adventure.checkDirection(direction) == null) {
+                        System.out.println("There is no room in the direction " + direction + ".");
+                    } else {
+                        room = adventure.changeRooms(direction);
+                        System.out.println("You are in " + room.getName());
+
+                        //print items in the room
+                        room.printRoomItems();
+                    }
+
+                } else {//if they just typed go
+                    System.out.println("You must provide a Direction");
                 }
             }
         }
@@ -142,7 +160,7 @@ public class Game{
         for(Object currentItem : itemList) {
             items.add((JSONObject)currentItem);
         }
-        
+
         adventure.setRoomList(rooms,items);
         return(adventure);
     }

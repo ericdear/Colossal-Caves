@@ -26,39 +26,39 @@ public class Adventure{
 
     public void setRoomList(ArrayList <JSONObject> newRooms, ArrayList <JSONObject> items) {
         int i;
-        JSONObject tempObject;
+        JSONObject roomObject;
         roomList = new ArrayList();
         Room tempRoom;
         for(i = 0; i < newRooms.size(); i++) {
             //create all the rooms and put into arraylist
-            tempObject = newRooms.get(i);
-            tempRoom = new Room(tempObject);
+            roomObject = newRooms.get(i);
+            tempRoom = new Room(roomObject);
             roomList.add(tempRoom);
 
             //set the current room to the room with the start key
-            if(tempObject.containsKey("start")) {
+            if(roomObject.containsKey("start")) {
                 currentRoom = roomList.get(i);
             }
 
-            checkLoot(tempObject, tempRoom, items);
-            //checkEntrance
+            setLoot(roomObject, tempRoom, items);
+            setEntrance(roomObject, tempRoom);
         }
     }
 
 
-    public void checkLoot(JSONObject tempObject, Room tempRoom, ArrayList <JSONObject> items) {
-        //if the tempObject contains loot, get the JSONArray of it
+    public void setLoot(JSONObject roomObject, Room tempRoom, ArrayList <JSONObject> items) {
+        //if the roomObject contains loot, get the JSONArray of it
         //iterate through the JSONArray making it a ArrayList of JSONObjects
-        if(tempObject.containsKey("loot")) {
+        if(roomObject.containsKey("loot")) {
             ArrayList <JSONObject> roomItems = new ArrayList();
-            JSONArray loot = (JSONArray) tempObject.get("loot");
+            JSONArray loot = (JSONArray) roomObject.get("loot");
 
             for(Object current_item : loot) {
                 roomItems.add((JSONObject) current_item);
             }
 
-            //ArrayList roomItems holds loot found in tempObject, ArrayList items holds the list of all items
-            //go through the items in the room (tempObject is the room) and check if the object.get("id") matches any object.get("id") in the items arrayList
+            //ArrayList roomItems holds loot found in roomObject, ArrayList items holds the list of all items
+            //go through the items in the room (roomObject is the room) and check if the object.get("id") matches any object.get("id") in the items arrayList
             //if it does, send the JSONObject to currentRoom.setRoomItems(Object);
             //make sure you give it the object from the items array because it has more data
             allItems = new ArrayList();
@@ -74,6 +74,31 @@ public class Adventure{
                 }
             }
         }
+    }
+
+    public void setEntrance(JSONObject roomObject, Room tempRoom) {
+        if(roomObject.containsKey("entrance")) {
+            ArrayList <JSONObject> roomEntrances = new ArrayList();
+            JSONArray entrances = (JSONArray) roomObject.get("entrance");
+
+            for(Object current_entrance : entrances) {
+                JSONObject entrance = (JSONObject) current_entrance;
+                tempRoom.setRoomEntrance(entrance);
+                roomEntrances.add(entrance);
+
+            }
+        }
+    }
+
+    public Room changeRooms(String dir) {
+        currentRoom.setRoomArray(roomList);
+        currentRoom = currentRoom.getConnectedRoom(dir);
+        return(currentRoom);
+    }
+
+    public Room checkDirection(String dir) {
+        currentRoom.setRoomArray(roomList);
+        return(currentRoom.getConnectedRoom(dir));
     }
 
     public ArrayList <Room> listAllRooms(){
@@ -93,6 +118,4 @@ public class Adventure{
     public String getCurrentRoomDescription(){
         return(currentRoom.getShortDescription());
     }
-
-    /* you may wish to add additional methods*/
 }

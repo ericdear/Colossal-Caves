@@ -20,6 +20,8 @@ public class Room{
     private ArrayList <Entrance> roomEntrances;
     private ArrayList <Item> roomItems;
 
+    private ArrayList <Room> allRooms;
+
     /* required public methods */
 
     public Room(JSONObject newRoom) {
@@ -37,7 +39,7 @@ public class Room{
         return(roomItems);
     }
 
-    public void setRoomItem(JSONObject tempItem, Room room) {//FIXME make it send in the Room
+    public void setRoomItem(JSONObject tempItem, Room room) {
         //create a Item object
         //u will have to provide the id name and desc, and the id of the room it belongs to. the id is a long in this class
         Item item = new Item((long)tempItem.get("id"), (String)tempItem.get("name"), (String)tempItem.get("desc"),(Room) room);//chage this id to room
@@ -46,7 +48,7 @@ public class Room{
         roomItems.add(item);
     }
 
-    public void setRoomEntrances(JSONObject tempEntrance) {
+    public void setRoomEntrance(JSONObject tempEntrance) {
         Entrance entrance = new Entrance((long)tempEntrance.get("id"), (String)tempEntrance.get("dir"));
         roomEntrances.add(entrance);
     }
@@ -83,10 +85,32 @@ public class Room{
         }
         return("Item " + itemSearched + " not found.");
     }
-/*
+
     public Room getConnectedRoom(String direction) {
+        long entranceId = -1;
+        //go through and find the id of the room to go to
+        for(int i = 0; i < roomEntrances.size(); i++) {
+            
+            if(direction.equals(roomEntrances.get(i).getDir())) {
+                entranceId = roomEntrances.get(i).getId();
+            }
+        }
         
-    }*/
+        //go through the rooms and check if the roomId matches the entranceId
+        for(int i = 0; i < allRooms.size(); i++) {
+            long roomId = allRooms.get(i).getId();
+            if(entranceId == roomId) {
+                return(allRooms.get(i));
+            }
+        }
+
+        return(null);
+    }
+
+    public void setRoomArray(ArrayList <Room> rooms) {
+        allRooms = new ArrayList();
+        allRooms = rooms;
+    }
 
     /* you may wish to add some helper methods*/
 }

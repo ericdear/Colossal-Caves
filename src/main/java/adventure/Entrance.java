@@ -10,4 +10,12 @@ public class Entrance {
         id = newId;
         dir = newDir;
     }
+
+    public long getId() {
+        return(id);
+    }
+
+    public String getDir() {
+        return(dir);
+    }
 }
