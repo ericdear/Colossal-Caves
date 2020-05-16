@@ -11,6 +11,7 @@ Run: mvn exec:java
 commands: "go x" where x is N, S, E, or W
           "look"
           "look x" where x is an item in that room
+          "exit" to exit
 
 There are checkstyle errors but only javadoc ones because Judi said we don't need them and will not lose marks for those errors
 
