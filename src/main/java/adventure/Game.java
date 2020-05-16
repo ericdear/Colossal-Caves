@@ -10,14 +10,11 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Iterator;
 
 public class Game{
 
     /* this is the class that runs the game.
     You may need some member variables */
-
-    
 
     public static void main(String[] args) {
 
@@ -26,90 +23,32 @@ public class Game{
         for this assignment */
         Game theGame = new Game();
         Scanner scnr = new Scanner(System.in);
-        String input = "";
         String file;
+        file = theGame.gameIntro(scnr);
         boolean running = true;
-
-        // 1. Print a welcome message to the user
-        System.out.println("Welcome to Eric's Colossal Caves!");
-
-        // 2. Ask the user if they want to load a json file.
-        while(!input.equals("yes") && !input.equals("no")) {
-            System.out.println("Would you like to load a json file?");
-            input = scnr.nextLine();
-        }
+        String inputLine;
         
-        if(input.equals("yes")) {
-            System.out.println("Please enter the full name of the file");
-            file = scnr.nextLine();
-        } else {
-            file = "src/main/java/adventure/example_adventure.json";
-        }
 
         /* 3. Parse the file the user specified to create the
         adventure, or load your default adventure*/
         JSONObject adventureObject = theGame.loadAdventureJson(file);
-
         Adventure adventure = theGame.generateAdventure(adventureObject);
         Room room = adventure.getCurrentRoom();
-        System.out.println("You are in " + room.getName());
+        
 
-        //print items in the room
+        //tell the user where they are and print items in the room
+        System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
         room.printRoomItems();
 
-        // 4. Print the beginning of the adventure
-        String inputLine;
-        String item;
-        String direction;
-        // 5. Begin game loop here
         while(running) {
+            room = adventure.getCurrentRoom();
             //propt the user for a command
             inputLine = scnr.nextLine();
-            Scanner inputScanner = new Scanner(inputLine);
-            input = inputScanner.next();
-            
-
-            //check what command they entered
-            if(input.equals("look")) {
-                //if they said look at an item
-                if(inputScanner.hasNext()) {
-                    item = inputScanner.next();
-                    //they are looking at an item
-                    //check to see if that matches an item in the room
-                    System.out.println(room.searchItemDescription(item));
-
-                } else {//if they just typed look
-                    System.out.println(room.getLongDescription());
-                }
-            } else if(input.equals("go")) {
-                if(inputScanner.hasNext()) {
-                    direction = inputScanner.next();
-                    
-                    if(adventure.checkDirection(direction) == null) {
-                        System.out.println("There is no room in the direction " + direction + ".");
-                    } else {
-                        room = adventure.changeRooms(direction);
-                        System.out.println("You are in " + room.getName());
-
-                        //print items in the room
-                        room.printRoomItems();
-                    }
-
-                } else {//if they just typed go
-                    System.out.println("You must provide a Direction");
-                }
+            adventure = theGame.doCommand(adventure, inputLine);
+            if(inputLine.equals("exit")) {
+                running = false;
             }
         }
-
-        // 6. Get the user input. You'll need a Scanner 
-
-        /* 7+. Use a game instance method to parse the user
-        input to learn what the user wishes to do*/
-
-        //use a game instance method to execute the users wishes*/
-
-        /* if the user doesn't wish to quit,
-        repeat the steps above*/
     }
 
     /* you must have these instance methods and may need more*/
@@ -119,7 +58,7 @@ public class Game{
         JSONObject adventure = new JSONObject();
         Scanner scnr = new Scanner(System.in);
         boolean fileFound = false;
-        while(fileFound == false) {
+        while(!fileFound) {
             try {
             
                 JSONParser parser = new JSONParser();
@@ -146,8 +85,8 @@ public class Game{
     public Adventure generateAdventure(JSONObject obj) {
         //make the adventure and jsonobject arrayLists
         Adventure adventure = new Adventure();
-        ArrayList <JSONObject> rooms = new ArrayList();
-        ArrayList <JSONObject> items = new ArrayList();
+        ArrayList<JSONObject> rooms = new ArrayList();
+        ArrayList<JSONObject> items = new ArrayList();
         
         //get the list of rooms
         JSONArray roomList = (JSONArray) obj.get("room");
@@ -162,6 +101,68 @@ public class Game{
         }
 
         adventure.setRoomList(rooms,items);
+        return(adventure);
+    }
+
+    public String gameIntro(Scanner scnr) {
+        String file;
+        String input = "";
+        // 1. Print a welcome message to the user
+        System.out.println("Welcome to Eric's Colossal Caves!");
+
+        // 2. Ask the user if they want to load a json file.
+        while(!input.equals("yes") && !input.equals("no")) {
+            System.out.println("Would you like to load a json file?");
+            input = scnr.nextLine();
+        }
+        
+        if(input.equals("yes")) {
+            System.out.println("Please enter the full name of the file");
+            file = scnr.nextLine();
+        } else {
+            file = "src/main/java/adventure/example_adventure.json";
+        }
+        return(file);
+    }
+
+    public Adventure doCommand(Adventure adventure, String inputLine) {
+        Scanner inputScanner = new Scanner(inputLine);
+        String input = inputScanner.next();
+        Room room = adventure.getCurrentRoom();
+        String item;
+        String direction;
+        
+
+        //check what command they entered
+        if(input.equals("look")) {
+        //if they said look at an item
+            if(inputScanner.hasNext()) {
+                item = inputScanner.next();
+                //they are looking at an item
+                //check to see if that matches an item in the room
+                System.out.println(room.searchItemDescription(item));
+
+            } else {//if they just typed look
+                System.out.println(room.getLongDescription());
+            }
+        } else if(input.equals("go")) {
+            if(inputScanner.hasNext()) {
+                direction = inputScanner.next();
+                    
+                if(adventure.checkDirection(direction) == null) {
+                    System.out.println("There is no room in the direction " + direction + ".");
+                } else {
+                    room = adventure.changeRooms(direction);
+                    System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
+
+                    //print items in the room
+                    room.printRoomItems();
+                }
+
+            } else {//if they just typed go
+                System.out.println("You must provide a Direction.");
+            }
+        }
         return(adventure);
     }
 

@@ -1,13 +1,6 @@
 package adventure;
 
 import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Iterator;
-
 import java.util.ArrayList;
 
 public class Room{
@@ -15,34 +8,33 @@ public class Room{
     //private JSONObject room;
     private long id;
     private String name;
-    private String short_description;
-    private String long_description;
-    private ArrayList <Entrance> roomEntrances;
-    private ArrayList <Item> roomItems;
-
-    private ArrayList <Room> allRooms;
-
-    /* required public methods */
+    private String shortDescription;
+    private String longDescription;
+    private ArrayList<Entrance> roomEntrances;
+    private ArrayList<Item> roomItems;
+    private ArrayList<Room> allRooms;
 
     public Room(JSONObject newRoom) {
         roomItems = new ArrayList();
         roomEntrances = new ArrayList();
         id = (long) newRoom.get("id");
         name = (String) newRoom.get("name");
-        short_description = (String) newRoom.get("short_description");
-        long_description = (String) newRoom.get("long_description");
+        shortDescription = (String) newRoom.get("short_description");
+        longDescription = (String) newRoom.get("long_description");
     }
 
 
-    public ArrayList <Item> listItems(){ //need to have
+    public ArrayList<Item> listItems(){ //need to have
         //lists all the items in the room
         return(roomItems);
     }
 
     public void setRoomItem(JSONObject tempItem, Room room) {
-        //create a Item object
-        //u will have to provide the id name and desc, and the id of the room it belongs to. the id is a long in this class
-        Item item = new Item((long)tempItem.get("id"), (String)tempItem.get("name"), (String)tempItem.get("desc"),(Room) room);//chage this id to room
+        //create a Item object and add it to the array of items in this room
+        long itemId = (long)tempItem.get("id");
+        String itemName = (String)tempItem.get("name");
+        String itemDesc = (String)tempItem.get("desc");
+        Item item = new Item(itemId, itemName, itemDesc, (Room) room);//chage this id to room
         
         //add the item to the roomItems ArrayList!
         roomItems.add(item);
@@ -62,11 +54,11 @@ public class Room{
     }
 
     public String getShortDescription(){
-        return(short_description);
+        return(shortDescription);
     }
 
     public String getLongDescription(){
-        return(long_description);
+        return(longDescription);
     }
 
     public void printRoomItems() {
@@ -107,10 +99,8 @@ public class Room{
         return(null);
     }
 
-    public void setRoomArray(ArrayList <Room> rooms) {
+    public void setRoomArray(ArrayList<Room> rooms) {
         allRooms = new ArrayList();
         allRooms = rooms;
     }
-
-    /* you may wish to add some helper methods*/
 }

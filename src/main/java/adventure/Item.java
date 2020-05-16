@@ -1,9 +1,5 @@
 package adventure;
 
-import java.util.ArrayList;
-
-import org.json.simple.JSONObject;
-
 public class Item{
     /* you will need to add some private member variables */
     private long id;
@@ -38,6 +34,4 @@ public class Item{
         //returns a reference to the room that contains the item
         return(room);
     }
-
-    /* you may wish to add some helper methods*/
 }
