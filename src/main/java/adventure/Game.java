@@ -44,6 +44,7 @@ public class Game{
             room = adventure.getCurrentRoom();
             //propt the user for a command
             inputLine = scnr.nextLine();
+            inputLine = inputLine.toLowerCase();
             adventure = theGame.doCommand(adventure, inputLine);
 
             //if the user wants to exit
@@ -114,6 +115,7 @@ public class Game{
         while(!input.equals("yes") && !input.equals("no")) {
             System.out.println("Would you like to load a json file? (yes/no):");
             input = scnr.nextLine();
+            input = input.toLowerCase();
         }
         
         // if the user said yes, ask them for the file name, if no, load the default json file
@@ -172,6 +174,8 @@ public class Game{
             } else {//if they just typed go
                 System.out.println("You must provide a Direction.");
             }
+        } else if(!input.equals("exit")) {
+            System.out.println("Command " + input + " not found.");
         }
         return(adventure);
     }

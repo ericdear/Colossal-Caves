@@ -91,6 +91,7 @@ public class Room{
     //get the connecting room in the direction provided
     public Room getConnectedRoom(String direction) {
         long entranceId = -1;
+        direction = direction.toUpperCase();
         //go through and find the id of the room to go to
         for(int i = 0; i < roomEntrances.size(); i++) {
             
