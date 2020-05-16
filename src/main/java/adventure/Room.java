@@ -14,6 +14,9 @@ public class Room{
     private ArrayList<Item> roomItems;
     private ArrayList<Room> allRooms;
 
+    public Room() {}
+
+    //set up the room
     public Room(JSONObject newRoom) {
         roomItems = new ArrayList();
         roomEntrances = new ArrayList();
@@ -23,12 +26,12 @@ public class Room{
         longDescription = (String) newRoom.get("long_description");
     }
 
-
-    public ArrayList<Item> listItems(){ //need to have
-        //lists all the items in the room
+    //list all the items in the room
+    public ArrayList<Item> listItems(){
         return(roomItems);
     }
 
+    //set the arrayList of the rooms items
     public void setRoomItem(JSONObject tempItem, Room room) {
         //create a Item object and add it to the array of items in this room
         long itemId = (long)tempItem.get("id");
@@ -40,27 +43,33 @@ public class Room{
         roomItems.add(item);
     }
 
+    //set the rooms entrances
     public void setRoomEntrance(JSONObject tempEntrance) {
         Entrance entrance = new Entrance((long)tempEntrance.get("id"), (String)tempEntrance.get("dir"));
         roomEntrances.add(entrance);
     }
 
+    //get the id of the room
     public long getId(){
         return(id);
     }
 
+    //get the name of the room
     public String getName(){
         return(name);
     }
 
+    //get the short description
     public String getShortDescription(){
         return(shortDescription);
     }
 
+    //get the long description
     public String getLongDescription(){
         return(longDescription);
     }
 
+    //print the list of items in the room
     public void printRoomItems() {
         for(int i = 0; i < roomItems.size(); i++) {
             Item item = roomItems.get(i);
@@ -68,6 +77,7 @@ public class Room{
         }
     }
 
+    //search the item description of the item that was searched
     public String searchItemDescription(String itemSearched) {
         for(int i = 0; i < roomItems.size(); i++) {
             Item item = roomItems.get(i);
@@ -78,6 +88,7 @@ public class Room{
         return("Item " + itemSearched + " not found.");
     }
 
+    //get the connecting room in the direction provided
     public Room getConnectedRoom(String direction) {
         long entranceId = -1;
         //go through and find the id of the room to go to
@@ -99,6 +110,7 @@ public class Room{
         return(null);
     }
 
+    //set an array of all rooms
     public void setRoomArray(ArrayList<Room> rooms) {
         allRooms = new ArrayList();
         allRooms = rooms;

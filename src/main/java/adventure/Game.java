@@ -45,19 +45,21 @@ public class Game{
             //propt the user for a command
             inputLine = scnr.nextLine();
             adventure = theGame.doCommand(adventure, inputLine);
+
+            //if the user wants to exit
             if(inputLine.equals("exit")) {
                 running = false;
             }
         }
     }
 
-    /* you must have these instance methods and may need more*/
-
     public JSONObject loadAdventureJson(String filename){
         JSONObject jsonObject = new JSONObject();
         JSONObject adventure = new JSONObject();
         Scanner scnr = new Scanner(System.in);
         boolean fileFound = false;
+
+        //ask the user for a file, if it doesnt parse then ask them again
         while(!fileFound) {
             try {
             
@@ -65,9 +67,7 @@ public class Game{
                 Reader reader = new FileReader(filename);
                 fileFound = true;
                 jsonObject  = (JSONObject) parser.parse(reader);
-                
                 adventure = (JSONObject) jsonObject.get("adventure");
-                
                 
             } catch (IOException e) {
                 System.out.println("Something wrong with the file you inputed");
@@ -78,7 +78,6 @@ public class Game{
                 e.printStackTrace();
             } 
         }
-        
         return(adventure);
     }
 
@@ -100,6 +99,7 @@ public class Game{
             items.add((JSONObject)currentItem);
         }
 
+        //set the rooms in the adventure
         adventure.setRoomList(rooms,items);
         return(adventure);
     }
@@ -112,10 +112,11 @@ public class Game{
 
         // 2. Ask the user if they want to load a json file.
         while(!input.equals("yes") && !input.equals("no")) {
-            System.out.println("Would you like to load a json file?");
+            System.out.println("Would you like to load a json file? (yes/no):");
             input = scnr.nextLine();
         }
         
+        // if the user said yes, ask them for the file name, if no, load the default json file
         if(input.equals("yes")) {
             System.out.println("Please enter the full name of the file");
             file = scnr.nextLine();
@@ -139,6 +140,7 @@ public class Game{
             if(inputScanner.hasNext()) {
                 item = inputScanner.next();
 
+                //if the item is 2 words
                 while(inputScanner.hasNext()) {
                     item = item.concat(" ");
                     item = item.concat(inputScanner.next());
@@ -146,15 +148,17 @@ public class Game{
                 
                 //they are looking at an item
                 //check to see if that matches an item in the room
-                System.out.println(room.searchItemDescription(item));
+                System.out.println(room.searchItemDescription(item) + ".");
 
             } else {//if they just typed look
-                System.out.println(room.getLongDescription());
+                System.out.println(room.getLongDescription() + ".");
             }
+            //if the user typed go
         } else if(input.equals("go")) {
             if(inputScanner.hasNext()) {
                 direction = inputScanner.next();
                     
+                //check if there is an entrance in that direction, if there is, go there
                 if(adventure.checkDirection(direction) == null) {
                     System.out.println("There is no room in the direction " + direction + ".");
                 } else {

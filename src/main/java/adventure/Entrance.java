@@ -6,17 +6,18 @@ public class Entrance {
 
     public Entrance() {}
 
+    //set up the entrance
     public Entrance(long newId, String newDir) {
         id = newId;
         dir = newDir;
     }
 
-    /* this returns the id */
+    // this returns the id
     public long getId() {
         return(id);
     }
 
-    /* this returns the direction */
+    // this returns the direction
     public String getDir() {
         return(dir);
     }

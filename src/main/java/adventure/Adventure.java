@@ -34,6 +34,7 @@ public class Adventure{
                 currentRoom = roomList.get(i);
             }
 
+            //set the items and entrances
             setLoot(roomObject, tempRoom, items);
             setEntrance(roomObject, tempRoom);
         }
@@ -74,6 +75,7 @@ public class Adventure{
         }
     }
 
+    //set the entrances of the current room
     public void setEntrance(JSONObject roomObject, Room tempRoom) {
         if(roomObject.containsKey("entrance")) {
             ArrayList<JSONObject> roomEntrances = new ArrayList();
@@ -88,31 +90,37 @@ public class Adventure{
         }
     }
 
+    //change rooms
     public Room changeRooms(String dir) {
         currentRoom.setRoomArray(roomList);
         currentRoom = currentRoom.getConnectedRoom(dir);
         return(currentRoom);
     }
 
+    //check to see if there is an entrance in a specific direction 
     public Room checkDirection(String dir) {
         currentRoom.setRoomArray(roomList);
         return(currentRoom.getConnectedRoom(dir));
     }
 
+    //return the list of all rooms
     public ArrayList<Room> listAllRooms(){
         //make an array of type Room
         //dont exaclty need to use
         return(roomList);
     }
 
+    //return the list of all the items
     public ArrayList<Item> listAllItems(){
         return(allItems);
     }
 
+    //get the current room
     public Room getCurrentRoom() {
         return(currentRoom);
     }
 
+    //get the current room description
     public String getCurrentRoomDescription(){
         return(currentRoom.getShortDescription());
     }

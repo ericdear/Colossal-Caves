@@ -4,7 +4,7 @@
       {
         "id": 100,
         "start": "true",
-        "name": "the shed",
+        "name": "the lobby",
         "short_description": "This is the lobby of the hotel",
         "long_description": "The lobby is a large room with ornate pictures on the walls",
         "entrance": [
