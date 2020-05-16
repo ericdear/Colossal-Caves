@@ -11,12 +11,12 @@ public class Entrance {
         dir = newDir;
     }
 
-    /** this returns the id */
+    /* this returns the id */
     public long getId() {
         return(id);
     }
 
-    /** this returns the direction */
+    /* this returns the direction */
     public String getDir() {
         return(dir);
     }

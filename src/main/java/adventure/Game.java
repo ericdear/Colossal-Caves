@@ -120,7 +120,7 @@ public class Game{
             System.out.println("Please enter the full name of the file");
             file = scnr.nextLine();
         } else {
-            file = "src/main/java/adventure/example_adventure.json";
+            file = "src/main/java/adventure/default_adventure.json";
         }
         return(file);
     }
@@ -138,6 +138,12 @@ public class Game{
         //if they said look at an item
             if(inputScanner.hasNext()) {
                 item = inputScanner.next();
+
+                while(inputScanner.hasNext()) {
+                    item = item.concat(" ");
+                    item = item.concat(inputScanner.next());
+                }
+                
                 //they are looking at an item
                 //check to see if that matches an item in the room
                 System.out.println(room.searchItemDescription(item));
