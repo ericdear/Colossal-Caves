@@ -39,6 +39,7 @@ public class Game{
         //tell the user where they are and print items in the room
         System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
         room.printRoomItems();
+        System.out.println("");
 
         while(running) {
             room = adventure.getCurrentRoom();
@@ -46,6 +47,7 @@ public class Game{
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
             adventure = theGame.doCommand(adventure, inputLine);
+            System.out.println("");
 
             //if the user wants to exit
             if(inputLine.equals("exit")) {
@@ -72,7 +74,7 @@ public class Game{
                 
             } catch (IOException e) {
                 System.out.println("Something wrong with the file you inputed");
-                System.out.println("Please enter the full name of the file");
+                System.out.println("Please enter the full name of the file\n");
                 filename = scnr.nextLine();
 
             } catch (ParseException e) {
@@ -109,18 +111,18 @@ public class Game{
         String file;
         String input = "";
         // 1. Print a welcome message to the user
-        System.out.println("Welcome to Eric's Colossal Caves!");
+        System.out.println("Welcome to Eric's Colossal Caves!\n");
 
         // 2. Ask the user if they want to load a json file.
         while(!input.equals("yes") && !input.equals("no")) {
-            System.out.println("Would you like to load a json file? (yes/no):");
+            System.out.println("Would you like to load a json file? (yes/no):\n");
             input = scnr.nextLine();
             input = input.toLowerCase();
         }
         
         // if the user said yes, ask them for the file name, if no, load the default json file
         if(input.equals("yes")) {
-            System.out.println("Please enter the full name of the file");
+            System.out.println("Please enter the full name of the file\n");
             file = scnr.nextLine();
         } else {
             file = "src/main/java/adventure/default_adventure.json";
