@@ -73,13 +73,14 @@ public class Game{
             Reader reader = new FileReader(filename);
             jsonObject  = (JSONObject) parser.parse(reader);
             adventure = (JSONObject) jsonObject.get("adventure");
-            
+            reader.close();
         } catch (IOException e) {
             return(null);
 
         } catch (ParseException e) {
             return(null);
         } 
+        
         return(adventure);
     }
 
