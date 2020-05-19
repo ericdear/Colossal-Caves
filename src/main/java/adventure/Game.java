@@ -52,6 +52,7 @@ public class Game{
             //if the user wants to exit
             if(inputLine.equals("exit")) {
                 running = false;
+                scnr.close();
             }
         }
     }
@@ -81,6 +82,7 @@ public class Game{
                 e.printStackTrace();
             } 
         }
+        
         return(adventure);
     }
 
