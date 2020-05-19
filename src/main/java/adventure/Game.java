@@ -17,25 +17,31 @@ public class Game{
     You may need some member variables */
 
     public static void main(String[] args) {
-
-        /* You will need to instantiate an object of type
-        game as we're going to avoid using static methods
-        for this assignment */
         Game theGame = new Game();
         Scanner scnr = new Scanner(System.in);
         String file;
         file = theGame.gameIntro(scnr);
         boolean running = true;
+        boolean fileFound = false;
         String inputLine;
-        
+        JSONObject adventureObject = null;
 
-        /* 3. Parse the file the user specified to create the
-        adventure, or load your default adventure*/
-        JSONObject adventureObject = theGame.loadAdventureJson(file);
+        //parse file
+        while(!fileFound) {
+            adventureObject = theGame.loadAdventureJson(file);
+            if(adventureObject != null) {
+                fileFound = true;
+                System.out.println("Loading Adventure...");
+            } else {
+                System.out.println("Something wrong with the file you inputed");
+                System.out.println("Please enter the full name of the file\n");
+                file = scnr.nextLine();
+            }
+        }
+        
         Adventure adventure = theGame.generateAdventure(adventureObject);
         Room room = adventure.getCurrentRoom();
         
-
         //tell the user where they are and print items in the room
         System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
         room.printRoomItems();
@@ -60,29 +66,20 @@ public class Game{
     public JSONObject loadAdventureJson(String filename){
         JSONObject jsonObject = new JSONObject();
         JSONObject adventure = new JSONObject();
-        Scanner scnr = new Scanner(System.in);
-        boolean fileFound = false;
-
-        //ask the user for a file, if it doesnt parse then ask them again
-        while(!fileFound) {
-            try {
-            
-                JSONParser parser = new JSONParser();
-                Reader reader = new FileReader(filename);
-                fileFound = true;
-                jsonObject  = (JSONObject) parser.parse(reader);
-                adventure = (JSONObject) jsonObject.get("adventure");
-                
-            } catch (IOException e) {
-                System.out.println("Something wrong with the file you inputed");
-                System.out.println("Please enter the full name of the file\n");
-                filename = scnr.nextLine();
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } 
-        }
         
+        //parse the file. return null if file cannot be parsed
+        try {
+            JSONParser parser = new JSONParser();
+            Reader reader = new FileReader(filename);
+            jsonObject  = (JSONObject) parser.parse(reader);
+            adventure = (JSONObject) jsonObject.get("adventure");
+            
+        } catch (IOException e) {
+            return(null);
+
+        } catch (ParseException e) {
+            return(null);
+        } 
         return(adventure);
     }
 
