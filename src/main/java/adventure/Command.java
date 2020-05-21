@@ -28,14 +28,6 @@ public class Command {
         add("down");
     }};
 
-    /*List<MyClass> list = new ArrayList<MyClass>() {
-        {
-            add("look");
-            add("go");
-            add("take");
-        }
-    };*/
-
   /**
      * Create a command object with default values.  
      * both instance variables are set to null
@@ -71,7 +63,7 @@ public class Command {
         // is a legitimate second word for the command
         // throw an exception if not
         if(!validCommand(command)) {
-            throw new InvalidCommandException(command + "is not a valid command.");
+            throw new InvalidCommandException(command + " is not a valid command.");
         } else if(command.equals("go") && !validDirection(what)) {
             throw new InvalidCommandException("You must provide a valid direction (N,E,S,W,Up,Down).");
         } else if(command.equals("take") && what == null) {
@@ -110,6 +102,7 @@ public class Command {
     }
 
     /**
+     * @param command the first word of the command
      * @return true if the command is valid
      */
     private static boolean validCommand(String command) {
@@ -122,6 +115,7 @@ public class Command {
     }
 
     /**
+     * @param direction the direction the user wants to go
      * @return true if the direction is valid
      */
     public static boolean validDirection(String direction) {

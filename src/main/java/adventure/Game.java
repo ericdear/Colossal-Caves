@@ -39,6 +39,7 @@ public class Game{
             }
         }
         
+        //create adventure room and player
         Adventure adventure = theGame.generateAdventure(adventureObject);
         Room room = adventure.getCurrentRoom();
         Player player = new Player("Eric",room, adventure.listAllRooms());
@@ -53,7 +54,7 @@ public class Game{
             //propt the user for a command
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
-            adventure = theGame.doCommand(adventure, inputLine, player);
+            theGame.doCommand(inputLine, player);
             System.out.println("");
 
             //if the user wants to exit
@@ -131,15 +132,10 @@ public class Game{
         return(file);
     }
 
-    public Adventure doCommand(Adventure adventure, String inputLine, Player player) {
+    public void doCommand(String inputLine, Player player) {
         Scanner inputScanner = new Scanner(inputLine);
-        //String input = inputScanner.next();
         Room room = player.getCurrentRoom();
-        String item;
-        String direction;
-
         Command command;
-
         String action = inputScanner.next();
 
         
@@ -163,67 +159,15 @@ public class Game{
                     printItems(player.getCurrentRoom());
                 }
             }
-            
 
             //if the user typed take
             if(command.getActionWord().equals("take")) {
-                System.out.println(room.searchItemDescription(command.getNoun()));
+                System.out.println(player.take(command));
             }
 
         } catch(InvalidCommandException e) {
             System.out.println(e.getMessage());
         }
-
-        
-        
-        
-/*
-        //check what command they entered
-        if(input.equals("look")) {
-        //if they said look at an item
-            if(inputScanner.hasNext()) {
-                item = inputScanner.next();
-
-                //if the item is 2 words
-                while(inputScanner.hasNext()) {
-                    item = item.concat(" ");
-                    item = item.concat(inputScanner.next());
-                }
-                
-                //they are looking at an item
-                //check to see if that matches an item in the room
-                System.out.println(room.searchItemDescription(item) + ".");
-
-            } else {//if they just typed look
-                System.out.println(room.getLongDescription() + ".");
-            }
-            //if the user typed go
-        } else if(input.equals("go")) {
-            if(inputScanner.hasNext()) {
-                direction = inputScanner.next();
-                    
-                //check if there is an entrance in that direction, if there is, go there
-                if(adventure.checkDirection(direction) == null) {
-                    System.out.println("There is no room in the direction " + direction + ".");
-                } else {
-                    room = adventure.changeRooms(direction);
-                    System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
-
-                    //print items in the room
-                    //room.printRoomItems();//FIXME: must be a for loop now and print from game
-                    ArrayList<Item> itemList = room.listItems();
-                    for(Item tempItem : itemList) {
-                        System.out.println("There is a " + tempItem.getName() + " here.");
-                    }
-                }
-
-            } else {//if they just typed go
-                System.out.println("You must provide a Direction.");
-            }
-        } else if(!input.equals("exit")) {
-            System.out.println("Command " + input + " not found.");
-        }*/
-        return(adventure);
     }
 
     public static void printItems(Room room) {

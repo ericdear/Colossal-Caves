@@ -12,12 +12,16 @@ public class Entrance {
         dir = newDir;
     }
 
-    // this returns the id
+    /**
+     * @return the id of the entrance
+     */
     public long getId() {
         return(id);
     }
 
-    // this returns the direction
+    /**
+     * @return the direction the entrance is
+     */
     public String getDir() {
         return(dir);
     }

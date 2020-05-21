@@ -26,7 +26,7 @@ under the License.
     <copyright>&#169;2020</copyright>
     <item>
       <title>File: 5,
-             Errors: 30,
+             Errors: 35,
              Warnings: 0,
              Infos: 0
       </title>
@@ -44,20 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#adventure.Entrance.java">adventure/Entrance.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#adventure.Item.java">adventure/Item.java</a>
@@ -83,7 +69,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  9
+                  7
                 </td>
               </tr>
                           <tr>
@@ -98,6 +84,20 @@ under the License.
                 </td>
                 <td>
                   4
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#adventure.Player.java">adventure/Player.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
                 </td>
               </tr>
                           <tr>

@@ -8,15 +8,15 @@ public class Player {
     private String name;
     private Room room;
 
-    public Player(String name, Room room, ArrayList<Room> listAllRooms) {
+    public Player(String newName, Room newRoom, ArrayList<Room> listAllRooms) {
         inventory = new ArrayList<Item>();
         rooms = listAllRooms;
-        this.name = name;
-        this.room = room;
+        name = newName;
+        room = newRoom;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRoom(Room newRoom) {
+        room = newRoom;
     }
 
     public void take(Item item) {
@@ -55,6 +55,16 @@ public class Player {
         } else {
             room = room.getConnectedRoom(command.getNoun());
             return("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
+        }
+    }
+
+    public String take(Command command) {
+        Item item = room.removeItem(command.getNoun());
+        if(item == null) {
+            return("Item " + command.getNoun() + " not found.");
+        } else {
+            inventory.add(item);
+            return("You picked up " + command.getNoun() + ".");
         }
     }
 

@@ -108,4 +108,15 @@ public class Room{
         allRooms = new ArrayList();
         allRooms = rooms;
     }
+
+    public Item removeItem(String itemName) {
+        Item item = null;
+        for(int i = 0; i < roomItems.size(); i++) {
+            if(itemName.equals(roomItems.get(i).getName())) {
+                item = roomItems.get(i);
+                roomItems.remove(i);
+            }
+        }
+        return(item);
+    }
 }
