@@ -132,12 +132,43 @@ public class Game{
 
     public Adventure doCommand(Adventure adventure, String inputLine) {
         Scanner inputScanner = new Scanner(inputLine);
-        String input = inputScanner.next();
+        //String input = inputScanner.next();
         Room room = adventure.getCurrentRoom();
         String item;
         String direction;
-        
 
+        Command command;
+
+        String action = inputScanner.next();
+
+        
+        try {
+            if(inputScanner.hasNext()) {
+                String noun = inputScanner.nextLine();
+                command = new Command(action, noun.trim());
+            } else {
+                command = new Command(action);
+            }
+
+            //if the user typed look
+            if(command.getActionWord().equals("look")) {
+                if(command.hasSecondWord()) {
+                    System.out.println(room.searchItemDescription(command.getNoun()));
+                }
+            }
+
+            if(command.getActionWord().equals("go")) {
+                
+            }
+
+        } catch(InvalidCommandException e) {
+            System.out.println(e.getMessage());
+        }
+
+        
+        
+        
+/*
         //check what command they entered
         if(input.equals("look")) {
         //if they said look at an item
@@ -170,7 +201,11 @@ public class Game{
                     System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
 
                     //print items in the room
-                    room.printRoomItems();
+                    //room.printRoomItems();//FIXME: must be a for loop now and print from game
+                    ArrayList<Item> itemList = room.listItems();
+                    for(Item tempItem : itemList) {
+                        System.out.println("There is a " + tempItem.getName() + " here.");
+                    }
                 }
 
             } else {//if they just typed go
@@ -178,7 +213,7 @@ public class Game{
             }
         } else if(!input.equals("exit")) {
             System.out.println("Command " + input + " not found.");
-        }
+        }*/
         return(adventure);
     }
 

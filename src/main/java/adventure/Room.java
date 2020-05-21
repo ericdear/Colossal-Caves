@@ -74,7 +74,7 @@ public class Room{
         for(int i = 0; i < roomItems.size(); i++) {
             Item item = roomItems.get(i);
             System.out.println("There is a " + item.getName() + " here.");
-        }
+        } 
     }
 
     //search the item description of the item that was searched
