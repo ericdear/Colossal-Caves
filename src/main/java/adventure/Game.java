@@ -41,18 +41,19 @@ public class Game{
         
         Adventure adventure = theGame.generateAdventure(adventureObject);
         Room room = adventure.getCurrentRoom();
+        Player player = new Player("Eric",room, adventure.listAllRooms());
         
         //tell the user where they are and print items in the room
         System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
-        room.printRoomItems();
+        printItems(room);
         System.out.println("");
 
         while(running) {
-            room = adventure.getCurrentRoom();
+            room = player.getCurrentRoom();
             //propt the user for a command
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
-            adventure = theGame.doCommand(adventure, inputLine);
+            adventure = theGame.doCommand(adventure, inputLine, player);
             System.out.println("");
 
             //if the user wants to exit
@@ -130,10 +131,10 @@ public class Game{
         return(file);
     }
 
-    public Adventure doCommand(Adventure adventure, String inputLine) {
+    public Adventure doCommand(Adventure adventure, String inputLine, Player player) {
         Scanner inputScanner = new Scanner(inputLine);
         //String input = inputScanner.next();
-        Room room = adventure.getCurrentRoom();
+        Room room = player.getCurrentRoom();
         String item;
         String direction;
 
@@ -152,13 +153,21 @@ public class Game{
 
             //if the user typed look
             if(command.getActionWord().equals("look")) {
-                if(command.hasSecondWord()) {
-                    System.out.println(room.searchItemDescription(command.getNoun()));
-                }
+                System.out.println(player.look(command));
             }
 
+            //if the user typed go __
             if(command.getActionWord().equals("go")) {
-                
+                System.out.println(player.go(command));
+                if(room != player.getCurrentRoom()) {
+                    printItems(player.getCurrentRoom());
+                }
+            }
+            
+
+            //if the user typed take
+            if(command.getActionWord().equals("take")) {
+                System.out.println(room.searchItemDescription(command.getNoun()));
             }
 
         } catch(InvalidCommandException e) {
@@ -215,6 +224,14 @@ public class Game{
             System.out.println("Command " + input + " not found.");
         }*/
         return(adventure);
+    }
+
+    public static void printItems(Room room) {
+        //print items in the room
+        ArrayList<Item> itemList = room.listItems();
+        for(Item tempItem : itemList) {
+            System.out.println("There is a " + tempItem.getName() + " here.");
+        }
     }
 
 }

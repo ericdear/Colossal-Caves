@@ -16,6 +16,16 @@ public class Command {
         add("look");
         add("go");
         add("take");
+        add("exit");
+    }};
+
+    private static ArrayList<String> directions = new ArrayList<String>() {{
+        add("n");
+        add("e");
+        add("s");
+        add("w");
+        add("up");
+        add("down");
     }};
 
     /*List<MyClass> list = new ArrayList<MyClass>() {
@@ -61,7 +71,11 @@ public class Command {
         // is a legitimate second word for the command
         // throw an exception if not
         if(!validCommand(command)) {
-            throw new InvalidCommandException(command + "is not a valid command");
+            throw new InvalidCommandException(command + "is not a valid command.");
+        } else if(command.equals("go") && !validDirection(what)) {
+            throw new InvalidCommandException("You must provide a valid direction (N,E,S,W,Up,Down).");
+        } else if(command.equals("take") && what == null) {
+            throw new InvalidCommandException("You must provide the item to be picked up.");
         }
         this.action = command;
         this.noun = what;
@@ -95,9 +109,24 @@ public class Command {
         return (noun != null);
     }
 
+    /**
+     * @return true if the command is valid
+     */
     private static boolean validCommand(String command) {
         for(String tempCommand : commands) {
             if(tempCommand.equals(command)) {
+                return(true);
+            }
+        }
+        return(false);
+    }
+
+    /**
+     * @return true if the direction is valid
+     */
+    public static boolean validDirection(String direction) {
+        for(String tempDirection : directions) {
+            if(tempDirection.equals(direction)) {
                 return(true);
             }
         }

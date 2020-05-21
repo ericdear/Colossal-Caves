@@ -69,14 +69,6 @@ public class Room{
         return(longDescription);
     }
 
-    //print the list of items in the room
-    public void printRoomItems() {
-        for(int i = 0; i < roomItems.size(); i++) {
-            Item item = roomItems.get(i);
-            System.out.println("There is a " + item.getName() + " here.");
-        } 
-    }
-
     //search the item description of the item that was searched
     public String searchItemDescription(String itemSearched) {
         for(int i = 0; i < roomItems.size(); i++) {

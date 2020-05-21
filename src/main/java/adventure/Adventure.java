@@ -90,19 +90,6 @@ public class Adventure{
         }
     }
 
-    //change rooms
-    public Room changeRooms(String dir) {
-        currentRoom.setRoomArray(roomList);
-        currentRoom = currentRoom.getConnectedRoom(dir);
-        return(currentRoom);
-    }
-
-    //check to see if there is an entrance in a specific direction 
-    public Room checkDirection(String dir) {
-        currentRoom.setRoomArray(roomList);
-        return(currentRoom.getConnectedRoom(dir));
-    }
-
     //return the list of all rooms
     public ArrayList<Room> listAllRooms(){
         //make an array of type Room
