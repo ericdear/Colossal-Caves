@@ -2,6 +2,7 @@ package adventure;
 
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Room{
     /* you will need to add some private member variables */
@@ -10,7 +11,8 @@ public class Room{
     private String name;
     private String shortDescription;
     private String longDescription;
-    private ArrayList<Entrance> roomEntrances;
+    private HashMap<String, Room> roomEntrances;
+
     private ArrayList<Item> roomItems;
     private ArrayList<Room> allRooms;
 
@@ -19,7 +21,7 @@ public class Room{
     //set up the room
     public Room(JSONObject newRoom) {
         roomItems = new ArrayList();
-        roomEntrances = new ArrayList();
+        roomEntrances = new HashMap<String, Room>();
         id = (long) newRoom.get("id");
         name = (String) newRoom.get("name");
         shortDescription = (String) newRoom.get("short_description");
@@ -44,9 +46,14 @@ public class Room{
     }
 
     //set the rooms entrances
-    public void setRoomEntrance(JSONObject tempEntrance) {
+    /*public void setRoomEntrance(JSONObject tempEntrance) {
         Entrance entrance = new Entrance((long)tempEntrance.get("id"), (String)tempEntrance.get("dir"));
         roomEntrances.add(entrance);
+    }*/
+
+    public void setRoomEntrance(String direction, Room room) {
+        direction = direction.toLowerCase();
+        roomEntrances.put(direction, room);
     }
 
     //get the id of the room
@@ -82,25 +89,7 @@ public class Room{
 
     //get the connecting room in the direction provided
     public Room getConnectedRoom(String direction) {
-        long entranceId = -1;
-        direction = direction.toUpperCase();
-        //go through and find the id of the room to go to
-        for(int i = 0; i < roomEntrances.size(); i++) {
-            
-            if(direction.equals(roomEntrances.get(i).getDir())) {
-                entranceId = roomEntrances.get(i).getId();
-            }
-        }
-        
-        //go through the rooms and check if the roomId matches the entranceId
-        for(int i = 0; i < allRooms.size(); i++) {
-            long roomId = allRooms.get(i).getId();
-            if(entranceId == roomId) {
-                return(allRooms.get(i));
-            }
-        }
-
-        return(null);
+        return(roomEntrances.get(direction));
     }
 
     //set an array of all rooms

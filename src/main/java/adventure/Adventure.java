@@ -23,11 +23,20 @@ public class Adventure{
         JSONObject roomObject;
         roomList = new ArrayList();
         Room tempRoom;
+
+        //set up the arrayList of rooms
         for(i = 0; i < newRooms.size(); i++) {
-            //create all the rooms and put into arraylist
             roomObject = newRooms.get(i);
             tempRoom = new Room(roomObject);
             roomList.add(tempRoom);
+        }
+
+        //go through the list of rooms and get the enrances and items
+        for(i = 0; i < roomList.size(); i++) {
+            //create all the rooms and put into arraylist
+            roomObject = newRooms.get(i);
+            tempRoom = roomList.get(i);
+            //roomList.add(tempRoom);
 
             //set the current room to the room with the start key
             if(roomObject.containsKey("start")) {
@@ -78,14 +87,16 @@ public class Adventure{
     //set the entrances of the current room
     public void setEntrance(JSONObject roomObject, Room tempRoom) {
         if(roomObject.containsKey("entrance")) {
-            ArrayList<JSONObject> roomEntrances = new ArrayList();
             JSONArray entrances = (JSONArray) roomObject.get("entrance");
 
             for(Object currentEntrance : entrances) {
                 JSONObject entrance = (JSONObject) currentEntrance;
-                tempRoom.setRoomEntrance(entrance);
-                roomEntrances.add(entrance);
-
+                for(Room connectedRoom : roomList) {
+                    if(entrance.get("id").equals(connectedRoom.getId())) {
+                        tempRoom.setRoomEntrance((String)entrance.get("dir"),connectedRoom);
+                    }
+                    
+                }
             }
         }
     }
