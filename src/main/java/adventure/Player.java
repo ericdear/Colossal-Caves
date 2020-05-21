@@ -68,4 +68,15 @@ public class Player {
         }
     }
 
+    public String inventory(Command command) {
+        String inventoryString = "";
+        if(inventory.isEmpty()) {
+            return("You have nothing in your inventory.\n");
+        }
+        for(Item item : inventory) {
+            inventoryString = inventoryString + " - " + item.getName() + "\n";
+        }
+        return(inventoryString);
+    }
+
 }

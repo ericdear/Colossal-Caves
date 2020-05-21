@@ -17,6 +17,7 @@ public class Command {
         add("go");
         add("take");
         add("exit");
+        add("inventory");
     }};
 
     private static ArrayList<String> directions = new ArrayList<String>() {{
@@ -68,6 +69,8 @@ public class Command {
             throw new InvalidCommandException("You must provide a valid direction (N,E,S,W,Up,Down).");
         } else if(command.equals("take") && what == null) {
             throw new InvalidCommandException("You must provide the item to be picked up.");
+        } else if(command.equals("inventory") && what != null) {
+            throw new InvalidCommandException("To see your inventory, type \"inventory\".");
         }
         this.action = command;
         this.noun = what;

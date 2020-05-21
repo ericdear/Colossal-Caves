@@ -19,8 +19,7 @@ public class Game{
     public static void main(String[] args) {
         Game theGame = new Game();
         Scanner scnr = new Scanner(System.in);
-        String file;
-        file = theGame.gameIntro(scnr);
+        String file = theGame.gameIntro(scnr);
         boolean running = true;
         boolean fileFound = false;
         String inputLine;
@@ -54,7 +53,7 @@ public class Game{
             //propt the user for a command
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
-            
+
             theGame.doCommand(inputLine, player);
             System.out.println("");
 
@@ -66,6 +65,10 @@ public class Game{
         }
     }
 
+    /**
+     * @param filename of the json file
+     * @return the json object parsed from the json file
+     */
     public JSONObject loadAdventureJson(String filename){
         JSONObject jsonObject = new JSONObject();
         JSONObject adventure = new JSONObject();
@@ -87,6 +90,10 @@ public class Game{
         return(adventure);
     }
 
+    /**
+     * @param obj from the file
+     * @return the adventure object created
+     */
     public Adventure generateAdventure(JSONObject obj) {
         //make the adventure and jsonobject arrayLists
         Adventure adventure = new Adventure();
@@ -110,6 +117,10 @@ public class Game{
         return(adventure);
     }
 
+    /**
+     * @param scnr 
+     * @return the file name that the user wants to load
+     */
     public String gameIntro(Scanner scnr) {
         String file;
         String input = "";
@@ -163,6 +174,11 @@ public class Game{
             //if the user typed take
             if(command.getActionWord().equals("take")) {
                 System.out.println(player.take(command));
+            }
+
+            //if the user typed inventory
+            if(command.getActionWord().equals("inventory")) {
+                System.out.print(player.inventory(command));
             }
 
         } catch(InvalidCommandException e) {
