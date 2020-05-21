@@ -54,6 +54,7 @@ public class Game{
             //propt the user for a command
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
+            
             theGame.doCommand(inputLine, player);
             System.out.println("");
 
@@ -159,7 +160,6 @@ public class Game{
                     printItems(player.getCurrentRoom());
                 }
             }
-
             //if the user typed take
             if(command.getActionWord().equals("take")) {
                 System.out.println(player.take(command));
