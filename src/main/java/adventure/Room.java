@@ -45,11 +45,6 @@ public class Room{
         roomItems.add(item);
     }
 
-    //set the rooms entrances
-    /*public void setRoomEntrance(JSONObject tempEntrance) {
-        Entrance entrance = new Entrance((long)tempEntrance.get("id"), (String)tempEntrance.get("dir"));
-        roomEntrances.add(entrance);
-    }*/
 
     public void setRoomEntrance(String direction, Room room) {
         direction = direction.toLowerCase();

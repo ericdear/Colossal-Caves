@@ -19,10 +19,6 @@ public class Player {
         room = newRoom;
     }
 
-    public void take(Item item) {
-        inventory.add(item);
-    }
-
     public String getName() {
         return(name);
     }
