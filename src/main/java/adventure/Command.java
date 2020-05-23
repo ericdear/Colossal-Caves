@@ -129,4 +129,8 @@ public class Command {
         }
         return(false);
     }
+
+    public ArrayList<String> getCommands() {
+        return(commands);
+    }
 }

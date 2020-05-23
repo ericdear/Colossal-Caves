@@ -19,42 +19,22 @@ public class Game{
     public static void main(String[] args) {
         Game theGame = new Game();
         Scanner scnr = new Scanner(System.in);
-        String file = theGame.gameIntro(scnr);
-        boolean running = true;
-        boolean fileFound = false;
-        String inputLine;
-        JSONObject adventureObject = null;
 
-        //parse file
-        while(!fileFound) {
-            adventureObject = theGame.loadAdventureJson(file);
-            if(adventureObject != null) {
-                fileFound = true;
-                System.out.println("Loading Adventure...");
-            } else {
-                System.out.println("Something wrong with the file you inputed");
-                System.out.println("Please enter the full name of the file\n");
-                file = scnr.nextLine();
-            }
-        }
-        
         //create adventure room and player
-        Adventure adventure = theGame.generateAdventure(adventureObject);
-        Room room = adventure.getCurrentRoom();
-        Player player = new Player("Eric",room, adventure.listAllRooms());
-        
-        //tell the user where they are and print items in the room
-        System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
-        printItems(room);
-        System.out.println("");
+        Adventure adventure = theGame.gameIntro(args);
+        Player player = theGame.setPlayer(adventure);
+        Room room = player.getCurrentRoom();
 
+        boolean running = true;
+        String inputLine;
+        
         while(running) {
             room = player.getCurrentRoom();
             //propt the user for a command
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
 
-            theGame.doCommand(inputLine, player);
+            theGame.checkCommand(inputLine, player);
             System.out.println("");
 
             //if the user wants to exit
@@ -63,6 +43,17 @@ public class Game{
                 scnr.close();
             }
         }
+    }
+
+    public Player setPlayer(Adventure adventure) {
+        Room room = adventure.getCurrentRoom();
+        Player player = new Player("Eric",room, adventure.listAllRooms());
+        
+        //tell the user where they are and print items in the room
+        System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
+        printItems(room);
+        System.out.println("");
+        return(player);
     }
 
     /**
@@ -121,68 +112,57 @@ public class Game{
      * @param scnr 
      * @return the file name that the user wants to load
      */
-    public String gameIntro(Scanner scnr) {
-        String file;
-        String input = "";
-        // 1. Print a welcome message to the user
-        System.out.println("Welcome to Eric's Colossal Caves!\n");
-
-        // 2. Ask the user if they want to load a json file.
-        while(!input.equals("yes") && !input.equals("no")) {
-            System.out.println("Would you like to load a json file? (yes/no):\n");
-            input = scnr.nextLine();
-            input = input.toLowerCase();
-        }
-        
-        // if the user said yes, ask them for the file name, if no, load the default json file
-        if(input.equals("yes")) {
-            System.out.println("Please enter the full name of the file\n");
-            file = scnr.nextLine();
+    public Adventure gameIntro(String[] args) {
+        String file = "";
+        JSONObject adventureObject = null;
+        if(args.length >= 2 && args[0].equals("-l")) {
+            file = args[1];
+            //call a function to load the games state
+        } else if(args.length >= 2 && args[0].equals("-a")) {
+            file = args[1];
+            adventureObject = loadAdventureJson(file);
         } else {
-            file = "src/main/java/adventure/default_adventure.json";
+            //load the default adventure json file
+            adventureObject = loadAdventureJson("src/main/java/adventure/default_adventure.json");
         }
-        return(file);
+        if(adventureObject == null) {
+            System.out.println("The file you provided does not exist or is empty");
+            System.exit(0);
+        }
+        return(generateAdventure(adventureObject));
     }
 
-    public void doCommand(String inputLine, Player player) {
-        Scanner inputScanner = new Scanner(inputLine);
+    public void checkCommand(String inputLine, Player player) {
         Room room = player.getCurrentRoom();
-        Command command;
-        String action = inputScanner.next();
-
         
         try {
-            if(inputScanner.hasNext()) {
-                String noun = inputScanner.nextLine();
-                command = new Command(action, noun.trim());
-            } else {
-                command = new Command(action);
-            }
-
-            //if the user typed look
-            if(command.getActionWord().equals("look")) {
-                System.out.println(player.look(command));
-            }
-
-            //if the user typed go __
-            if(command.getActionWord().equals("go")) {
-                System.out.println(player.go(command));
-                if(room != player.getCurrentRoom()) {
-                    printItems(player.getCurrentRoom());
-                }
-            }
-            //if the user typed take
-            if(command.getActionWord().equals("take")) {
-                System.out.println(player.take(command));
-            }
-
-            //if the user typed inventory
-            if(command.getActionWord().equals("inventory")) {
-                System.out.print(player.inventory(command));
+            Parser parser = new Parser();
+            Command command = parser.parseUserCommand(inputLine);
+            doCommand(command, player);
+            if(room != player.getCurrentRoom()) {
+                printItems(player.getCurrentRoom());
             }
 
         } catch(InvalidCommandException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void doCommand(Command command, Player player) {
+        switch(command.getActionWord()) {
+            case "look":
+                System.out.println(player.look(command));
+                break;
+            case "go":
+                System.out.println(player.go(command));
+                break;
+            case "take":
+                System.out.println(player.take(command));
+                break;
+            case "inventory":
+                System.out.print(player.inventory(command));
+                break;
+            default:
         }
     }
 

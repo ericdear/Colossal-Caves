@@ -19,14 +19,14 @@ under the License.
 -->
 <rss version="0.91">
   <channel>
-    <title>Game - Checkstyle report</title>
+    <title>2430_A2 - Checkstyle report</title>
     <link>${project.url}</link>
-    <description>Game - Checkstyle report</description>
+    <description>2430_A2 - Checkstyle report</description>
     <language>en-us</language>
     <copyright>&#169;2020</copyright>
     <item>
       <title>File: 6,
-             Errors: 35,
+             Errors: 41,
              Warnings: 0,
              Infos: 0
       </title>
@@ -60,20 +60,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#adventure.Command.java">adventure/Command.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#adventure.Adventure.java">adventure/Adventure.java</a>
                 </td>
                 <td>
@@ -97,7 +83,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  6
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#adventure.Parser.java">adventure/Parser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
                 </td>
               </tr>
                           <tr>
@@ -125,7 +125,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  11
+                  13
                 </td>
               </tr>
                       </tbody>

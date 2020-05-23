@@ -61,24 +61,24 @@ public class Adventure{
                 roomItems.add((JSONObject) currentItem);
             }
 
-            //ArrayList roomItems holds loot found in roomObject, ArrayList items holds the list of all items
-            //go through the items in the room (roomObject is the room) 
-            //and check if the object.get("id") matches any object.get("id") in the items arrayList
-            //if it does, send the JSONObject to currentRoom.setRoomItems(Object);
-            //make sure you give it the object from the items array because it has more data
             allItems = new ArrayList();
-            for(int j = 0; j < roomItems.size(); j++) {
-                for(int k = 0; k < items.size(); k++) {
-                    JSONObject item1 = roomItems.get(j);
-                    JSONObject item2 = items.get(k);
+            addItem(roomItems, items, tempRoom);
+            
+        }
+    }
 
-                    long itemId = (long)item2.get("id");
-                    String itemName = (String)item2.get("name");
-                    String itemDesc = (String)item2.get("desc");
-                    allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
-                    if(item1.get("id") == item2.get("id")) {
-                        tempRoom.setRoomItem(item2, tempRoom);
-                    }
+    private void addItem(ArrayList<JSONObject> roomItems, ArrayList<JSONObject> items, Room tempRoom) {
+        for(int j = 0; j < roomItems.size(); j++) {
+            for(int k = 0; k < items.size(); k++) {
+                JSONObject item1 = roomItems.get(j);
+                JSONObject item2 = items.get(k);
+
+                long itemId = (long)item2.get("id");
+                String itemName = (String)item2.get("name");
+                String itemDesc = (String)item2.get("desc");
+                allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
+                if(item1.get("id") == item2.get("id")) {
+                    tempRoom.setRoomItem(item2, tempRoom);
                 }
             }
         }

@@ -22,10 +22,18 @@ public class Room{
     public Room(JSONObject newRoom) {
         roomItems = new ArrayList();
         roomEntrances = new HashMap<String, Room>();
-        id = (long) newRoom.get("id");
-        name = (String) newRoom.get("name");
+        this.setId((long) newRoom.get("id"));
+        this.setName((String) newRoom.get("name"));
         shortDescription = (String) newRoom.get("short_description");
         longDescription = (String) newRoom.get("long_description");
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+
+    public void setId(long newId) {
+        id = newId;
     }
 
     //list all the items in the room
