@@ -35,7 +35,7 @@ public class Game{
             inputLine = inputLine.toLowerCase();
 
             theGame.checkCommand(inputLine, player);
-            //System.out.println("");
+            System.out.println("");
 
             //if the user wants to exit
             if(inputLine.equals("exit")) {
@@ -53,6 +53,7 @@ public class Game{
     public Player setPlayer(Adventure adventure) {
         Room room = adventure.getCurrentRoom();
         Player player = new Player("Eric",room, adventure.listAllRooms());
+        displayStartingRoom(room);
         return(player);
     }
 
