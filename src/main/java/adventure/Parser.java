@@ -4,6 +4,13 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Parser {
+    public Parser() {}
+
+    /**
+     * @param userCommand
+     * this method creates a command from the line
+     * @return the command
+     */
     public Command parseUserCommand(String userCommand) throws InvalidCommandException {
         if(userCommand.equals("")) {
             throw new InvalidCommandException("You must enter a command");
@@ -20,6 +27,10 @@ public class Parser {
         return(command);
     }
 
+    /**
+     * this method 
+     * @return 's all the valid commands
+     */
     public String allCommands() {
         String allCommands = "Commands:\n";
         try {

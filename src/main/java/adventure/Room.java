@@ -16,16 +16,25 @@ public class Room{
     private ArrayList<Item> roomItems;
     private ArrayList<Room> allRooms;
 
-    public Room() {}
+    public Room() {
+        roomItems = new ArrayList();
+        roomEntrances = new HashMap<String, Room>();
+        allRooms = new ArrayList<Room>();
+        this.setId(0);
+        this.setName(null);
+        this.setShortDescription(null);
+        this.setLongDescription(null);
+    }
 
     //set up the room
     public Room(JSONObject newRoom) {
         roomItems = new ArrayList();
         roomEntrances = new HashMap<String, Room>();
-        this.setId((long) newRoom.get("id"));
-        this.setName((String) newRoom.get("name"));
-        shortDescription = (String) newRoom.get("short_description");
-        longDescription = (String) newRoom.get("long_description");
+        allRooms = new ArrayList<Room>();
+        this.setId(Long.parseLong(newRoom.get("id").toString()));
+        this.setName(newRoom.get("name").toString());
+        this.setShortDescription(newRoom.get("short_description").toString());
+        this.setLongDescription(newRoom.get("long_description").toString());
     }
 
     public void setName(String newName) {
@@ -36,6 +45,14 @@ public class Room{
         id = newId;
     }
 
+    public void setShortDescription(String newShort) {
+        shortDescription = newShort;
+    }
+
+    public void setLongDescription(String newLong) {
+        longDescription = newLong;
+    }
+
     //list all the items in the room
     public ArrayList<Item> listItems(){
         return(roomItems);
@@ -44,9 +61,9 @@ public class Room{
     //set the arrayList of the rooms items
     public void setRoomItem(JSONObject tempItem, Room room) {
         //create a Item object and add it to the array of items in this room
-        long itemId = (long)tempItem.get("id");
-        String itemName = (String)tempItem.get("name");
-        String itemDesc = (String)tempItem.get("desc");
+        long itemId = Long.parseLong(tempItem.get("id").toString());
+        String itemName = tempItem.get("name").toString();
+        String itemDesc = tempItem.get("desc").toString();
         Item item = new Item(itemId, itemName, itemDesc, (Room) room);//chage this id to room
         
         //add the item to the roomItems ArrayList!
@@ -97,7 +114,6 @@ public class Room{
 
     //set an array of all rooms
     public void setRoomArray(ArrayList<Room> rooms) {
-        allRooms = new ArrayList();
         allRooms = rooms;
     }
 

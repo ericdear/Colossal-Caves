@@ -8,15 +8,27 @@ public class Player {
     private String name;
     private Room room;
 
+    public Player() {
+        this(null,null,null);
+    }
+
     public Player(String newName, Room newRoom, ArrayList<Room> listAllRooms) {
         inventory = new ArrayList<Item>();
+        this.setRoomList(listAllRooms);
+        this.setName(newName);
+        this.setRoom(newRoom);
+    }
+
+    public void setRoomList(ArrayList<Room> listAllRooms) {
         rooms = listAllRooms;
-        name = newName;
-        room = newRoom;
     }
 
     public void setRoom(Room newRoom) {
         room = newRoom;
+    }
+
+    public void setName(String newName) {
+        name = newName;
     }
 
     public String getName() {

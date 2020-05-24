@@ -19,7 +19,7 @@
           ],
           "loot": [
               {
-                  "id": 1
+                  "id": 1337
               }
           ]
         },
@@ -121,7 +121,7 @@
       ],
       "item": [
         {
-          "id": 1,
+          "id": 1337,
           "name": "tv remote",
           "desc": "An old tv remote with the batteries missing"
         },

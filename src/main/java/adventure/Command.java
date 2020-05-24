@@ -130,6 +130,9 @@ public class Command {
         return(false);
     }
 
+    /**
+     * @return the list of valid command
+     */
     public ArrayList<String> getCommands() {
         return(commands);
     }

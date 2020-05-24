@@ -35,7 +35,7 @@ public class Game{
             inputLine = inputLine.toLowerCase();
 
             theGame.checkCommand(inputLine, player);
-            System.out.println("");
+            //System.out.println("");
 
             //if the user wants to exit
             if(inputLine.equals("exit")) {
@@ -45,15 +45,21 @@ public class Game{
         }
     }
 
+    /**
+     * @param adventure
+     * sets up the player.
+     * @return player object
+     */
     public Player setPlayer(Adventure adventure) {
         Room room = adventure.getCurrentRoom();
         Player player = new Player("Eric",room, adventure.listAllRooms());
-        
-        //tell the user where they are and print items in the room
+        return(player);
+    }
+
+    public void displayStartingRoom(Room room) {
         System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
         printItems(room);
-        System.out.println("");
-        return(player);
+        //System.out.println("");
     }
 
     /**
@@ -172,6 +178,7 @@ public class Game{
         for(Item tempItem : itemList) {
             System.out.println("There is a " + tempItem.getName() + " here.");
         }
+        System.out.println("");
     }
 
 }

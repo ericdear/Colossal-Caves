@@ -13,7 +13,6 @@ public class RoomTest{
     @Before
     public void setup(){
         testRoom = new Room();
-
     }
 
     @Test
@@ -22,7 +21,12 @@ public class RoomTest{
         String roomName = "one";
         testRoom.setName(roomName);
         assertTrue(testRoom.getName().equals(roomName));
-
+    }
+    public void testSetIdWithValidInput() {
+        System.out.println("Testing setId with valid id");
+        String roomName = "one";
+        testRoom.setName(roomName);
+        assertTrue(testRoom.getName().equals(roomName));
     }
 
 

@@ -17,11 +17,15 @@ public class Adventure{
         methods but you do have to provide them.
         We will be using them to test your code */
 
+    public Adventure() {
+        roomList = new ArrayList<Room>();
+        allItems = new ArrayList<Item>();
+    }
+
 
     public void setRoomList(ArrayList<JSONObject> newRooms, ArrayList<JSONObject> items) {
         int i;
         JSONObject roomObject;
-        roomList = new ArrayList();
         Room tempRoom;
 
         //set up the arrayList of rooms
@@ -60,10 +64,7 @@ public class Adventure{
             for(Object currentItem : loot) {
                 roomItems.add((JSONObject) currentItem);
             }
-
-            allItems = new ArrayList();
             addItem(roomItems, items, tempRoom);
-            
         }
     }
 
@@ -73,11 +74,11 @@ public class Adventure{
                 JSONObject item1 = roomItems.get(j);
                 JSONObject item2 = items.get(k);
 
-                long itemId = (long)item2.get("id");
-                String itemName = (String)item2.get("name");
-                String itemDesc = (String)item2.get("desc");
+                long itemId = Long.parseLong(item2.get("id").toString());
+                String itemName = item2.get("name").toString();
+                String itemDesc = item2.get("desc").toString();
                 allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
-                if(item1.get("id") == item2.get("id")) {
+                if(item1.get("id").toString().equals(item2.get("id").toString())) {
                     tempRoom.setRoomItem(item2, tempRoom);
                 }
             }
@@ -93,7 +94,7 @@ public class Adventure{
                 JSONObject entrance = (JSONObject) currentEntrance;
                 for(Room connectedRoom : roomList) {
                     if(entrance.get("id").equals(connectedRoom.getId())) {
-                        tempRoom.setRoomEntrance((String)entrance.get("dir"),connectedRoom);
+                        tempRoom.setRoomEntrance(entrance.get("dir").toString(),connectedRoom);
                     }
                     
                 }
