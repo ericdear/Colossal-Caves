@@ -16,6 +16,9 @@ public class Room{
     private ArrayList<Item> roomItems;
     private ArrayList<Room> allRooms;
 
+    /**
+     * default constructor setting everything to null and the id of the room to 0
+     */
     public Room() {
         roomItems = new ArrayList();
         roomEntrances = new HashMap<String, Room>();
@@ -26,7 +29,10 @@ public class Room{
         this.setLongDescription(null);
     }
 
-    //set up the room
+    /**
+     * room constuctor that sets up the room
+     * @param newRoom : a json object of the room
+     */
     public Room(JSONObject newRoom) {
         roomItems = new ArrayList();
         roomEntrances = new HashMap<String, Room>();
@@ -37,28 +43,50 @@ public class Room{
         this.setLongDescription(newRoom.get("long_description").toString());
     }
 
+    /**
+     * sets the name of the room
+     * @param newName : the new name for the room
+     */
     public void setName(String newName) {
         name = newName;
     }
 
+    /**
+     * sets the id of the room
+     * @param newId : the new id for the room
+     */
     public void setId(long newId) {
         id = newId;
     }
 
+    /**
+     * sets the short description of the room
+     * @param newShort : the new short description of the room
+     */
     public void setShortDescription(String newShort) {
         shortDescription = newShort;
     }
 
+    /**
+     * sets the long description of the room
+     * @param newLong : the new long description of the room
+     */
     public void setLongDescription(String newLong) {
         longDescription = newLong;
     }
 
-    //list all the items in the room
+    /**
+     * @return the list of the items in the room
+     */
     public ArrayList<Item> listItems(){
         return(roomItems);
     }
 
-    //set the arrayList of the rooms items
+    /**
+     * add an item to the arrayList of items in the room
+     * @param tempItem : a json object of the item
+     * @param room : the current room
+     */
     public void setRoomItem(JSONObject tempItem, Room room) {
         //create a Item object and add it to the array of items in this room
         long itemId = Long.parseLong(tempItem.get("id").toString());
@@ -70,33 +98,50 @@ public class Room{
         roomItems.add(item);
     }
 
-
+    /**
+     * puts an entrance into the room entrance hashmap
+     * @param direction : the direction the entrance is in
+     * @param room : the room it goes to
+     */
     public void setRoomEntrance(String direction, Room room) {
         direction = direction.toLowerCase();
         roomEntrances.put(direction, room);
     }
 
-    //get the id of the room
+    /**
+     * @return the id of the room
+     */
     public long getId(){
         return(id);
     }
 
-    //get the name of the room
+    /**
+     * @return the name of the room
+     */
     public String getName(){
         return(name);
     }
 
-    //get the short description
+    /**
+     * @return the short description of the room
+     */
     public String getShortDescription(){
         return(shortDescription);
     }
 
-    //get the long description
+    /**
+     * @return the long description of the room
+     */
     public String getLongDescription(){
         return(longDescription);
     }
 
     //search the item description of the item that was searched
+    /**
+     * searches for the item and returns the description
+     * @param itemSearched : the item name the user is looking for
+     * @return the item description or a message saying the item was not found
+     */
     public String searchItemDescription(String itemSearched) {
         for(int i = 0; i < roomItems.size(); i++) {
             Item item = roomItems.get(i);
@@ -107,16 +152,30 @@ public class Room{
         return("Item " + itemSearched + " not found.");
     }
 
-    //get the connecting room in the direction provided
+    /**
+     * getConnectedRoom finds the room that you would be in if you went that direction
+     * @param direction : the direction the user wants to go
+     * @return the room in that direction
+     */
     public Room getConnectedRoom(String direction) {
+        direction = direction.toLowerCase();
         return(roomEntrances.get(direction));
     }
 
-    //set an array of all rooms
+    /**
+     * sets the array of all rooms in the adventure
+     * @param rooms : an arrayList of all the rooms
+     */
     public void setRoomArray(ArrayList<Room> rooms) {
         allRooms = rooms;
     }
 
+    /**
+     * removeItem removes an item from the room
+     * used for when a player picks up an item
+     * @param itemName : the name of the item the user wants to remove
+     * @return the item that was removed or null if the item was not found
+     */
     public Item removeItem(String itemName) {
         Item item = null;
         for(int i = 0; i < roomItems.size(); i++) {
@@ -128,6 +187,9 @@ public class Room{
         return(item);
     }
 
+    /**
+     * @return the name of the room
+     */
     public String toString() {
         return(name);
     }
