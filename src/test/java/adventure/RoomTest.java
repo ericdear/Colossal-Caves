@@ -19,14 +19,14 @@ public class RoomTest{
 
     @Test
     public void testNullEntrance() {
-        System.out.println("Testing Null Entance");
+        System.out.println("Testing with a null entance");
         testRoom.setRoomEntrance("N",null);
         assertTrue(testRoom.getConnectedRoom("N") == null);
     }
 
     @Test
     public void testWrongDirection() {
-        System.out.println("Testing Wrong Direction");
+        System.out.println("Testing with a wrong direction");
         testRoom.setRoomEntrance("W",null);
         assertTrue(testRoom.getConnectedRoom("J") == null);
     }
@@ -45,6 +45,31 @@ public class RoomTest{
         connectedRoom.setId(16161717);
         testRoom.setRoomEntrance("E",connectedRoom);
         assertTrue(testRoom.getConnectedRoom("E") == connectedRoom);
+    }
+
+    @Test
+    public void testWithNegativeId() {
+        System.out.println("Testing with a negative ID");
+        connectedRoom.setId(-50);
+        testRoom.setRoomEntrance("W",connectedRoom);
+        assertTrue(testRoom.getConnectedRoom("W") == connectedRoom);
+    }
+
+    @Test
+    public void testWithDefaultRoom() {
+        System.out.println("Testing with a default room");
+        connectedRoom = new Room();
+        testRoom.setRoomEntrance("E",connectedRoom);
+        assertTrue(testRoom.getConnectedRoom("E") == connectedRoom);
+    }
+
+    @Test
+    public void testWithDifferentRooms() {
+        System.out.println("Testing with a different room");
+        connectedRoom.setShortDescription("Hello there");
+        testRoom.setRoomEntrance("E",connectedRoom);
+        Room otherRoom = new Room();
+        assertTrue(testRoom.getConnectedRoom("E") != otherRoom);
     }
     
 

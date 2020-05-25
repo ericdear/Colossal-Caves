@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
+
+
 public class Game{
 
     /* this is the class that runs the game.
@@ -35,14 +37,53 @@ public class Game{
             inputLine = inputLine.toLowerCase();
 
             theGame.checkCommand(inputLine, player);
+            running = theGame.exit(scnr, inputLine);
             System.out.println("");
+        }
+        scnr.close();
+    }
 
-            //if the user wants to exit
-            if(inputLine.equals("exit")) {
-                running = false;
-                scnr.close();
+    /**
+     * exit determines if the user wants to keep playing the game or not
+     * @param scnr - the game scanner to scan input
+     * @param inputLine - the line the user inputed
+     * @return true to keep playing or false to exit the game
+     */
+    public boolean exit(Scanner scnr, String inputLine) {
+        if(inputLine.equals("exit")) {
+            String answer = "";
+            while(!answer.equals("yes") && !answer.equals("no")) {
+                System.out.println("Are you sure you want to exit? (yes/no)\n");
+                answer = scnr.nextLine();
+            }
+            if(answer.equals("yes")) {
+                askUserToSave(scnr);
+                return(false);
+            } else {
+                System.out.println("You are back in the game!");
+                return(true);
             }
         }
+        return(true);
+    }
+
+    /**
+     * asks the user to save the game
+     * @param scnr - the game scanner to scan the user input from system.in
+     */
+    public void askUserToSave(Scanner scnr) {
+        String answer = "";
+        while(!answer.equals("yes") && !answer.equals("no")) {
+            System.out.println("Would you like to save? (yes/no)\n");
+            answer = scnr.nextLine();
+            answer.toLowerCase();
+            if(answer.equals("yes")) {
+                //go to save game
+            } else if(answer.equals("no")) {
+                System.out.println("Bye!");
+            }
+        }
+        
     }
 
     /**
