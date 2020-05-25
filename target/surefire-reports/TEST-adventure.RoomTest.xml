@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="adventure.RoomTest" time="0.008" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="adventure.RoomTest" time="0.003" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.7+10-post-Debian-3deb10u1"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
-    <property name="maven.multiModuleProjectDirectory" value="/mnt/c/Users/Asus/Documents/CIS2430/A1/project"/>
+    <property name="maven.multiModuleProjectDirectory" value="/mnt/c/Users/Asus/Documents/CIS2430/A2/project"/>
     <property name="java.vm.vendor" value="Debian"/>
     <property name="java.vendor.url" value="https://tracker.debian.org/openjdk-11"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -14,7 +14,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/mnt/c/Users/Asus/Documents/CIS2430/A1/project"/>
+    <property name="user.dir" value="/mnt/c/Users/Asus/Documents/CIS2430/A2/project"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="java.runtime.version" value="11.0.7+10-post-Debian-3deb10u1"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
@@ -60,5 +60,5 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="adventure.RoomTest" name="testSetNameWithValidInput" time="0.008"/>
+  <testcase classname="adventure.RoomTest" name="testSetNameWithValidInput" time="0.003"/>
 </testsuite>

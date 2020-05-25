@@ -95,6 +95,27 @@ public class Command {
         return this.noun;
     }
 
+    /**
+     * @param actionWord 
+     * this method sets the first word of the command
+     */
+    public void setActionWord(String actionWord) throws InvalidCommandException {
+        if(validCommand(actionWord)) {
+            this.action = actionWord;
+        } else {
+            throw new InvalidCommandException("Not a valid action word.");
+        }
+    }
+
+    /**
+     * @param newNoun
+     * newNoun must be valid!!!!!!!
+     * there is no way to check because it could be an item
+     */
+    public void setNoun(String newNoun) {
+        this.noun = newNoun;
+    }
+
 
 
     /**
@@ -135,5 +156,9 @@ public class Command {
      */
     public ArrayList<String> getCommands() {
         return(commands);
+    }
+
+    public String toString() {
+        return(action + " " + noun);
     }
 }

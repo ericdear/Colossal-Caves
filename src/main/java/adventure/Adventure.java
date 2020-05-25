@@ -123,4 +123,8 @@ public class Adventure{
     public String getCurrentRoomDescription(){
         return(currentRoom.getShortDescription());
     }
+
+    public String toString() {
+        return("Current room: " + currentRoom);
+    }
 }

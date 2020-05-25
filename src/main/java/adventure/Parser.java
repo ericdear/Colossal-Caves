@@ -44,4 +44,8 @@ public class Parser {
         }
         return(allCommands);
     }
+
+    public String toString() {
+        return("Parsing Class used for user input");
+    }
 }

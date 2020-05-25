@@ -127,4 +127,8 @@ public class Room{
         }
         return(item);
     }
+
+    public String toString() {
+        return(name);
+    }
 }

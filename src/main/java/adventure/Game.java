@@ -182,4 +182,8 @@ public class Game{
         System.out.println("");
     }
 
+    public String toString() {
+        return("The Game Class");
+    }
+
 }

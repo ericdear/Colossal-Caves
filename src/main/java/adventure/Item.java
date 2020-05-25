@@ -38,4 +38,8 @@ public class Item{
     public Room getContainingRoom(){
         return(room);
     }
+
+    public String toString() {
+        return(name);
+    }
 }

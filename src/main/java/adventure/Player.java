@@ -87,4 +87,8 @@ public class Player {
         return(inventoryString);
     }
 
+    public String toString() {
+        return(name + ". " + name + " is in " + room);
+    }
+
 }

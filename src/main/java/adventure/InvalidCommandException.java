@@ -15,4 +15,8 @@ public class InvalidCommandException extends Exception{
     public InvalidCommandException(String message) {
         super(message);
     }
+
+    public String toString() {
+        return("Invalid Command Exception Class");
+    }
 }
