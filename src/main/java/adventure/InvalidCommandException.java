@@ -16,6 +16,9 @@ public class InvalidCommandException extends Exception{
         super(message);
     }
 
+    /**
+     * @return a message for what the class is since there is really nothing to print out
+     */
     public String toString() {
         return("Invalid Command Exception Class");
     }

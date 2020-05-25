@@ -57,10 +57,14 @@ public class Game{
         return(player);
     }
 
+    /**
+     * @param room : the current room
+     * outputs the room name and short description
+     */
     public void displayStartingRoom(Room room) {
         System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
         printItems(room);
-        //System.out.println("");
+        System.out.println("");
     }
 
     /**
@@ -109,14 +113,14 @@ public class Game{
         for(Object currentItem : itemList) {
             items.add((JSONObject)currentItem);
         }
-
+        
         //set the rooms in the adventure
-        adventure.setRoomList(rooms,items);
+        adventure.setAdventure(rooms,items);
         return(adventure);
     }
 
     /**
-     * @param scnr 
+     * @param args : the arguments the user inputed on the command line
      * @return the file name that the user wants to load
      */
     public Adventure gameIntro(String[] args) {
@@ -139,6 +143,11 @@ public class Game{
         return(generateAdventure(adventureObject));
     }
 
+    /**
+     * checkCommand creates a command
+     * @param inputLine : the line that the user inputed
+     * @param player : the player
+     */
     public void checkCommand(String inputLine, Player player) {
         Room room = player.getCurrentRoom();
         
@@ -155,6 +164,11 @@ public class Game{
         }
     }
 
+    /**
+     * doCommand tells the player class what command to execute
+     * @param command : the command the user entered
+     * @param player : the player
+     */
     public void doCommand(Command command, Player player) {
         switch(command.getActionWord()) {
             case "look":
@@ -173,15 +187,21 @@ public class Game{
         }
     }
 
+    /**
+     * printItem prints the items it a certain room
+     * @param room : the current room
+     */
     public static void printItems(Room room) {
         //print items in the room
         ArrayList<Item> itemList = room.listItems();
         for(Item tempItem : itemList) {
             System.out.println("There is a " + tempItem.getName() + " here.");
         }
-        System.out.println("");
     }
 
+    /**
+     * @return a string saying which class it is because there is no variables
+     */
     public String toString() {
         return("The Game Class");
     }

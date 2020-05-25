@@ -158,6 +158,9 @@ public class Command {
         return(commands);
     }
 
+    /**
+     * @return the action word and noun as a string
+     */
     public String toString() {
         return(action + " " + noun);
     }

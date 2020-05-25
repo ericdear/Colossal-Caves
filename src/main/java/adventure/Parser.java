@@ -45,6 +45,9 @@ public class Parser {
         return(allCommands);
     }
 
+    /**
+     * @return a message for what the class is since there is no variables to print out
+     */
     public String toString() {
         return("Parsing Class used for user input");
     }

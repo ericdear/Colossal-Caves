@@ -72,6 +72,7 @@ public class Player {
             return("Item " + command.getNoun() + " not found.");
         } else {
             inventory.add(item);
+            item.setContainingRoom(null);
             return("You picked up " + command.getNoun() + ".");
         }
     }
