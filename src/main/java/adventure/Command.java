@@ -60,10 +60,16 @@ public class Command {
      * @param what      The second word of the command.
      */
     public Command(String command, String what) throws InvalidCommandException{
-        //TODO validate the command here and ensure that the noun provided
-        // is a legitimate second word for the command
-        // throw an exception if not
-        if(!validCommand(command)) {
+        validateCommand(command, what);
+    }
+
+    /**
+     * check if the command is valid
+     * @param command the first word of the command
+     * @param what the second word of the command
+     */
+    public void validateCommand(String command, String what) throws InvalidCommandException {
+        if(!validActionWord(command)) {
             throw new InvalidCommandException(command + " is not a valid command.");
         } else if(command.equals("go") && !validDirection(what)) {
             throw new InvalidCommandException("You must provide a valid direction (N,E,S,W,Up,Down).");
@@ -74,7 +80,6 @@ public class Command {
         }
         this.action = command;
         this.noun = what;
-        
     }
 
     /**
@@ -100,20 +105,15 @@ public class Command {
      * this method sets the first word of the command
      */
     public void setActionWord(String actionWord) throws InvalidCommandException {
-        if(validCommand(actionWord)) {
-            this.action = actionWord;
-        } else {
-            throw new InvalidCommandException("Not a valid action word.");
-        }
+        validateCommand(actionWord, noun);
     }
 
     /**
+     * set the noun
      * @param newNoun
-     * newNoun must be valid!!!!!!!
-     * there is no way to check because it could be an item
      */
-    public void setNoun(String newNoun) {
-        this.noun = newNoun;
+    public void setNoun(String newNoun) throws InvalidCommandException {
+        validateCommand(action, newNoun);
     }
 
 
@@ -129,7 +129,7 @@ public class Command {
      * @param command the first word of the command
      * @return true if the command is valid
      */
-    private static boolean validCommand(String command) {
+    private static boolean validActionWord(String command) {
         for(String tempCommand : commands) {
             if(tempCommand.equals(command)) {
                 return(true);

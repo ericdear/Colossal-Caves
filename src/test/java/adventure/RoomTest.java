@@ -36,7 +36,7 @@ public class RoomTest{
         System.out.println("Testing with set name");
         connectedRoom.setName("Eric");
         testRoom.setRoomEntrance("E",connectedRoom);
-        assertTrue(testRoom.getConnectedRoom("E") == connectedRoom);
+        assertTrue(testRoom.getConnectedRoom("E").getName().equals("Eric"));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class RoomTest{
         System.out.println("Testing with a big ID");
         connectedRoom.setId(16161717);
         testRoom.setRoomEntrance("E",connectedRoom);
-        assertTrue(testRoom.getConnectedRoom("E") == connectedRoom);
+        assertTrue(testRoom.getConnectedRoom("E").getId() == 16161717);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class RoomTest{
         System.out.println("Testing with a negative ID");
         connectedRoom.setId(-50);
         testRoom.setRoomEntrance("W",connectedRoom);
-        assertTrue(testRoom.getConnectedRoom("W") == connectedRoom);
+        assertTrue(testRoom.getConnectedRoom("W").getId() == -50);
     }
 
     @Test
@@ -70,6 +70,17 @@ public class RoomTest{
         testRoom.setRoomEntrance("E",connectedRoom);
         Room otherRoom = new Room();
         assertTrue(testRoom.getConnectedRoom("E") != otherRoom);
+    }
+
+    @Test
+    public void testWithFullRoom() {
+        System.out.println("Testing with a full room");
+        connectedRoom.setName("Living Room");
+        connectedRoom.setId(16);
+        connectedRoom.setShortDescription("Hello There");
+        connectedRoom.setLongDescription("My name is Eric");
+        testRoom.setRoomEntrance("W",connectedRoom);
+        assertTrue(testRoom.getConnectedRoom("W") == connectedRoom);
     }
     
 

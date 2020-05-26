@@ -109,6 +109,14 @@ public class Room{
     }
 
     /**
+     * sets all the entrances for the rooms
+     * @param entrances : the hashmap of directions to Rooms
+     */
+    public void setRoomEntrances(HashMap<String, Room> entrances) {
+        roomEntrances = entrances;
+    }
+
+    /**
      * @return the id of the room
      */
     public long getId(){
