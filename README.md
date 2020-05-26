@@ -18,6 +18,11 @@ commands: "go x" where x is N, S, E, W, up, or down
           "take x" where x is an item in that room
           "inventory" to look what the player has
 
+## Documentation of RoomTest.java
+getConnectedRoom() looks good. no errors in any of the test case
+all there is is a setter to set the connected room and a getter so it doesnt take many test cases 
+to know that my hashmap is working perfectly.
+
 ## Statement of Individual Work
 By the action of submitting this work for grading, I certify that this assignment is my own work, based on my personal study. I also certify that no parts of this assignment have previously been submitted for assessment in any other course, except where specific permission has been granted.  Finally, I certify that I have not copied in part or whole or otherwise plagiarised the work of other persons.
 
