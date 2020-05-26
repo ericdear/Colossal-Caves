@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<checkstyle version="8.29">
-<file name="/mnt/c/Users/Asus/Documents/CIS2430/A2/project/src/main/java/adventure/Game.java">
-<error line="71" column="38" severity="error" message="Must have at least one statement." source="com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck"/>
-</file>
-</checkstyle>
