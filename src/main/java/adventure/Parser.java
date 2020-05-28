@@ -12,10 +12,12 @@ public class Parser {
      * @return the command
      */
     public Command parseUserCommand(String userCommand) throws InvalidCommandException {
-        if(userCommand.equals("")) {
+        Scanner inputScanner = new Scanner(userCommand);
+
+        if(!inputScanner.hasNext()) {
             throw new InvalidCommandException("You must enter a command");
         }
-        Scanner inputScanner = new Scanner(userCommand);
+
         String action = inputScanner.next();
         Command command;
         if(inputScanner.hasNext()) {

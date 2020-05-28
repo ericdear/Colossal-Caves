@@ -17,6 +17,7 @@ public class Command {
         add("go");
         add("take");
         add("exit");
+        add("quit");
         add("inventory");
     }};
 

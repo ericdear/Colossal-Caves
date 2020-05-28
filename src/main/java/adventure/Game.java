@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.io.Reader;
 
 
-
+/**
+ * @author Eric Dearing
+ * Last Updated: May 26/20
+ */
 public class Game{
 
     /* this is the class that runs the game.
@@ -23,7 +26,7 @@ public class Game{
         Scanner scnr = new Scanner(System.in);
 
         //create adventure room and player
-        Adventure adventure = theGame.gameIntro(args);
+        Adventure adventure = theGame.gameIntro(args);//make this and player a private variable and then save Game
         Player player = theGame.setPlayer(adventure);
         Room room = player.getCurrentRoom();
 
@@ -50,7 +53,7 @@ public class Game{
      * @return true to keep playing or false to exit the game
      */
     public boolean exit(Scanner scnr, String inputLine) {
-        if(inputLine.equals("exit")) {
+        if(inputLine.equals("exit") || inputLine.equals("quit")) {
             String answer = "";
             while(!answer.equals("yes") && !answer.equals("no")) {
                 System.out.println("Are you sure you want to exit? (yes/no)\n");
