@@ -65,10 +65,10 @@ public class Player implements java.io.Serializable {
 
     /**
      * set the name of the saved game
-     * @param name - the name of the saved game
+     * @param newName - the name of the saved game
      */
-    public void setSaveGameName(String name) {
-        saveGameName = name;
+    public void setSaveGameName(String newName) {
+        saveGameName = newName;
     }
 
     /**

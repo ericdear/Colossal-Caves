@@ -7,22 +7,22 @@ public class Command {
     private String action;
     private String noun;
 
-    private static final ArrayList<String> commands = new ArrayList<String>();
-    private static final ArrayList<String> directions = new ArrayList<String>();
+    private static final ArrayList<String> COMMANDS = new ArrayList<String>();
+    private static final ArrayList<String> DIRECTIONS = new ArrayList<String>();
     static {
-        commands.add("look");
-        commands.add("go");
-        commands.add("take");
-        commands.add("exit");
-        commands.add("quit");
-        commands.add("inventory");
+        COMMANDS.add("look");
+        COMMANDS.add("go");
+        COMMANDS.add("take");
+        COMMANDS.add("exit");
+        COMMANDS.add("quit");
+        COMMANDS.add("inventory");
 
-        directions.add("n");
-        directions.add("e");
-        directions.add("s");
-        directions.add("w");
-        directions.add("up");
-        directions.add("down");
+        DIRECTIONS.add("n");
+        DIRECTIONS.add("e");
+        DIRECTIONS.add("s");
+        DIRECTIONS.add("w");
+        DIRECTIONS.add("up");
+        DIRECTIONS.add("down");
     }
 
   /**
@@ -123,7 +123,7 @@ public class Command {
      * @return true if the command is valid
      */
     private boolean validActionWord(String command) {
-        for(String tempCommand : commands) {
+        for(String tempCommand : COMMANDS) {
             if(tempCommand.equals(command)) {
                 return(true);
             }
@@ -136,7 +136,7 @@ public class Command {
      * @return true if the direction is valid
      */
     private boolean validDirection(String direction) {
-        for(String tempDirection : directions) {
+        for(String tempDirection : DIRECTIONS) {
             if(tempDirection.equals(direction)) {
                 return(true);
             }
@@ -148,7 +148,7 @@ public class Command {
      * @return the list of valid command
      */
     public ArrayList<String> getCommands() {
-        return(commands);
+        return(COMMANDS);
     }
 
     /**

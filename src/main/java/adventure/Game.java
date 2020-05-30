@@ -150,8 +150,9 @@ public class Game implements java.io.Serializable {
     }
 
     /**
-     * @param adventure
      * sets up the player.
+     * @param adventure - the adventure object
+     * @param scnr - the scanner
      * @return player object
      */
     public Player setPlayer(Adventure adventure, Scanner scnr) {
@@ -180,6 +181,7 @@ public class Game implements java.io.Serializable {
     }
 
     /**
+     * this creates the json object from the .json file
      * @param filename of the json file
      * @return the json object parsed from the json file
      */
@@ -204,6 +206,11 @@ public class Game implements java.io.Serializable {
         return(adventure);
     }
 
+    /**
+     * creates a json object from the inputstream of the default adventure
+     * @param inputStream - the input stream of the default adventure
+     * @return the created jsonobject
+     */
     public JSONObject loadAdventureJson(InputStream inputStream) {
         JSONObject jsonObject = new JSONObject();
         JSONObject adventure = new JSONObject();
