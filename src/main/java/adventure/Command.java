@@ -3,7 +3,6 @@ package adventure;
 import java.util.ArrayList;
 
 public class Command {
-    //private static final long serialVersionUID = 8902464931192503285L;
 
     private String action;
     private String noun;

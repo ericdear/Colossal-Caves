@@ -306,7 +306,7 @@ public class Game implements java.io.Serializable {
      * printItem prints the items it a certain room
      * @param room : the current room
      */
-    public static void printItems(Room room) {
+    public void printItems(Room room) {
         //print items in the room
         ArrayList<Item> itemList = room.listItems();
         for(Item tempItem : itemList) {

@@ -60,7 +60,7 @@ public class RoomTest{
         System.out.println("Testing with a default room");
         connectedRoom = new Room();
         testRoom.setRoomEntrance("E",connectedRoom);
-        assertTrue(testRoom.getConnectedRoom("E") == connectedRoom);
+        assertTrue(testRoom.getConnectedRoom("E").equals(connectedRoom));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class RoomTest{
         connectedRoom.setShortDescription("Hello there");
         testRoom.setRoomEntrance("E",connectedRoom);
         Room otherRoom = new Room();
-        assertTrue(testRoom.getConnectedRoom("E") != otherRoom);
+        assertTrue(!testRoom.getConnectedRoom("E").equals(otherRoom));
     }
 
     @Test
