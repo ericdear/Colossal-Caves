@@ -39,3 +39,9 @@ Thumbs.db
 # Folders #
 ######################
 target/
+
+# VS Code #
+######################
+.classpath
+.project
+.settings/

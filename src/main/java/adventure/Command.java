@@ -8,23 +8,23 @@ public class Command {
     private String action;
     private String noun;
 
-    private ArrayList<String> commands = new ArrayList<String>() {{
-        add("look");
-        add("go");
-        add("take");
-        add("exit");
-        add("quit");
-        add("inventory");
-    }};
+    private static final ArrayList<String> commands = new ArrayList<String>();
+    private static final ArrayList<String> directions = new ArrayList<String>();
+    static {
+        commands.add("look");
+        commands.add("go");
+        commands.add("take");
+        commands.add("exit");
+        commands.add("quit");
+        commands.add("inventory");
 
-    private ArrayList<String> directions = new ArrayList<String>() {{
-        add("n");
-        add("e");
-        add("s");
-        add("w");
-        add("up");
-        add("down");
-    }};
+        directions.add("n");
+        directions.add("e");
+        directions.add("s");
+        directions.add("w");
+        directions.add("up");
+        directions.add("down");
+    }
 
   /**
      * Create a command object with default values.  

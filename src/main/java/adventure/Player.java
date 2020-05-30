@@ -9,6 +9,7 @@ public class Player implements java.io.Serializable {
     private ArrayList<Item> inventory;
     private String name;
     private Room room;
+    private String saveGameName = null;
 
     /**
      * default constructor sets name room and list of all rooms to null
@@ -63,6 +64,14 @@ public class Player implements java.io.Serializable {
     }
 
     /**
+     * set the name of the saved game
+     * @param name - the name of the saved game
+     */
+    public void setSaveGameName(String name) {
+        saveGameName = name;
+    }
+
+    /**
      * @return the name of the player
      */
     public String getName() {
@@ -86,8 +95,8 @@ public class Player implements java.io.Serializable {
     /**
      * @return the name of the saved game
      */
-    public String getSaveGameName() { //FIXMEEEE
-        return(null);
+    public String getSaveGameName() {
+        return(saveGameName);
     }
 
     /**

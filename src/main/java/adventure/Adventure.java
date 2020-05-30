@@ -57,11 +57,17 @@ public class Adventure implements java.io.Serializable{
         }
     }
 
+    /**
+     * sets the player of the game
+     * @param newPlayer - the new player of the game
+     */
     public void setPlayer(Player newPlayer) {
         player = newPlayer;
     }
 
-
+    /**
+     * @return the player of the game
+     */
     public Player getPlayer() {
         return(player);
     }
