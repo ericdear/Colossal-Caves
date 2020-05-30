@@ -15,6 +15,7 @@ public class Parser {
         Scanner inputScanner = new Scanner(userCommand);
 
         if(!inputScanner.hasNext()) {
+            inputScanner.close();
             throw new InvalidCommandException("You must enter a command");
         }
 
@@ -26,6 +27,7 @@ public class Parser {
         } else {
             command = new Command(action);
         }
+        inputScanner.close();
         return(command);
     }
 

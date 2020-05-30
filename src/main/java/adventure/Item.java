@@ -1,6 +1,7 @@
 package adventure;
 
-public class Item{
+public class Item implements java.io.Serializable{
+    private static final long serialVersionUID = 5293704039987323355L;
     /* you will need to add some private member variables */
     private long id;
     private String name;

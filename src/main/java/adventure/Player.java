@@ -2,7 +2,9 @@ package adventure;
 
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements java.io.Serializable {
+    private static final long serialVersionUID = -2403269607193739060L;
+    
     private static ArrayList<Room> rooms;
     private ArrayList<Item> inventory;
     private String name;

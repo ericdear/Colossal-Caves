@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Adventure{
+public class Adventure implements java.io.Serializable{
+    private static final long serialVersionUID = 2140486198577919560L;
     /* you will need to add some private member variables */
     private ArrayList<Room> roomList;
     private ArrayList<Item> allItems;
     private Room currentRoom;
+    private Player player;
     
 
     /* ======== Required public methods ========== */
@@ -24,6 +26,7 @@ public class Adventure{
     public Adventure() {
         roomList = new ArrayList<Room>();
         allItems = new ArrayList<Item>();
+        player = null;
     }
 
     /**
@@ -52,6 +55,15 @@ public class Adventure{
             setLoot(roomObject, tempRoom, items);
             setEntrance(roomObject, tempRoom);
         }
+    }
+
+    public void setPlayer(Player newPlayer) {
+        player = newPlayer;
+    }
+
+
+    public Player getPlayer() {
+        return(player);
     }
 
     /**
@@ -84,7 +96,7 @@ public class Adventure{
         //if the roomObject contains loot, get the JSONArray of it
         //iterate through the JSONArray making it a ArrayList of JSONObjects
         if(roomObject.containsKey("loot")) {
-            ArrayList<JSONObject> roomItems = new ArrayList();
+            ArrayList<JSONObject> roomItems = new ArrayList<JSONObject>();
             JSONArray loot = (JSONArray) roomObject.get("loot");
 
             for(Object currentItem : loot) {

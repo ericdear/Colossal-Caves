@@ -2,17 +2,13 @@ package adventure;
 
 import java.util.ArrayList;
 
-/* TODO add a static data structure or another enum class
-that lists all the valid commands.  Then add methods for validating
-commands 
-
-You may add other methods to this class if you wish*/
-
 public class Command {
+    //private static final long serialVersionUID = 8902464931192503285L;
+
     private String action;
     private String noun;
 
-    private static ArrayList<String> commands = new ArrayList<String>() {{
+    private ArrayList<String> commands = new ArrayList<String>() {{
         add("look");
         add("go");
         add("take");
@@ -21,7 +17,7 @@ public class Command {
         add("inventory");
     }};
 
-    private static ArrayList<String> directions = new ArrayList<String>() {{
+    private ArrayList<String> directions = new ArrayList<String>() {{
         add("n");
         add("e");
         add("s");
@@ -48,9 +44,6 @@ public class Command {
      * 
      */
     public Command(String command) throws InvalidCommandException{
-
-        //TODO validate the action word here and throw an exception if it isn't
-        // a single-word action
         this(command, null);
     }
 
@@ -130,7 +123,7 @@ public class Command {
      * @param command the first word of the command
      * @return true if the command is valid
      */
-    private static boolean validActionWord(String command) {
+    private boolean validActionWord(String command) {
         for(String tempCommand : commands) {
             if(tempCommand.equals(command)) {
                 return(true);
@@ -143,7 +136,7 @@ public class Command {
      * @param direction the direction the user wants to go
      * @return true if the direction is valid
      */
-    public static boolean validDirection(String direction) {
+    private boolean validDirection(String direction) {
         for(String tempDirection : directions) {
             if(tempDirection.equals(direction)) {
                 return(true);

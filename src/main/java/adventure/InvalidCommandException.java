@@ -1,7 +1,8 @@
 package adventure;
 
-public class InvalidCommandException extends Exception{
-    
+public class InvalidCommandException extends Exception {
+    private static final long serialVersionUID = 5721350057657180173L;
+
     /**
      * throws the exception with the message invalid command
      */

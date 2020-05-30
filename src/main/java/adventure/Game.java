@@ -7,8 +7,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Reader;
 
 
@@ -16,10 +20,10 @@ import java.io.Reader;
  * @author Eric Dearing
  * Last Updated: May 26/20
  */
-public class Game{
-
+public class Game implements java.io.Serializable {
     /* this is the class that runs the game.
     You may need some member variables */
+    private static final long serialVersionUID = -6682124909469554063L;
 
     public static void main(String[] args) {
         Game theGame = new Game();
@@ -28,19 +32,17 @@ public class Game{
         //create adventure room and player
         Adventure adventure = theGame.gameIntro(args);//make this and player a private variable and then save Game
         Player player = theGame.setPlayer(adventure);
-        Room room = player.getCurrentRoom();
-
+        adventure.setPlayer(player);
         boolean running = true;
         String inputLine;
         
         while(running) {
-            room = player.getCurrentRoom();
             //propt the user for a command
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
 
             theGame.checkCommand(inputLine, player);
-            running = theGame.exit(scnr, inputLine);
+            running = theGame.exit(scnr, inputLine, adventure, player);
             System.out.println("");
         }
         scnr.close();
@@ -52,7 +54,7 @@ public class Game{
      * @param inputLine - the line the user inputed
      * @return true to keep playing or false to exit the game
      */
-    public boolean exit(Scanner scnr, String inputLine) {
+    public boolean exit(Scanner scnr, String inputLine, Adventure adventure, Player player) {
         if(inputLine.equals("exit") || inputLine.equals("quit")) {
             String answer = "";
             while(!answer.equals("yes") && !answer.equals("no")) {
@@ -60,7 +62,7 @@ public class Game{
                 answer = scnr.nextLine();
             }
             if(answer.equals("yes")) {
-                askUserToSave(scnr);
+                askUserToSave(scnr, adventure, player);
                 return(false);
             } else {
                 System.out.println("You are back in the game!");
@@ -74,19 +76,56 @@ public class Game{
      * asks the user to save the game
      * @param scnr - the game scanner to scan the user input from system.in
      */
-    public void askUserToSave(Scanner scnr) {
+    public void askUserToSave(Scanner scnr, Adventure adventure, Player player) {
         String answer = "";
         while(!answer.equals("yes") && !answer.equals("no")) {
             System.out.println("Would you like to save? (yes/no)\n");
             answer = scnr.nextLine();
             answer.toLowerCase();
             if(answer.equals("yes")) {
-                //go to save game
+                System.out.println("What would you like to name your saved game?");
+                String filename = scnr.nextLine();
+                saveGame(adventure, player, filename);
             } else if(answer.equals("no")) {
                 System.out.println("Bye!");
             }
         }
         
+    }
+
+    public void saveGame(Adventure adventure, Player player, String filename) {
+        adventure.setPlayer(player);
+        try {
+            FileOutputStream outPutStream = new FileOutputStream(filename);
+            ObjectOutputStream outPutDest = new ObjectOutputStream(outPutStream);
+            
+            outPutDest.writeObject(adventure);
+
+            outPutDest.close();
+            outPutStream.close();
+            System.out.println("Game Saved as \"" + filename + "\"");
+        } catch (IOException e) {
+            System.out.println("File could not be saved");
+        }
+    }
+
+    public Adventure loadGame(String filename) {
+        Adventure adventure = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(fileInputStream);
+
+            adventure = (Adventure) in.readObject();
+            System.out.println("File Loaded!");
+            in.close();
+            return(adventure);
+        } catch(IOException e) {
+            System.out.println("File could not be opened");
+        } catch(ClassNotFoundException e) {
+            System.out.println("File could not be opened");
+        }
+        System.exit(0);
+        return(null);
     }
 
     /**
@@ -95,9 +134,15 @@ public class Game{
      * @return player object
      */
     public Player setPlayer(Adventure adventure) {
-        Room room = adventure.getCurrentRoom();
-        Player player = new Player("Eric",room, adventure.listAllRooms());
-        displayStartingRoom(room);
+        Player player;
+        if(adventure.getPlayer() == null) {
+            Room room = adventure.getCurrentRoom();
+            player = new Player("Eric",room, adventure.listAllRooms());
+            displayStartingRoom(room);
+        } else {
+            player = adventure.getPlayer();
+        }
+        
         return(player);
     }
 
@@ -136,6 +181,10 @@ public class Game{
         return(adventure);
     }
 
+    /*public JSONObject loadAdventureJson(InputStream inputStream) {
+
+    }*/
+
     /**
      * @param obj from the file
      * @return the adventure object created
@@ -143,8 +192,8 @@ public class Game{
     public Adventure generateAdventure(JSONObject obj) {
         //make the adventure and jsonobject arrayLists
         Adventure adventure = new Adventure();
-        ArrayList<JSONObject> rooms = new ArrayList();
-        ArrayList<JSONObject> items = new ArrayList();
+        ArrayList<JSONObject> rooms = new ArrayList<JSONObject>();
+        ArrayList<JSONObject> items = new ArrayList<JSONObject>();
         
         //get the list of rooms
         JSONArray roomList = (JSONArray) obj.get("room");
@@ -173,6 +222,7 @@ public class Game{
         if(args.length >= 2 && args[0].equals("-l")) {
             file = args[1];
             //call a function to load the games state
+            return(loadGame(file));
         } else if(args.length >= 2 && args[0].equals("-a")) {
             file = args[1];
             adventureObject = loadAdventureJson(file);

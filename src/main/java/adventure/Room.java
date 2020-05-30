@@ -4,7 +4,8 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Room{
+public class Room implements java.io.Serializable {
+    private static final long serialVersionUID = -8423856135517312624L;
     /* you will need to add some private member variables */
     //private JSONObject room;
     private long id;
@@ -20,7 +21,7 @@ public class Room{
      * default constructor setting everything to null and the id of the room to 0
      */
     public Room() {
-        roomItems = new ArrayList();
+        roomItems = new ArrayList<Item>();
         roomEntrances = new HashMap<String, Room>();
         allRooms = new ArrayList<Room>();
         this.setId(0);
@@ -34,7 +35,7 @@ public class Room{
      * @param newRoom : a json object of the room
      */
     public Room(JSONObject newRoom) {
-        roomItems = new ArrayList();
+        roomItems = new ArrayList<Item>();
         roomEntrances = new HashMap<String, Room>();
         allRooms = new ArrayList<Room>();
         this.setId(Long.parseLong(newRoom.get("id").toString()));
