@@ -15,6 +15,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 
 /**
  * @author Eric Dearing
@@ -201,9 +204,24 @@ public class Game implements java.io.Serializable {
         return(adventure);
     }
 
-    /*public JSONObject loadAdventureJson(InputStream inputStream) {
+    public JSONObject loadAdventureJson(InputStream inputStream) {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject adventure = new JSONObject();
 
-    }*/
+        try {
+            JSONParser parser = new JSONParser();
+            InputStreamReader reader = new InputStreamReader(inputStream);
+
+            jsonObject = (JSONObject) parser.parse(reader);
+            adventure = (JSONObject) jsonObject.get("adventure");
+            reader.close();
+        } catch (IOException e) {
+            return(null);
+        } catch (ParseException e) {
+            return(null);
+        }
+        return(adventure);
+    }
 
     /**
      * @param obj from the file
@@ -248,8 +266,8 @@ public class Game implements java.io.Serializable {
             adventureObject = loadAdventureJson(file);
         } else {
             //load the default adventure json file
-            //FIXME
-            adventureObject = loadAdventureJson("src/main/java/adventure/default_adventure.json");
+            InputStream inputStream = Game.class.getClassLoader().getResourceAsStream("default_adventure.json");
+            adventureObject = loadAdventureJson(inputStream);
         }
         if(adventureObject == null) {
             System.out.println("The file you provided does not exist or is empty");
