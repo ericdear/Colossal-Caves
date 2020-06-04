@@ -35,20 +35,24 @@ public class Game implements java.io.Serializable {
         //create adventure room and player
         Adventure adventure = theGame.gameIntro(args);//make this and player a private variable and then save Game
         Player player = theGame.setPlayer(adventure, scnr);
-        adventure.setPlayer(player);
+
+        theGame.running(scnr, adventure, player);
+        
+        scnr.close();
+    }
+
+    public void running(Scanner scnr, Adventure adventure, Player player) {
         boolean running = true;
         String inputLine;
-        
         while(running) {
             //propt the user for a command
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
 
-            theGame.checkCommand(inputLine, player);
-            running = theGame.exit(scnr, inputLine, adventure, player);
+            checkCommand(inputLine, player);
+            running = exit(scnr, inputLine, adventure, player);
             System.out.println("");
         }
-        scnr.close();
     }
 
     /**

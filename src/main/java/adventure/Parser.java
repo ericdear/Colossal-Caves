@@ -19,16 +19,26 @@ public class Parser {
             throw new InvalidCommandException("You must enter a command");
         }
 
-        String action = inputScanner.next();
-        Command command;
-        if(inputScanner.hasNext()) {
-            String noun = inputScanner.nextLine();
-            command = new Command(action, noun.trim());
-        } else {
-            command = new Command(action);
-        }
+        Command command = createCommand(inputScanner);
+        
         inputScanner.close();
         return(command);
+    }
+
+    /**
+     * creates the command
+     * @param inputScanner
+     * @return a command
+     * @throws InvalidCommandException
+     */
+    private Command createCommand(Scanner inputScanner) throws InvalidCommandException {
+        String action = inputScanner.next();
+        if(inputScanner.hasNext()) {
+            String noun = inputScanner.nextLine();
+            return(new Command(action, noun.trim()));
+        } else {
+            return(new Command(action));
+        }
     }
 
     /**

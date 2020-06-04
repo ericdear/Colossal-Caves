@@ -35,27 +35,36 @@ public class Adventure implements java.io.Serializable{
      * @param items : a jsonobject arraylist of all items
      */
     public void setAdventure(ArrayList<JSONObject> newRooms, ArrayList<JSONObject> items) {
-        int i;
         JSONObject roomObject;
         Room tempRoom;
         setRoomArrayList(newRooms);
 
         //go through the list of rooms and get the enrances and items
-        for(i = 0; i < roomList.size(); i++) {
+        for(int i = 0; i < roomList.size(); i++) {
             //create all the rooms and put into arraylist
             roomObject = newRooms.get(i);
             tempRoom = roomList.get(i);
 
             //set the current room to the room with the start key
-            if(roomObject.containsKey("start")) {
-                currentRoom = roomList.get(i);
-            }
+            checkForStart(roomObject, i);
 
             //set the items and entrances
             setLoot(roomObject, tempRoom, items);
             setEntrance(roomObject, tempRoom);
         }
     }
+
+    /**
+     * checks each room to find the starting room and set the current room equal to it
+     * @param roomObject - the json object of the room
+     * @param i - the index of the room in roomList
+     */
+    public void checkForStart(JSONObject roomObject, int i) {
+        if(roomObject.containsKey("start")) {
+            currentRoom = roomList.get(i);
+        }
+    }
+
 
     /**
      * sets the player of the game
@@ -122,14 +131,24 @@ public class Adventure implements java.io.Serializable{
     private void addItem(ArrayList<JSONObject> roomItems, ArrayList<JSONObject> items, Room tempRoom) {
         for(JSONObject item1 : roomItems) {
             for(JSONObject item2 : items) {
-                long itemId = Long.parseLong(item2.get("id").toString());
-                String itemName = item2.get("name").toString();
-                String itemDesc = item2.get("desc").toString();
-                allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
-                if(item1.get("id").toString().equals(item2.get("id").toString())) {
-                    tempRoom.setRoomItem(item2, tempRoom);
-                }
+                checkItem(item1, item2, tempRoom);
             }
+        }
+    }
+
+    /**
+     * checks if the items and loot match and if so add them to the rooms item list
+     * @param loot - the item in the room
+     * @param item - the item in the list of items
+     * @param tempRoom - the current room
+     */
+    private void checkItem(JSONObject loot, JSONObject item, Room tempRoom) {
+        long itemId = Long.parseLong(item.get("id").toString());
+        String itemName = item.get("name").toString();
+        String itemDesc = item.get("desc").toString();
+        allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
+        if(loot.get("id").toString().equals(item.get("id").toString())) {
+            tempRoom.setRoomItem(item, tempRoom);
         }
     }
 
@@ -143,12 +162,16 @@ public class Adventure implements java.io.Serializable{
             JSONArray entrances = (JSONArray) roomObject.get("entrance");
 
             for(Object currentEntrance : entrances) {
-                JSONObject entrance = (JSONObject) currentEntrance;
-                for(Room connectedRoom : roomList) {
-                    if(entrance.get("id").equals(connectedRoom.getId())) {
-                        tempRoom.setRoomEntrance(entrance.get("dir").toString(),connectedRoom);
-                    }
-                }
+                addEntrance(tempRoom, currentEntrance);
+            }
+        }
+    }
+
+    private void addEntrance(Room tempRoom, Object currentEntrance) {
+        JSONObject entrance = (JSONObject) currentEntrance;
+        for(Room connectedRoom : roomList) {
+            if(entrance.get("id").equals(connectedRoom.getId())) {
+                tempRoom.setRoomEntrance(entrance.get("dir").toString(),connectedRoom);
             }
         }
     }

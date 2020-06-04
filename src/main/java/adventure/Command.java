@@ -71,6 +71,15 @@ public class Command {
         } else if(command.equals("inventory") && what != null) {
             throw new InvalidCommandException("To see your inventory, type \"inventory\".");
         }
+        setCommands(command, what);
+    }
+
+    /**
+     * set the firs tand last word of the command
+     * @param command - the first word of the command
+     * @param what - the second word of the command
+     */
+    private void setCommands(String command, String what) {
         this.action = command;
         this.noun = what;
     }
