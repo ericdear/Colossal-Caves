@@ -41,6 +41,12 @@ public class Game implements java.io.Serializable {
         scnr.close();
     }
 
+    /**
+     * the loop where the game is running
+     * @param scnr - the input scanner
+     * @param adventure - the adventure
+     * @param player - the player
+     */
     public void running(Scanner scnr, Adventure adventure, Player player) {
         boolean running = true;
         String inputLine;
@@ -65,20 +71,42 @@ public class Game implements java.io.Serializable {
      */
     public boolean exit(Scanner scnr, String inputLine, Adventure adventure, Player player) {
         if(inputLine.equals("exit") || inputLine.equals("quit")) {
-            String answer = "";
-            while(!answer.equals("yes") && !answer.equals("no")) {
-                System.out.println("Are you sure you want to exit? (yes/no)\n");
-                answer = scnr.nextLine();
-            }
-            if(answer.equals("yes")) {
-                askUserToSave(scnr, adventure, player);
-                return(false);
-            } else {
-                System.out.println("You are back in the game!");
-                return(true);
-            }
+            String answer = confirmAnswer(scnr);
+            return(doAnswer(answer, scnr, adventure, player));
         }
         return(true);
+    }
+
+    /**
+     * either ask the user to save or put the user back in the game
+     * @param answer - if the user typed yes or no
+     * @param scnr - the input scanner
+     * @param adventure - the adventure
+     * @param player - the player
+     * @return the boolean true to stay in the game and false to exit
+     */
+    private boolean doAnswer(String answer, Scanner scnr, Adventure adventure, Player player) {
+        if(answer.equals("yes")) {
+            askUserToSave(scnr, adventure, player);
+            return(false);
+        } else {
+            System.out.println("You are back in the game!");
+            return(true);
+        }
+    }
+
+    /**
+     * confirm that the user wants to exit
+     * @param scnr - the input scanner
+     * @return the answer once it is either yes or no
+     */
+    private String confirmAnswer(Scanner scnr) {
+        String answer = "";
+        while(!answer.equals("yes") && !answer.equals("no")) {
+            System.out.println("Are you sure you want to exit? (yes/no)\n");
+            answer = scnr.nextLine();
+        }
+        return(answer);
     }
 
     /**
@@ -93,14 +121,25 @@ public class Game implements java.io.Serializable {
             System.out.println("Would you like to save? (yes/no)\n");
             answer = scnr.nextLine();
             answer.toLowerCase();
-            if(answer.equals("yes")) {
-                System.out.println("What would you like to name your saved game?\n");
-                String filename = scnr.nextLine();
-                player.setSaveGameName(filename);
-                saveGame(adventure, player, filename);
-            } else if(answer.equals("no")) {
-                System.out.println("Thanks for Playing!");
-            }
+            saveAnswer(scnr, adventure, player, answer);
+        }
+    }
+
+    /**
+     * save or exit depending on answer being yes or no
+     * @param scnr - the input scanner
+     * @param adventure - the adventure
+     * @param player - the player
+     * @param answer - the users answer to "Would you like to save?"
+     */
+    private void saveAnswer(Scanner scnr, Adventure adventure, Player player, String answer) {
+        if(answer.equals("yes")) {
+            System.out.println("What would you like to name your saved game?\n");
+            String filename = scnr.nextLine();
+            player.setSaveGameName(filename);
+            saveGame(adventure, player, filename);
+        } else if(answer.equals("no")) {
+            System.out.println("Thanks for Playing!");
         }
     }
 
@@ -118,7 +157,6 @@ public class Game implements java.io.Serializable {
             
             outPutDest.writeObject(adventure);
 
-            outPutDest.close();
             outPutStream.close();
             System.out.println("Game Saved as \"" + filename + "\"");
         } catch (IOException e) {
@@ -132,18 +170,9 @@ public class Game implements java.io.Serializable {
      * @param filename - the name of the saved file
      * @return the adventure object
      */
-    public Adventure loadGame(String filename) {
-        Adventure adventure = null;
+    public Adventure tryLoadGame(String filename) {
         try {
-            FileInputStream fileInputStream = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(fileInputStream);
-
-            adventure = (Adventure) in.readObject();
-            String saveGameName = adventure.getPlayer().getSaveGameName();
-            System.out.println("File \"" + saveGameName + "\"" + " Loaded!");
-            displayStartingRoom(adventure.getPlayer().getCurrentRoom());
-            in.close();
-            return(adventure);
+            return(loadGame(filename));
         } catch(IOException e) {
             System.out.println("File could not be opened");
         } catch(ClassNotFoundException e) {
@@ -152,6 +181,27 @@ public class Game implements java.io.Serializable {
         System.exit(0);
         return(null);
     }
+
+    /**
+     * loads the game
+     * @param filename - the name of the file the user wants to load
+     * @return the advenutre object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private Adventure loadGame(String filename) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(filename);
+        ObjectInputStream in = new ObjectInputStream(fileInputStream);
+
+        Adventure adventure = (Adventure) in.readObject();
+        String saveGameName = adventure.getPlayer().getSaveGameName();
+        System.out.println("File \"" + saveGameName + "\"" + " Loaded!");
+        displayStartingRoom(adventure.getPlayer().getCurrentRoom());
+        in.close();
+        return(adventure);
+    }
+
+
 
     /**
      * sets up the player.
@@ -164,8 +214,8 @@ public class Game implements java.io.Serializable {
         if(adventure.getPlayer() == null) {
             Room room = adventure.getCurrentRoom();
             System.out.println("What would you like your player to be called?\n");
-            String playerName = scnr.nextLine();
-            player = new Player(playerName,room, adventure.listAllRooms());
+            //String playerName = scnr.nextLine();
+            player = new Player(scnr.nextLine(),room, adventure.listAllRooms());
             displayStartingRoom(room);
         } else {
             player = adventure.getPlayer();
@@ -271,7 +321,7 @@ public class Game implements java.io.Serializable {
         if(args.length >= 2 && args[0].equals("-l")) {
             file = args[1];
             //call a function to load the games state
-            return(loadGame(file));
+            return(tryLoadGame(file));
         } else if(args.length >= 2 && args[0].equals("-a")) {
             file = args[1];
             adventureObject = loadAdventureJson(file);

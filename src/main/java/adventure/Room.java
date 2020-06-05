@@ -180,6 +180,14 @@ public class Room implements java.io.Serializable {
     }
 
     /**
+     * gets the list of rooms
+     * @return the list of rooms
+     */
+    public ArrayList<Room> getRoomArray() {
+        return(allRooms);
+    }
+
+    /**
      * removeItem removes an item from the room
      * used for when a player picks up an item
      * @param itemName : the name of the item the user wants to remove
