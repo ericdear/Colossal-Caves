@@ -240,23 +240,17 @@ public class Game implements java.io.Serializable {
      * @return the json object parsed from the json file
      */
     public JSONObject loadAdventureJson(String filename){
-        JSONObject jsonObject = new JSONObject();
-        JSONObject adventure = new JSONObject();
+        JSONObject adventure;
+        JSONParser parser = new JSONParser();
         
         //parse the file. return null if file cannot be parsed
-        try {
-            JSONParser parser = new JSONParser();
-            Reader reader = new FileReader(filename);
-            jsonObject  = (JSONObject) parser.parse(reader);
+        try (Reader reader = new FileReader(filename)) {
+            JSONObject jsonObject  = (JSONObject) parser.parse(reader);
             adventure = (JSONObject) jsonObject.get("adventure");
             reader.close();
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             return(null);
-
-        } catch (ParseException e) {
-            return(null);
-        } 
-        
+        }
         return(adventure);
     }
 
@@ -266,19 +260,14 @@ public class Game implements java.io.Serializable {
      * @return the created jsonobject
      */
     public JSONObject loadAdventureJson(InputStream inputStream) {
-        JSONObject jsonObject = new JSONObject();
-        JSONObject adventure = new JSONObject();
+        JSONObject adventure;
+        JSONParser parser = new JSONParser();
 
-        try {
-            JSONParser parser = new JSONParser();
-            InputStreamReader reader = new InputStreamReader(inputStream);
-
-            jsonObject = (JSONObject) parser.parse(reader);
+        try (InputStreamReader reader = new InputStreamReader(inputStream)) {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
             adventure = (JSONObject) jsonObject.get("adventure");
             reader.close();
-        } catch (IOException e) {
-            return(null);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             return(null);
         }
         return(adventure);
@@ -291,20 +280,12 @@ public class Game implements java.io.Serializable {
     public Adventure generateAdventure(JSONObject obj) {
         //make the adventure and jsonobject arrayLists
         Adventure adventure = new Adventure();
-        ArrayList<JSONObject> rooms = new ArrayList<JSONObject>();
-        ArrayList<JSONObject> items = new ArrayList<JSONObject>();
         
         //get the list of rooms
-        JSONArray roomList = (JSONArray) obj.get("room");
-        for(Object currentRoom : roomList) {
-            rooms.add((JSONObject)currentRoom);
-        }
+        ArrayList<JSONObject> rooms = setRoomList(obj);
 
         //get the list of items
-        JSONArray itemList = (JSONArray) obj.get("item");
-        for(Object currentItem : itemList) {
-            items.add((JSONObject)currentItem);
-        }
+        ArrayList<JSONObject> items = setItemList(obj);
         
         //set the rooms in the adventure
         adventure.setAdventure(rooms,items);
@@ -312,29 +293,75 @@ public class Game implements java.io.Serializable {
     }
 
     /**
+     * set the arrayList of rooms
+     * @param obj - the json object adventure
+     * @return the arraylist of rooms
+     */
+    private ArrayList<JSONObject> setRoomList(JSONObject obj) {
+        ArrayList<JSONObject> rooms = new ArrayList<JSONObject>();
+        JSONArray roomList = (JSONArray) obj.get("room");
+        for(Object currentRoom : roomList) {
+            rooms.add((JSONObject)currentRoom);
+        }
+        return(rooms);
+    }
+
+    /**
+     * set the item list
+     * @param obj - the json object adventure
+     * @return the arraylist of items
+     */
+    private ArrayList<JSONObject> setItemList(JSONObject obj) {
+        ArrayList<JSONObject> items = new ArrayList<JSONObject>();
+        JSONArray itemList = (JSONArray) obj.get("item");
+        for(Object currentItem : itemList) {
+            items.add((JSONObject)currentItem);
+        }
+        return(items);
+    }
+
+    /**
      * @param args : the arguments the user inputed on the command line
-     * @return the file name that the user wants to load
+     * @return the adventure object the user loaded
      */
     public Adventure gameIntro(String[] args) {
-        String file = "";
         JSONObject adventureObject = null;
         if(args.length >= 2 && args[0].equals("-l")) {
-            file = args[1];
+            String file = args[1];
             //call a function to load the games state
             return(tryLoadGame(file));
-        } else if(args.length >= 2 && args[0].equals("-a")) {
-            file = args[1];
-            adventureObject = loadAdventureJson(file);
-        } else {
-            //load the default adventure json file
-            InputStream inputStream = Game.class.getClassLoader().getResourceAsStream("default_adventure.json");
-            adventureObject = loadAdventureJson(inputStream);
         }
+        adventureObject = getAdventureJson(args);
+        checkNull(adventureObject);
+        return(generateAdventure(adventureObject));
+    }
+
+    /**
+     * check if the adventure object is null
+     * @param adventureObject
+     */
+    private void checkNull(JSONObject adventureObject) {
         if(adventureObject == null) {
             System.out.println("The file you provided does not exist or is empty");
             System.exit(0);
         }
-        return(generateAdventure(adventureObject));
+    }
+
+    /**
+     * load the json object from the json file
+     * @param args
+     * @return the json object
+     */
+    private JSONObject getAdventureJson(String[] args) {
+        String file = "";
+        if(args.length >= 2 && args[0].equals("-a")) {
+            file = args[1];
+            return(loadAdventureJson(file));
+        } else {
+            //load the default adventure json file
+            InputStream inputStream = Game.class.getClassLoader().getResourceAsStream("default_adventure.json");
+            return(loadAdventureJson(inputStream));
+        }
     }
 
     /**
@@ -349,12 +376,16 @@ public class Game implements java.io.Serializable {
             Parser parser = new Parser();
             Command command = parser.parseUserCommand(inputLine);
             doCommand(command, player);
-            if(room != player.getCurrentRoom()) {
-                printItems(player.getCurrentRoom());
-            }
+            movedRooms(room, player);
 
         } catch(InvalidCommandException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void movedRooms(Room room, Player player) {
+        if(room != player.getCurrentRoom()) {
+            printItems(player.getCurrentRoom());
         }
     }
 
@@ -364,20 +395,14 @@ public class Game implements java.io.Serializable {
      * @param player : the player
      */
     public void doCommand(Command command, Player player) {
-        switch(command.getActionWord()) {
-            case "look":
-                System.out.println(player.look(command));
-                break;
-            case "go":
-                System.out.println(player.go(command));
-                break;
-            case "take":
-                System.out.println(player.take(command));
-                break;
-            case "inventory":
-                System.out.print(player.inventory(command));
-                break;
-            default:
+        if(command.getActionWord().equals("look")) {
+            System.out.println(player.look(command));
+        } else if(command.getActionWord().equals("go")) {
+            System.out.println(player.go(command));
+        } else if(command.getActionWord().equals("take")) {
+            System.out.println(player.take(command));
+        } else if(command.getActionWord().equals("inventory")) {
+            System.out.print(player.inventory(command));
         }
     }
 
