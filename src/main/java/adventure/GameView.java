@@ -2,14 +2,7 @@ package adventure;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import org.graalvm.compiler.lir.CompositeValue.Component;
-
-//import org.graalvm.compiler.lir.CompositeValue.Component;
-
-//import jdk.internal.platform.Container;
-
-import java.awt.event.*;
+//import java.awt.event.*;
 import java.awt.*;
 
 public class GameView extends JFrame {
