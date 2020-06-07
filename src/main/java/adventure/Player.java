@@ -40,6 +40,13 @@ public class Player implements java.io.Serializable {
     }
 
     /**
+     * @return the list of rooms
+     */
+    public ArrayList<Room> getRoomList() {
+        return(rooms);
+    }
+
+    /**
      * setRoom sets the current room the player is in
      * @param newRoom : the new room the player is in
      */

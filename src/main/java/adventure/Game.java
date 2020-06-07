@@ -352,7 +352,7 @@ public class Game implements java.io.Serializable {
      * @param args
      * @return the json object
      */
-    private JSONObject getAdventureJson(String[] args) {
+    public JSONObject getAdventureJson(String[] args) {
         String file = "";
         if(args.length >= 2 && args[0].equals("-a")) {
             file = args[1];

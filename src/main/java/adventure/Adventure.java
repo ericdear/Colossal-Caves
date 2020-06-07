@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 public class Adventure implements java.io.Serializable{
     private static final long serialVersionUID = 2140486198577919560L;
     /* you will need to add some private member variables */
-    private ArrayList<Room> roomList;
+    private ArrayList<Room> roomList; 
     private ArrayList<Item> allItems;
     private Room currentRoom;
     private Player player;
