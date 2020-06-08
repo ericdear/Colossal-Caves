@@ -15,7 +15,7 @@ public class Player implements java.io.Serializable {
      * default constructor sets name room and list of all rooms to null
      */
     public Player() {
-        this(null,null,null);
+        this("",null,null,"");
     }
 
     /**
@@ -23,12 +23,14 @@ public class Player implements java.io.Serializable {
      * @param newName : the name of the player I guess? lol
      * @param newRoom : the room the player is in
      * @param listAllRooms : the list of all of the rooms
+     * @param newSaveGameName : the name the game will be saved as
      */
-    public Player(String newName, Room newRoom, ArrayList<Room> listAllRooms) {
+    public Player(String newName, Room newRoom, ArrayList<Room> listAllRooms, String newSaveGameName) {
         inventory = new ArrayList<Item>();
         this.setRoomList(listAllRooms);
         this.setName(newName);
         this.setRoom(newRoom);
+        this.setSaveGameName(newSaveGameName);
     }
 
     /**
@@ -126,7 +128,7 @@ public class Player implements java.io.Serializable {
      * @return an error if there is no room in that direction or the name and description of the new room
      */
     public String go(Command command) {
-        room.setRoomArray(rooms);
+        room.setAllRooms(rooms);
         //check if there is an entrance in that direction, if there is, go there
         if(room.getConnectedRoom(command.getNoun()) == null) {
             return("There is no room in the direction " + command.getNoun() + ".");

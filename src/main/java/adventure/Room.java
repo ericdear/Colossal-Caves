@@ -84,6 +84,14 @@ public class Room implements java.io.Serializable {
     }
 
     /**
+     * sets the items in the room
+     * @param newRoomItems - the new list of items
+     */
+    public void setRoomItems(ArrayList<Item> newRoomItems) {
+        roomItems = newRoomItems;
+    }
+
+    /**
      * add an item to the arrayList of items in the room
      * @param tempItem : a json object of the item
      * @param room : the current room
@@ -175,7 +183,7 @@ public class Room implements java.io.Serializable {
      * sets the array of all rooms in the adventure
      * @param rooms : an arrayList of all the rooms
      */
-    public void setRoomArray(ArrayList<Room> rooms) {
+    public void setAllRooms(ArrayList<Room> rooms) {
         allRooms = rooms;
     }
 

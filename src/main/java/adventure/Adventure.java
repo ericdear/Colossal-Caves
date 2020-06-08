@@ -94,6 +94,22 @@ public class Adventure implements java.io.Serializable{
     }
 
     /**
+     * sets the new arraylist of all the items
+     * @param newAllItems - the new arraylist of all items
+     */
+    public void setAllItems(ArrayList<Item> newAllItems) {
+        allItems = newAllItems;
+    }
+
+    /**
+     * sets the arraylist of rooms
+     * @param newRoomList - the new room list
+     */
+    public void setRoomList(ArrayList<Room> newRoomList) {
+        roomList = newRoomList;
+    }
+
+    /**
      * sets up the arrayList of all items
      * @param newItems : an arraylist of all the items
      */

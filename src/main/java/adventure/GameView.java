@@ -156,7 +156,7 @@ public class GameView extends JFrame {
 
     private void changePlayerName(String name) {
         if(adventure.getPlayer() == null) {
-            adventure.setPlayer(new Player(name, adventure.getCurrentRoom(), adventure.listAllRooms()));
+            adventure.setPlayer(new Player(name, adventure.getCurrentRoom(), adventure.listAllRooms(),""));
         } else {
             adventure.getPlayer().setName(name);
         }

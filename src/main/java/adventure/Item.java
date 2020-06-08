@@ -5,8 +5,8 @@ public class Item implements java.io.Serializable{
     /* you will need to add some private member variables */
     private long id;
     private String name;
-    private String description;
-    private Room room;
+    private String longDescription;
+    private Room containingRoom;
 
     
     /**
@@ -64,7 +64,7 @@ public class Item implements java.io.Serializable{
      * @return the description of the item
      */
     public String getLongDescription(){
-        return(description);
+        return(longDescription);
     }
 
     /**
@@ -72,14 +72,14 @@ public class Item implements java.io.Serializable{
      * @param newDescription : the new description for the item
      */
     public void setLongDescription(String newDescription) {
-        description = newDescription;
+        longDescription = newDescription;
     }
 
     /**
      * @return the room that the item is in
      */
     public Room getContainingRoom(){
-        return(room);
+        return(containingRoom);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Item implements java.io.Serializable{
      * @param newRoom : the new room the item is in
      */
     public void setContainingRoom(Room newRoom) {
-        room = newRoom;
+        containingRoom = newRoom;
     }
 
     /**

@@ -53,6 +53,8 @@ public class Command {
      * @param what      The second word of the command.
      */
     public Command(String command, String what) throws InvalidCommandException{
+        command = command.toLowerCase();
+        what = what.toLowerCase();
         validateCommand(command, what);
     }
 
@@ -106,7 +108,7 @@ public class Command {
      * @param actionWord 
      * this method sets the first word of the command
      */
-    public void setActionWord(String actionWord) throws InvalidCommandException {
+    public void setAction(String actionWord) throws InvalidCommandException {
         validateCommand(actionWord, noun);
     }
 

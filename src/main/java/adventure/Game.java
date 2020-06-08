@@ -215,7 +215,7 @@ public class Game implements java.io.Serializable {
             Room room = adventure.getCurrentRoom();
             System.out.println("What would you like your player to be called?\n");
             //String playerName = scnr.nextLine();
-            player = new Player(scnr.nextLine(),room, adventure.listAllRooms());
+            player = new Player(scnr.nextLine(),room, adventure.listAllRooms(),"");
             displayStartingRoom(room);
         } else {
             player = adventure.getPlayer();
