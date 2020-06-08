@@ -2,38 +2,66 @@ package adventure;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-//import java.awt.event.*;
+import javax.swing.text.DefaultCaret;
+
+import java.awt.event.*;
 import java.awt.*;
 
 public class GameView extends JFrame {
     private static final long serialVersionUID = 7305436428373534270L;
     public static final int WIDTH = 700;
     public static final int HEIGHT = 450;
-    //Dimension dimension = new Dimension(200,50);
+
     Container contentPane;
     private Game game;
     private Adventure adventure;
+    private String filename;
+
     JLabel adventureName = new JLabel("Adventure Name: Default_Adventure");
-    JLabel playerName = new JLabel("Player Name: No Name");
+    JLabel playerName = new JLabel("Player Name: ");
     JTextField inputField = new JTextField("Type your commands here");
     JTextArea outputArea = new JTextArea();
     JTextArea inventory = new JTextArea();
+
+    JScrollPane scrollPane;
+    //JScrollBar scrollBar;
     
 
     public static void main(String[] args) {
         Game newGame = new Game();
-        GameView gui = new GameView(newGame);
+        GameView gui = new GameView(newGame, args);
         gui.setVisible(true);
     }
 
-    public GameView(Game newGame) {
+    public GameView(Game newGame, String[] args) {
         super();
         game = newGame;
-        adventure = newGame.gameIntro(new String[] {""});
-        game.changePlayerName("No Name", adventure);
+        adventure = game.gameIntro(args);
+        filename = game.setFileName(args, adventure);
         setUpSize();
         setMainContainer();
-        outputArea.setText(game.displayStartingRoom(adventure.getCurrentRoom()));
+        setAdventure(args);
+    }
+
+    private void setAdventure(String[] args) {
+        checkNullAdventure();
+        outputArea.append(filename + " has been loaded\n\n");
+        game.possibleNewPlayer(adventure, "No name", filename);
+        outputArea.append(game.displayStartingRoom(adventure.getPlayer().getCurrentRoom()) + "\n");
+        playerName.setText("Player name: " + adventure.getPlayer().getName());
+        adventureName.setText("Adventure name: " + adventure.getPlayer().getSaveGameName());
+        setInventory();
+    }
+
+    private void checkNullAdventure() {
+        outputArea.setText("");
+        if(adventure == null) {
+            adventure = game.gameIntro(new String[] {""});
+            filename = "default_adventure.json";
+            outputArea.append("File could not be opened.\n\n");
+        } else {
+            filename = adventure.getPlayer().getSaveGameName();
+        }
     }
 
     private void setUpSize() {
@@ -81,13 +109,16 @@ public class GameView extends JFrame {
         return(inputField);
     }
 
-    private JTextArea outputArea() {
+    private JScrollPane outputArea() {
         outputArea.setColumns(45);
         outputArea.setRows(20);
         outputArea.setMargin(new Insets(5,5,5,5));
         outputArea.setEditable(false);
         outputArea.setLineWrap(true);
-        return(outputArea);
+        outputArea.setWrapStyleWord(true);
+        outputArea.add(new JScrollPane());
+        scrollPane = new JScrollPane(outputArea);
+        return(scrollPane);
     }
 
     private JPanel rightPanel() {
@@ -120,20 +151,19 @@ public class GameView extends JFrame {
 
     private JButton changeNameButton() {
         JButton changeNameButton = new JButton("Change Name");
-        //changeNameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         changeNameButton.addActionListener(buttonPressed -> changeName());
         return(changeNameButton);
     }
 
     private JButton loadJsonButton() {
         JButton loadJsonButton = new JButton("Load JSON file");
-        //loadJsonButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loadJsonButton.addActionListener(buttonPressed -> loadFile("-a"));
         return(loadJsonButton);
     }
 
     private JButton loadSavedGameButton() {
         JButton loadSavedGameButton = new JButton("Load saved game");
-        //loadSavedGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loadSavedGameButton.addActionListener(buttonPressed -> loadFile("-l"));
         return(loadSavedGameButton);
     }
 
@@ -161,13 +191,29 @@ public class GameView extends JFrame {
         game.changePlayerName(name,adventure);
         //set the player jlabel to the new name
         playerName.setText("Player Name: " + name);
-        outputArea.setText("Player name changed to " + name);
+        outputArea.append("Player name changed to " + name + "\n\n");
     }
 
     private void doCommand(JTextField textField) {
-        outputArea.setText(game.checkCommand(textField.getText(), adventure.getPlayer()));
-        inventory.setText("Inventory:\n" + game.checkCommand("inventory", adventure.getPlayer()));
+        outputArea.append(textField.getText() + "\n" + game.checkCommand(textField.getText(), adventure.getPlayer()) + "\n");
+        setInventory();
         textField.setText("");
+
+        outputArea.setCaretPosition(outputArea.getDocument().getLength());
+    }
+
+    private void setInventory() {
+        inventory.setText("Inventory:\n" + game.checkCommand("inventory", adventure.getPlayer()));
+    }
+
+    private void loadFile(String flag) {
+        String file = JOptionPane.showInputDialog("Enter the file path and name.");
+        if(file == null || file.equals("")) {
+            return;
+        }
+        String[] arguments = new String[] {flag, file};
+        adventure = game.gameIntro(arguments);
+        setAdventure(arguments);
     }
     
     

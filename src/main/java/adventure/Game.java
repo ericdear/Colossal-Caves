@@ -33,12 +33,15 @@ public class Game implements java.io.Serializable {
         Scanner scnr = new Scanner(System.in);
 
         //create adventure room and player
-        Adventure adventure = theGame.gameIntro(args);//make this and player a private variable and then save Game
-        Player player = theGame.setPlayer(adventure, scnr);
-
-        theGame.running(scnr, adventure, player);
+        Adventure adventure = theGame.gameIntro(args);
         
-        scnr.close();
+        if(adventure != null) {
+            Player player = theGame.setPlayer(adventure, scnr);
+
+            theGame.running(scnr, adventure, player);
+        
+            scnr.close();
+        }
     }
 
     /**
@@ -178,7 +181,7 @@ public class Game implements java.io.Serializable {
         } catch(ClassNotFoundException e) {
             System.out.println("File could not be opened");
         }
-        System.exit(0);
+        //System.exit(0);
         return(null);
     }
 
@@ -198,6 +201,15 @@ public class Game implements java.io.Serializable {
         System.out.println("File \"" + saveGameName + "\"" + " Loaded!");
         System.out.println(displayStartingRoom(adventure.getPlayer().getCurrentRoom()));
         in.close();
+
+
+        //wtffffff
+        System.out.println(adventure.getCurrentRoom().listItems());
+        //TEST FIXME
+        for(Item item : adventure.getCurrentRoom().listItems()) {
+            System.out.println("item - " + item.getId() + "\n" + item.getName() + "\n" + item.getLongDescription() + "\n\n");
+        }
+
         return(adventure);
     }
 
@@ -222,6 +234,31 @@ public class Game implements java.io.Serializable {
         }
         
         return(player);
+    }
+
+    /**
+     * sets up the player without prompting user for a name
+     * @param adventure- the adventure
+     * @param name - the players name
+     * @return the player
+     */
+    public void possibleNewPlayer(Adventure adventure, String name, String filename) {
+        if(adventure.getPlayer() == null) {
+            adventure.setPlayer(new Player(name, adventure.getCurrentRoom(), adventure.listAllRooms(), filename));
+        }
+    }
+
+    /**
+     * sets the file name
+     * @param args - the command line arguments
+     * @return the name of the file
+     */
+    public String setFileName(String[] args, Adventure adventure) {
+        if(adventure == null || args.length < 2) {
+            return("default_adventure.json");
+        } else {
+            return(args[1]);
+        } 
     }
 
     /**
@@ -279,6 +316,11 @@ public class Game implements java.io.Serializable {
      * @return the adventure object created
      */
     public Adventure generateAdventure(JSONObject obj) {
+        if(obj == null) {
+            System.out.println("The file can't be opened.");
+            return(null);
+        }
+        
         //make the adventure and jsonobject arrayLists
         Adventure adventure = new Adventure();
         
@@ -333,19 +375,7 @@ public class Game implements java.io.Serializable {
             return(tryLoadGame(file));
         }
         adventureObject = getAdventureJson(args);
-        checkNull(adventureObject);
         return(generateAdventure(adventureObject));
-    }
-
-    /**
-     * check if the adventure object is null
-     * @param adventureObject
-     */
-    private void checkNull(JSONObject adventureObject) {
-        if(adventureObject == null) {
-            System.out.println("The file you provided does not exist or is empty");
-            System.exit(0);
-        }
     }
 
     /**

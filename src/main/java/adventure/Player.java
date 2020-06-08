@@ -15,7 +15,7 @@ public class Player implements java.io.Serializable {
      * default constructor sets name room and list of all rooms to null
      */
     public Player() {
-        this("",null,null,"");
+        this("No name",null,null,"default_adventure.json");
     }
 
     /**
@@ -162,7 +162,7 @@ public class Player implements java.io.Serializable {
     public String inventory(Command command) {
         String inventoryString = "";
         if(inventory.isEmpty()) {
-            return("You have nothing in your inventory.");
+            return("Inventory empty.");
         }
         for(Item item : inventory) {
             inventoryString = inventoryString + " - " + item.getName() + "\n";

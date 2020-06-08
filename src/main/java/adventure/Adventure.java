@@ -131,7 +131,7 @@ public class Adventure implements java.io.Serializable{
             JSONArray loot = (JSONArray) roomObject.get("loot");
 
             for(Object currentItem : loot) {
-                roomItems.add((JSONObject) currentItem);
+                roomItems.add((JSONObject) currentItem);//FIXME this does this for all rooms so addsmultiple
             }
             addItem(roomItems, items, tempRoom);
         }
