@@ -54,7 +54,9 @@ public class Command {
      */
     public Command(String command, String what) throws InvalidCommandException{
         command = command.toLowerCase();
-        what = what.toLowerCase();
+        if(what != null) {
+            what = what.toLowerCase();
+        }
         validateCommand(command, what);
     }
 

@@ -8,13 +8,13 @@ import java.awt.*;
 public class GameView extends JFrame {
     private static final long serialVersionUID = 7305436428373534270L;
     public static final int WIDTH = 700;
-    public static final int HEIGHT = 500;
-    Dimension dimension = new Dimension(200,50);
+    public static final int HEIGHT = 450;
+    //Dimension dimension = new Dimension(200,50);
     Container contentPane;
     private Game game;
     private Adventure adventure;
     JLabel adventureName = new JLabel("Adventure Name: Default_Adventure");
-    JLabel playerName = new JLabel("Player Name: Eric");
+    JLabel playerName = new JLabel("Player Name: No Name");
     JTextField inputField = new JTextField("Type your commands here");
     JTextArea outputArea = new JTextArea();
     JTextArea inventory = new JTextArea();
@@ -30,8 +30,10 @@ public class GameView extends JFrame {
         super();
         game = newGame;
         adventure = newGame.gameIntro(new String[] {""});
+        game.changePlayerName("No Name", adventure);
         setUpSize();
         setMainContainer();
+        outputArea.setText(game.displayStartingRoom(adventure.getCurrentRoom()));
     }
 
     private void setUpSize() {
@@ -46,6 +48,14 @@ public class GameView extends JFrame {
         contentPane.add(namePanel(), BorderLayout.PAGE_START);
         contentPane.add(playPanel(), BorderLayout.CENTER);
         contentPane.add(rightPanel(), BorderLayout.LINE_END);
+        contentPane.add(bottomPanel(), BorderLayout.PAGE_END);
+    }
+
+    private JPanel bottomPanel() {
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        //bottomPanel.setSize(800, 100);
+        return(bottomPanel);
     }
 
     private JPanel namePanel() {
@@ -65,7 +75,7 @@ public class GameView extends JFrame {
     }
 
     private JTextField inputField() {
-        //inputField.addActionListener(enterPressed -> changeName(inputField));
+        inputField.addActionListener(enterPressed -> doCommand(inputField));
         inputField.setColumns(45);
         inputField.setMargin(new Insets(5,5,5,5));
         return(inputField);
@@ -76,6 +86,7 @@ public class GameView extends JFrame {
         outputArea.setRows(20);
         outputArea.setMargin(new Insets(5,5,5,5));
         outputArea.setEditable(false);
+        outputArea.setLineWrap(true);
         return(outputArea);
     }
 
@@ -133,8 +144,8 @@ public class GameView extends JFrame {
     }
 
     private JTextArea inventory() {
-        inventory.setColumns(2);
-        inventory.setRows(2);
+        inventory.setColumns(15);
+        inventory.setRows(10);
         inventory.setMargin(new Insets(5,5,5,5));
         inventory.setEditable(false);
         return(inventory);
@@ -147,19 +158,17 @@ public class GameView extends JFrame {
             return;
         }
         //set the Game player name to the new name
-        changePlayerName(name);
-        
+        game.changePlayerName(name,adventure);
         //set the player jlabel to the new name
         playerName.setText("Player Name: " + name);
         outputArea.setText("Player name changed to " + name);
     }
 
-    private void changePlayerName(String name) {
-        if(adventure.getPlayer() == null) {
-            adventure.setPlayer(new Player(name, adventure.getCurrentRoom(), adventure.listAllRooms(),""));
-        } else {
-            adventure.getPlayer().setName(name);
-        }
+    private void doCommand(JTextField textField) {
+        outputArea.setText(game.checkCommand(textField.getText(), adventure.getPlayer()));
+        inventory.setText("Inventory:\n" + game.checkCommand("inventory", adventure.getPlayer()));
+        textField.setText("");
     }
+    
     
 }

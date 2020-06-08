@@ -23,7 +23,7 @@ public class Player implements java.io.Serializable {
      * @param newName : the name of the player I guess? lol
      * @param newRoom : the room the player is in
      * @param listAllRooms : the list of all of the rooms
-     * @param newSaveGameName : the name the game will be saved as
+     * @param newSaveGameName : the name the game will be saved
      */
     public Player(String newName, Room newRoom, ArrayList<Room> listAllRooms, String newSaveGameName) {
         inventory = new ArrayList<Item>();
@@ -162,7 +162,7 @@ public class Player implements java.io.Serializable {
     public String inventory(Command command) {
         String inventoryString = "";
         if(inventory.isEmpty()) {
-            return("You have nothing in your inventory.\n");
+            return("You have nothing in your inventory.");
         }
         for(Item item : inventory) {
             inventoryString = inventoryString + " - " + item.getName() + "\n";

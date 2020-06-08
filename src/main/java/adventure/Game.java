@@ -55,9 +55,9 @@ public class Game implements java.io.Serializable {
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
 
-            checkCommand(inputLine, player);
+            System.out.println(checkCommand(inputLine, player));
             running = exit(scnr, inputLine, adventure, player);
-            System.out.println("");
+            //System.out.println("");
         }
     }
 
@@ -196,7 +196,7 @@ public class Game implements java.io.Serializable {
         Adventure adventure = (Adventure) in.readObject();
         String saveGameName = adventure.getPlayer().getSaveGameName();
         System.out.println("File \"" + saveGameName + "\"" + " Loaded!");
-        displayStartingRoom(adventure.getPlayer().getCurrentRoom());
+        System.out.println(displayStartingRoom(adventure.getPlayer().getCurrentRoom()));
         in.close();
         return(adventure);
     }
@@ -216,7 +216,7 @@ public class Game implements java.io.Serializable {
             System.out.println("What would you like your player to be called?\n");
             //String playerName = scnr.nextLine();
             player = new Player(scnr.nextLine(),room, adventure.listAllRooms(),"");
-            displayStartingRoom(room);
+            System.out.println(displayStartingRoom(room));
         } else {
             player = adventure.getPlayer();
         }
@@ -226,12 +226,13 @@ public class Game implements java.io.Serializable {
 
     /**
      * @param room : the current room
+     * @return the string telling the user where the user is
      * outputs the room name and short description
      */
-    public void displayStartingRoom(Room room) {
-        System.out.println("You are in " + room.getName() + ", " + room.getShortDescription() + ".");
-        printItems(room);
-        System.out.println("");
+    public String displayStartingRoom(Room room) {
+        String output = "";
+        output = output + "You are in " + room.getName() + ", " + room.getShortDescription() + ".\n" + getItems(room);
+        return(output);
     }
 
     /**
@@ -368,53 +369,86 @@ public class Game implements java.io.Serializable {
      * checkCommand creates a command
      * @param inputLine : the line that the user inputed
      * @param player : the player
+     * @return the string telling the user what they did
      */
-    public void checkCommand(String inputLine, Player player) {
+    public String checkCommand(String inputLine, Player player) {
         Room room = player.getCurrentRoom();
-        
+        String output = "";
         try {
             Parser parser = new Parser();
             Command command = parser.parseUserCommand(inputLine);
-            doCommand(command, player);
-            movedRooms(room, player);
+            output = output + doCommand(command, player) + "\n" + movedRooms(room, player);
 
         } catch(InvalidCommandException e) {
-            System.out.println(e.getMessage());
+            output = e.getMessage() + "\n";
         }
+        return(output);
     }
 
-    private void movedRooms(Room room, Player player) {
+    /**
+     * if the room changed, print th eitems in that room
+     * @param room - the room
+     * @param player - the player
+     * @return the string of the items in that room or nothing
+     */
+    private String movedRooms(Room room, Player player) {
         if(room != player.getCurrentRoom()) {
-            printItems(player.getCurrentRoom());
+            return(getItems(player.getCurrentRoom()));
         }
+        return("");
     }
 
     /**
      * doCommand tells the player class what command to execute
      * @param command : the command the user entered
      * @param player : the player
+     * @return the string of what they player did
      */
-    public void doCommand(Command command, Player player) {
+    public String doCommand(Command command, Player player) {
+        String output = "";
         if(command.getActionWord().equals("look")) {
-            System.out.println(player.look(command));
+            output = player.look(command);
         } else if(command.getActionWord().equals("go")) {
-            System.out.println(player.go(command));
+            output = player.go(command);
         } else if(command.getActionWord().equals("take")) {
-            System.out.println(player.take(command));
+            output = player.take(command);
         } else if(command.getActionWord().equals("inventory")) {
-            System.out.print(player.inventory(command));
+            output = player.inventory(command);
         }
+        return(output);
     }
 
     /**
      * printItem prints the items it a certain room
      * @param room : the current room
      */
-    public void printItems(Room room) {
+    /*public void printItems(Room room) {
         //print items in the room
         ArrayList<Item> itemList = room.listItems();
         for(Item tempItem : itemList) {
             System.out.println("There is a " + tempItem.getName() + " here.");
+        }
+    }*/
+
+    public String getItems(Room room) {
+        String items = "";
+        ArrayList<Item> itemList = room.listItems();
+        for(Item tempItem : itemList) {
+            items = items + "There is a " + tempItem.getName() + " here.\n";
+        }
+        return(items);
+    }
+
+    /**
+     * changed the player name
+     * @param name - the new name of the player
+     * @param adventure - the adventure object
+     */
+    public void changePlayerName(String name, Adventure adventure) {
+        if(adventure.getPlayer() == null) {
+            adventure.setPlayer(new Player(name, adventure.getCurrentRoom(), adventure.listAllRooms(),""));
+        } else {
+            adventure.getPlayer().setName(name);
         }
     }
 
