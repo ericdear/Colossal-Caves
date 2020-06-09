@@ -202,14 +202,6 @@ public class Game implements java.io.Serializable {
         System.out.println(displayStartingRoom(adventure.getPlayer().getCurrentRoom()));
         in.close();
 
-
-        //wtffffff
-        System.out.println(adventure.getCurrentRoom().listItems());
-        //TEST FIXME
-        for(Item item : adventure.getCurrentRoom().listItems()) {
-            System.out.println("item - " + item.getId() + "\n" + item.getName() + "\n" + item.getLongDescription() + "\n\n");
-        }
-
         return(adventure);
     }
 

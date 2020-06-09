@@ -131,7 +131,7 @@ public class Adventure implements java.io.Serializable{
             JSONArray loot = (JSONArray) roomObject.get("loot");
 
             for(Object currentItem : loot) {
-                roomItems.add((JSONObject) currentItem);//FIXME this does this for all rooms so addsmultiple
+                roomItems.add((JSONObject) currentItem);
             }
             addItem(roomItems, items, tempRoom);
         }
@@ -159,12 +159,12 @@ public class Adventure implements java.io.Serializable{
      * @param tempRoom - the current room
      */
     private void checkItem(JSONObject loot, JSONObject item, Room tempRoom) {
-        long itemId = Long.parseLong(item.get("id").toString());
-        String itemName = item.get("name").toString();
-        String itemDesc = item.get("desc").toString();
-        allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
         if(loot.get("id").toString().equals(item.get("id").toString())) {
             tempRoom.setRoomItem(item, tempRoom);
+            long itemId = Long.parseLong(item.get("id").toString());
+            String itemName = item.get("name").toString();
+            String itemDesc = item.get("desc").toString();
+            allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
         }
     }
 

@@ -2,9 +2,6 @@ package adventure;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.DefaultCaret;
-
-import java.awt.event.*;
 import java.awt.*;
 
 public class GameView extends JFrame {
@@ -37,16 +34,19 @@ public class GameView extends JFrame {
         super();
         game = newGame;
         adventure = game.gameIntro(args);
-        filename = game.setFileName(args, adventure);
+        
         setUpSize();
         setMainContainer();
         setAdventure(args);
     }
 
     private void setAdventure(String[] args) {
+        filename = game.setFileName(args, adventure);
+        
+
         checkNullAdventure();
         outputArea.append(filename + " has been loaded\n\n");
-        game.possibleNewPlayer(adventure, "No name", filename);
+
         outputArea.append(game.displayStartingRoom(adventure.getPlayer().getCurrentRoom()) + "\n");
         playerName.setText("Player name: " + adventure.getPlayer().getName());
         adventureName.setText("Adventure name: " + adventure.getPlayer().getSaveGameName());
@@ -59,7 +59,9 @@ public class GameView extends JFrame {
             adventure = game.gameIntro(new String[] {""});
             filename = "default_adventure.json";
             outputArea.append("File could not be opened.\n\n");
+            game.possibleNewPlayer(adventure, "No name", filename);
         } else {
+            game.possibleNewPlayer(adventure, "No name", filename);
             filename = adventure.getPlayer().getSaveGameName();
         }
     }
@@ -169,7 +171,7 @@ public class GameView extends JFrame {
 
     private JButton saveButton() {
         JButton saveButton = new JButton("Save game");
-        //saveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        saveButton.addActionListener(buttonPressed -> save());
         return(saveButton);
     }
 
@@ -197,6 +199,7 @@ public class GameView extends JFrame {
     private void doCommand(JTextField textField) {
         outputArea.append(textField.getText() + "\n" + game.checkCommand(textField.getText(), adventure.getPlayer()) + "\n");
         setInventory();
+        checkExit(textField.getText());
         textField.setText("");
 
         outputArea.setCaretPosition(outputArea.getDocument().getLength());
@@ -207,6 +210,7 @@ public class GameView extends JFrame {
     }
 
     private void loadFile(String flag) {
+        askToSave();
         String file = JOptionPane.showInputDialog("Enter the file path and name.");
         if(file == null || file.equals("")) {
             return;
@@ -215,6 +219,47 @@ public class GameView extends JFrame {
         adventure = game.gameIntro(arguments);
         setAdventure(arguments);
     }
-    
+
+    private void save() {
+        filename = JOptionPane.showInputDialog("What would you like to name your saved game?");
+        if(filename == null || filename.equals("")) {
+            return;
+        }
+        adventure.getPlayer().setSaveGameName(filename);
+
+        game.saveGame(adventure, adventure.getPlayer(), filename);
+    }
+
+    private void checkExit(String command) {
+        command.toLowerCase();
+        if(command.equals("quit") || command.equals("exit")) {
+            exit();
+        }
+    }
+
+    private void exit() {
+        String saveAnswer = "";
+        while(!saveAnswer.equals("yes") && !saveAnswer.equals("no")) {
+            saveAnswer = JOptionPane.showInputDialog("Are you sure you want to exit? (yes/no)");
+            if(saveAnswer == null || saveAnswer.equals("")) {
+                return;
+            } else if(saveAnswer.equals("yes")) {
+                askToSave();
+                System.exit(0);
+            }
+        }
+    }
+
+    private void askToSave() {
+        String saveAnswer = "";
+        while(!saveAnswer.equals("yes") && !saveAnswer.equals("no")) {
+            saveAnswer = JOptionPane.showInputDialog("Do you want to save first? (yes/no)");
+            if(saveAnswer == null || saveAnswer.equals("")) {
+                return;
+            } else if(saveAnswer.equals("yes")) {
+                save();
+            }
+        }
+    }
     
 }
