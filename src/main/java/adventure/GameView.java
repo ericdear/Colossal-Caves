@@ -1,26 +1,48 @@
 package adventure;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.Container;
+import java.awt.Insets;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+
 
 public class GameView extends JFrame {
     private static final long serialVersionUID = 7305436428373534270L;
     public static final int WIDTH = 700;
     public static final int HEIGHT = 450;
 
-    Container contentPane;
+    private static final int NONE = 0;
+    private static final int SMALL = 5;
+    private static final int MEDIUM = 10;
+
+    private static final int SMALLCOL = 15;
+    private static final int BIGCOL = 45;
+    private static final int ROWS = 20;
+
+    private Container contentPane;
     private Game game;
     private Adventure adventure;
     private String filename;
 
-    JLabel adventureName = new JLabel("Adventure Name: Default_Adventure");
-    JLabel playerName = new JLabel("Player Name: ");
-    JTextField inputField = new JTextField("Type your commands here");
-    JTextArea outputArea = new JTextArea();
-    JTextArea inventory = new JTextArea();
+    private JLabel adventureName = new JLabel("Adventure Name: Default_Adventure");
+    private JLabel playerName = new JLabel("Player Name: ");
+    private JTextField inputField = new JTextField("Type your commands here");
+    private JTextArea outputArea = new JTextArea();
+    private JTextArea inventory = new JTextArea();
 
-    JScrollPane scrollPane;
+    private JScrollPane scrollPane;
     //JScrollBar scrollBar;
     
 
@@ -68,8 +90,8 @@ public class GameView extends JFrame {
 
     private void setUpSize() {
         setSize(WIDTH, HEIGHT);
-		setTitle("Adventure!");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+        setTitle("Adventure!");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void setMainContainer() {
@@ -92,7 +114,7 @@ public class GameView extends JFrame {
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.PAGE_AXIS));
         namePanel.add(adventureName);
-        playerName.setBorder(new EmptyBorder(0, 0, 10, 0));
+        playerName.setBorder(new EmptyBorder(NONE, NONE, MEDIUM, NONE));
         namePanel.add(playerName);
         return(namePanel);
     }
@@ -106,15 +128,15 @@ public class GameView extends JFrame {
 
     private JTextField inputField() {
         inputField.addActionListener(enterPressed -> doCommand(inputField));
-        inputField.setColumns(45);
-        inputField.setMargin(new Insets(5,5,5,5));
+        inputField.setColumns(BIGCOL);
+        inputField.setMargin(new Insets(SMALL,SMALL,SMALL,SMALL));
         return(inputField);
     }
 
     private JScrollPane outputArea() {
-        outputArea.setColumns(45);
-        outputArea.setRows(20);
-        outputArea.setMargin(new Insets(5,5,5,5));
+        outputArea.setColumns(BIGCOL);
+        outputArea.setRows(ROWS);
+        outputArea.setMargin(new Insets(SMALL,SMALL,SMALL,SMALL));
         outputArea.setEditable(false);
         outputArea.setLineWrap(true);
         outputArea.setWrapStyleWord(true);
@@ -126,7 +148,7 @@ public class GameView extends JFrame {
     private JPanel rightPanel() {
         JPanel rightPanel = new JPanel();
         GridLayout layout = new GridLayout(2,0);
-        layout.setVgap(5);
+        layout.setVgap(SMALL);
         rightPanel.setLayout(layout);
         rightPanel.add(menuPanel());
         rightPanel.add(inventory());
@@ -135,7 +157,7 @@ public class GameView extends JFrame {
 
     private JPanel menuPanel() {
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(5,0));
+        menuPanel.setLayout(new GridLayout(SMALL,0));
         menuPanel.add(menuLabel());
         menuPanel.add(changeNameButton());
         menuPanel.add(loadJsonButton());
@@ -176,9 +198,9 @@ public class GameView extends JFrame {
     }
 
     private JTextArea inventory() {
-        inventory.setColumns(15);
-        inventory.setRows(10);
-        inventory.setMargin(new Insets(5,5,5,5));
+        inventory.setColumns(SMALLCOL);
+        inventory.setRows(MEDIUM);
+        inventory.setMargin(new Insets(SMALL,SMALL,SMALL,SMALL));
         inventory.setEditable(false);
         return(inventory);
     }
@@ -197,7 +219,8 @@ public class GameView extends JFrame {
     }
 
     private void doCommand(JTextField textField) {
-        outputArea.append(textField.getText() + "\n" + game.checkCommand(textField.getText(), adventure.getPlayer()) + "\n");
+        String output = game.checkCommand(textField.getText(), adventure.getPlayer());
+        outputArea.append(textField.getText() + "\n" + output + "\n");
         setInventory();
         checkExit(textField.getText());
         textField.setText("");
