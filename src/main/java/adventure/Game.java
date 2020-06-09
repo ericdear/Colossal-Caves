@@ -44,6 +44,11 @@ public class Game implements java.io.Serializable {
         }
     }
 
+    /**
+     * checks json errors
+     * @param adventure - adventure object
+     * @return the adventure if no errors and null if there are errors
+     */
     public Adventure checkJsonErrors(Adventure adventure) {
         if(adventure.getJsonTest().test().equals("")) {
             return(adventure);
@@ -239,9 +244,9 @@ public class Game implements java.io.Serializable {
 
     /**
      * sets up the player without prompting user for a name
-     * @param adventure- the adventure
+     * @param adventure the adventure
      * @param name - the players name
-     * @return the player
+     * @param filename - the file name
      */
     public void possibleNewPlayer(Adventure adventure, String name, String filename) {
         if(adventure.getPlayer() == null) {
@@ -252,6 +257,7 @@ public class Game implements java.io.Serializable {
     /**
      * sets the file name
      * @param args - the command line arguments
+     * @param adventure - the adventure object
      * @return the name of the file
      */
     public String setFileName(String[] args, Adventure adventure) {

@@ -32,10 +32,17 @@ public class Adventure implements java.io.Serializable{
         player = null;
     }
 
+    /**
+     * sets the json test object
+     * @param newJsonTest
+     */
     public void setJsonTest(JsonTest newJsonTest) {
         jsonTest = newJsonTest;
     }
 
+    /**
+     * @return the json test object
+     */
     public JsonTest getJsonTest() {
         return(jsonTest);
     }
@@ -46,15 +53,15 @@ public class Adventure implements java.io.Serializable{
      * @param items : a jsonobject arraylist of all items
      */
     public void setAdventure(ArrayList<JSONObject> newRooms, ArrayList<JSONObject> items) {
-        JSONObject roomObject;
-        Room tempRoom;
+        //JSONObject roomObject;
+        //Room tempRoom;
         setRoomArrayList(newRooms);
 
         //go through the list of rooms and get the enrances and items
         for(int i = 0; i < roomList.size(); i++) {
             //create all the rooms and put into arraylist
-            roomObject = newRooms.get(i);
-            tempRoom = roomList.get(i);
+            JSONObject roomObject = newRooms.get(i);
+            Room tempRoom = roomList.get(i);
 
             //set the current room to the room with the start key
             checkForStart(roomObject, i);
@@ -63,6 +70,7 @@ public class Adventure implements java.io.Serializable{
             setLoot(roomObject, tempRoom, items);
             setEntrance(roomObject, tempRoom);
         }
+        jsonTest.testEntrances(roomList);
     }
 
     /**
@@ -160,7 +168,7 @@ public class Adventure implements java.io.Serializable{
         for(JSONObject loot : roomItems) {
             missing = true;
             for(JSONObject item2 : items) {
-                if(checkItem(loot, item2, tempRoom) == true) {
+                if(checkItem(loot, item2, tempRoom)) {
                     missing = false;
                 }
             }
@@ -195,11 +203,17 @@ public class Adventure implements java.io.Serializable{
     public void setEntrance(JSONObject roomObject, Room tempRoom) {
         if(roomObject.containsKey("entrance")) {
             JSONArray entrances = (JSONArray) roomObject.get("entrance");
-
+            noExitCheck(entrances);
             for(Object currentEntrance : entrances) {
                 addEntrance(tempRoom, currentEntrance);
             }
-        } else {
+        } else if(!roomObject.containsKey("entrance")) {
+            jsonTest.setNoExits(true);
+        }
+    }
+
+    private void noExitCheck(JSONArray entrances) {
+        if(entrances.isEmpty()) {
             jsonTest.setNoExits(true);
         }
     }

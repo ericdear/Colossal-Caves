@@ -164,6 +164,13 @@ public class Command {
     }
 
     /**
+     * @return the list of directions
+     */
+    public ArrayList<String> getDirections() {
+        return(DIRECTIONS);
+    }
+
+    /**
      * @return the action word and noun as a string
      */
     public String toString() {
