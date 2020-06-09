@@ -44,6 +44,15 @@ public class Game implements java.io.Serializable {
         }
     }
 
+    public Adventure checkJsonErrors(Adventure adventure) {
+        if(adventure.getJsonTest().test().equals("")) {
+            return(adventure);
+        } else {
+            System.out.println("Problems with JSON file!\n" + adventure.getJsonTest().test());
+            return(null);
+        }
+    }
+
     /**
      * the loop where the game is running
      * @param scnr - the input scanner
@@ -367,7 +376,7 @@ public class Game implements java.io.Serializable {
             return(tryLoadGame(file));
         }
         adventureObject = getAdventureJson(args);
-        return(generateAdventure(adventureObject));
+        return(checkJsonErrors(generateAdventure(adventureObject)));
     }
 
     /**

@@ -12,6 +12,8 @@ public class Adventure implements java.io.Serializable{
     private ArrayList<Item> allItems;
     private Room currentRoom;
     private Player player;
+
+    private JsonTest jsonTest;
     
 
     /* ======== Required public methods ========== */
@@ -26,7 +28,16 @@ public class Adventure implements java.io.Serializable{
     public Adventure() {
         roomList = new ArrayList<Room>();
         allItems = new ArrayList<Item>();
+        jsonTest = new JsonTest();
         player = null;
+    }
+
+    public void setJsonTest(JsonTest newJsonTest) {
+        jsonTest = newJsonTest;
+    }
+
+    public JsonTest getJsonTest() {
+        return(jsonTest);
     }
 
     /**
@@ -145,10 +156,15 @@ public class Adventure implements java.io.Serializable{
      * @param tempRoom : the currennt room that items are being added to
      */
     private void addItem(ArrayList<JSONObject> roomItems, ArrayList<JSONObject> items, Room tempRoom) {
-        for(JSONObject item1 : roomItems) {
+        boolean missing;
+        for(JSONObject loot : roomItems) {
+            missing = true;
             for(JSONObject item2 : items) {
-                checkItem(item1, item2, tempRoom);
+                if(checkItem(loot, item2, tempRoom) == true) {
+                    missing = false;
+                }
             }
+            jsonTest.setMissingItem(missing);
         }
     }
 
@@ -157,15 +173,18 @@ public class Adventure implements java.io.Serializable{
      * @param loot - the item in the room
      * @param item - the item in the list of items
      * @param tempRoom - the current room
+     * @return if the item was added or not
      */
-    private void checkItem(JSONObject loot, JSONObject item, Room tempRoom) {
+    private boolean checkItem(JSONObject loot, JSONObject item, Room tempRoom) {
         if(loot.get("id").toString().equals(item.get("id").toString())) {
             tempRoom.setRoomItem(item, tempRoom);
             long itemId = Long.parseLong(item.get("id").toString());
             String itemName = item.get("name").toString();
             String itemDesc = item.get("desc").toString();
             allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
+            return(true);
         }
+        return(false);
     }
 
     /**
@@ -180,16 +199,21 @@ public class Adventure implements java.io.Serializable{
             for(Object currentEntrance : entrances) {
                 addEntrance(tempRoom, currentEntrance);
             }
+        } else {
+            jsonTest.setNoExits(true);
         }
     }
 
     private void addEntrance(Room tempRoom, Object currentEntrance) {
         JSONObject entrance = (JSONObject) currentEntrance;
+        boolean missing = true;
         for(Room connectedRoom : roomList) {
             if(entrance.get("id").equals(connectedRoom.getId())) {
                 tempRoom.setRoomEntrance(entrance.get("dir").toString(),connectedRoom);
+                missing = false;
             }
         }
+        jsonTest.setMissingRoom(missing);
     }
 
     /**

@@ -53,10 +53,6 @@ public class Command {
      * @param what      The second word of the command.
      */
     public Command(String command, String what) throws InvalidCommandException{
-        command = command.toLowerCase();
-        if(what != null) {
-            what = what.toLowerCase();
-        }
         validateCommand(command, what);
     }
 
@@ -136,8 +132,11 @@ public class Command {
      * @return true if the command is valid
      */
     private boolean validActionWord(String command) {
+        if(command == null) {
+            return(false);
+        }
         for(String tempCommand : COMMANDS) {
-            if(tempCommand.equals(command)) {
+            if(tempCommand.equals(command.toLowerCase())) {
                 return(true);
             }
         }
@@ -150,7 +149,7 @@ public class Command {
      */
     private boolean validDirection(String direction) {
         for(String tempDirection : DIRECTIONS) {
-            if(tempDirection.equals(direction)) {
+            if(tempDirection.equals(direction.toLowerCase())) {
                 return(true);
             }
         }
