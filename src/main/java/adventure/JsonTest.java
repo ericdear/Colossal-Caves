@@ -3,7 +3,9 @@ package adventure;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class JsonTest {
+public class JsonTest implements java.io.Serializable {
+    private static final long serialVersionUID = -7177533858802588594L;
+    
     private boolean missingItem;
     private boolean equalExits;
     private boolean missingRoom;
