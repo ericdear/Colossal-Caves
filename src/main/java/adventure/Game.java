@@ -477,6 +477,12 @@ public class Game implements java.io.Serializable {
         String output = "";
         if(command.getActionWord().equals("read")) {
             output = player.read(command);
+        } else if(command.getActionWord().equals("toss")) {
+            output = player.toss(command);
+        } else if(command.getActionWord().equals("eat")) {
+            output = player.eat(command);
+        } else if(command.getActionWord().equals("wear")) {
+            output = player.wear(command);
         }
         return(output);
     }

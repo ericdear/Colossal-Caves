@@ -12,5 +12,5 @@
 |missingRoom()|returns the error message|boolean missingRoom|none|none|6|
 |noExits()|returns the error message|boolean noExits|none|none|6|
 |test()|returns the string of all errors|none|missingItem(), equalExits(), missingRoom(), noExits()|none|5|
-|testEntrances(ArrayList<Room>)|tests if the entrances of rooms match|HashMap<String, String> DIRECTIONMAP|setEqualExits(boolean)|HashMap<String, String> DIRECTIONMAP, HashMap.Entry entry, Room room|12|
+|testEntrances(ArrayList\<Room>)|tests if the entrances of rooms match|HashMap<String, String> DIRECTIONMAP|setEqualExits(boolean)|HashMap<String, String> DIRECTIONMAP, HashMap.Entry entry, Room room|12|
 |toString()|returns the error message|none|test()|none|3|

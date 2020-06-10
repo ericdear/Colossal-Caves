@@ -17,6 +17,9 @@ public class Command {
         COMMANDS.add("quit");
         COMMANDS.add("inventory");
         COMMANDS.add("read");
+        COMMANDS.add("toss");
+        COMMANDS.add("eat");
+        COMMANDS.add("wear");
 
         DIRECTIONS.add("n");
         DIRECTIONS.add("e");

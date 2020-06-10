@@ -2,8 +2,8 @@
 
 | method sig | responsibility | instance vars used | other class methods called | objects used with method calls | lines of code |
 |:----------:|:--------------:|:------------------:|:--------------------------:|:------------------------------:|:-------------:|
-|Player()|initializes player|none|Player(String, Room, ArrayList<Room>, String)|this|3|
-|Player(String, Room, ArrayList<Room>, String)|initializes player|ArrayList<Item> inventory|setRoomList(ArrayList<Room>), setName(String), setRoom(Room), setSaveGameName(String)|this|7|
+|Player()|initializes player|none|Player(String, Room, ArrayList\<Room>, String)|this|3|
+|Player(String, Room, ArrayList\<Room>, String)|initializes player|ArrayList\<Item> inventory|setRoomList(ArrayList\<Room>), setName(String), setRoom(Room), setSaveGameName(String)|this|7|
 |setRoomList(ArrayList<Room>)|sets the list of all rooms|ArrayList<Room> rooms|none|none|3|
 |getRoomList()|returns the list of rooms|ArrayList<Room> rooms|none|none|3|
 |setRoom(Room)|sets the room the player is in|Room room|none|none|3|
