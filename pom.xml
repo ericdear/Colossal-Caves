@@ -89,7 +89,7 @@ to run your executable jar: java -jar <pathtoexecutablejarwithdependencies> <fla
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>adventure.GameView</mainClass>
+                            <mainClass>adventure.Game</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -3,6 +3,9 @@ package adventure;
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.fail;
 import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
+
 import org.junit.Test;
 import org.junit.Before;
 
@@ -15,6 +18,18 @@ public class RoomTest{
     public void setup(){
         testRoom = new Room();
         connectedRoom = new Room();
+    }
+
+    @Test
+    public void testSetRoomEntrances() {
+        System.out.println("Testing setConnectedRooms");
+        Room room = new Room();
+        HashMap<String, Room> entrances = new HashMap<String, Room>();
+        Room newRoom = new Room();
+        newRoom.setName("Eric");
+        entrances.put("n",newRoom);
+        room.setRoomEntrances(entrances);
+        assertTrue(room.getConnectedRoom("n").getName().equals("Eric"));
     }
 
     @Test

@@ -5,19 +5,19 @@ import java.util.HashMap;
 
 public class JsonTest implements java.io.Serializable {
     private static final long serialVersionUID = -7177533858802588594L;
-    
+
     private boolean missingItem;
     private boolean equalExits;
     private boolean missingRoom;
     private boolean noExits;
     private static final HashMap<String,String> DIRECTIONMAP = new HashMap<String,String>();
     static {
-        DIRECTIONMAP.put("N", "S");
-        DIRECTIONMAP.put("S", "N");
-        DIRECTIONMAP.put("E", "W");
-        DIRECTIONMAP.put("W", "E");
-        DIRECTIONMAP.put("UP", "DOWN");
-        DIRECTIONMAP.put("DOWN", "UP");
+        DIRECTIONMAP.put("n", "s");
+        DIRECTIONMAP.put("s", "n");
+        DIRECTIONMAP.put("e", "w");
+        DIRECTIONMAP.put("w", "e");
+        DIRECTIONMAP.put("up", "down");
+        DIRECTIONMAP.put("down", "up");
     }
 
     /**

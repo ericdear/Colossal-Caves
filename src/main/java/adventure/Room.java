@@ -25,9 +25,9 @@ public class Room implements java.io.Serializable {
         roomEntrances = new HashMap<String, Room>();
         allRooms = new ArrayList<Room>();
         this.setId(0);
-        this.setName(null);
-        this.setShortDescription(null);
-        this.setLongDescription(null);
+        this.setName("");
+        this.setShortDescription("");
+        this.setLongDescription("");
     }
 
     /**
@@ -215,7 +215,7 @@ public class Room implements java.io.Serializable {
     /**
      * @return the name of the room
      */
-    public String toString() {
+    /*public String toString() {
         return(name);
-    }
+    }*/
 }
