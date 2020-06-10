@@ -13,7 +13,7 @@ public class Item implements java.io.Serializable{
      * default constructor that sets id to 0 and the rest to null
      */
     public Item() {
-        this(0,null,null,null);
+        this(0,"","",null);
     }
 
     /**
