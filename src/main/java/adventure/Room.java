@@ -123,9 +123,10 @@ public class Room implements java.io.Serializable {
     }
 
     private Item checkClothing(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("wearable") && item.containsKey("readable")) {
+        boolean bothTrue = item.containsKey("wearable") && item.containsKey("readable");
+        if(bothTrue && item.get("wearable").equals(true) && item.get("readable").equals(true)) {
             return(new BrandedClothing(itemId, itemName, itemDesc,(Room) tempRoom));
-        } else if(item.containsKey("wearable")) {
+        } else if(item.containsKey("wearable") && item.get("wearable").equals(true)) {
             return(new Clothing(itemId, itemName, itemDesc,(Room) tempRoom));
         } else {
             return(null);
@@ -133,7 +134,7 @@ public class Room implements java.io.Serializable {
     }
 
     private Item checkWeapon(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("tossable")) {
+        if(item.containsKey("tossable") && item.get("tossable").equals(true)) {
             return(new Weapon(itemId, itemName, itemDesc,(Room) tempRoom));
         } else {
             return(null);
@@ -141,9 +142,10 @@ public class Room implements java.io.Serializable {
     }
 
     private Item checkFood(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("edible") && item.containsKey("tossable")) {
+        boolean bothTrue = item.containsKey("edible") && item.containsKey("tossable");
+        if(bothTrue && item.get("edible").equals(true) && item.get("tossable").equals(true)) {
             return(new SmallFood(itemId, itemName, itemDesc,(Room) tempRoom));
-        } else if(item.containsKey("edible")) {
+        } else if(item.containsKey("edible") && item.get("edible").equals(true)) {
             return(new Food(itemId, itemName, itemDesc,(Room) tempRoom));
         } else {
             return(null);
@@ -151,7 +153,7 @@ public class Room implements java.io.Serializable {
     }
 
     private Item checkSpell(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("readable")) {
+        if(item.containsKey("readable") && item.get("readable").equals(true)) {
             return(new Spell(itemId, itemName, itemDesc,(Room) tempRoom));
         } else {
             return(null);
