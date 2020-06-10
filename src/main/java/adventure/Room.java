@@ -215,7 +215,7 @@ public class Room implements java.io.Serializable {
     /**
      * @return the name of the room
      */
-    /*public String toString() {
+    public String toString() {
         return(name);
-    }*/
+    }
 }
