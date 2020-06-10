@@ -80,7 +80,7 @@ public class GameView extends JFrame {
         if(adventure == null) {
             adventure = game.gameIntro(new String[] {""});
             filename = "default_adventure.json";
-            outputArea.append("File could not be opened.\n\n");
+            outputArea.append(game.getErrorMessage() + "\nFile could not be opened.\nPlease use the menu to load a file or use our default adventure.\n\n");
             game.possibleNewPlayer(adventure, "No name", filename);
         } else {
             game.possibleNewPlayer(adventure, "No name", filename);

@@ -27,6 +27,7 @@ public class Game implements java.io.Serializable {
     /* this is the class that runs the game.
     You may need some member variables */
     private static final long serialVersionUID = -6682124909469554063L;
+    private String errorMessage = "";
 
     public static void main(String[] args) {
         Game theGame = new Game();
@@ -53,9 +54,26 @@ public class Game implements java.io.Serializable {
         if(adventure.getJsonTest().test().equals("")) {
             return(adventure);
         } else {
-            System.out.println("Problems with JSON file!\n" + adventure.getJsonTest().test());
+            setErrorMessage("Problems with JSON file!\n" + adventure.getJsonTest().test());
+            System.out.println(getErrorMessage());
             return(null);
         }
+    }
+
+    /**
+     * sets the error message
+     * used for the gui when a json file has errors
+     * @param message - the message to the user
+     */
+    public void setErrorMessage(String message) {
+        errorMessage = message;
+    }
+
+    /**
+     * @return the error message
+     */
+    public String getErrorMessage() {
+        return(errorMessage);
     }
 
     /**
