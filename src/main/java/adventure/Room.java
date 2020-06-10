@@ -101,11 +101,63 @@ public class Room implements java.io.Serializable {
         long itemId = Long.parseLong(tempItem.get("id").toString());
         String itemName = tempItem.get("name").toString();
         String itemDesc = tempItem.get("desc").toString();
-        Item item = new Item(itemId, itemName, itemDesc, (Room) room);//chage this id to room
+        Item item = checkItemKind(itemId, itemName, itemDesc, (Room) room, tempItem);
         
         //add the item to the roomItems ArrayList!
         roomItems.add(item);
     }
+
+
+    public Item checkItemKind(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
+        if(checkFood(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
+            return(checkFood(itemId, itemName, itemDesc,(Room) tempRoom, item));
+        } else if(checkClothing(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
+            return(checkClothing(itemId, itemName, itemDesc,(Room) tempRoom, item));
+        } else if(checkWeapon(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
+            return(checkWeapon(itemId, itemName, itemDesc,(Room) tempRoom, item));
+        } else if(checkSpell(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
+            return(checkSpell(itemId, itemName, itemDesc,(Room) tempRoom, item));
+        } else {
+            return(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
+        }
+    }
+
+    private Item checkClothing(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
+        if(item.containsKey("wearable") && item.containsKey("readable")) {
+            return(new BrandedClothing(itemId, itemName, itemDesc,(Room) tempRoom));
+        } else if(item.containsKey("wearable")) {
+            return(new Clothing(itemId, itemName, itemDesc,(Room) tempRoom));
+        } else {
+            return(null);
+        }
+    }
+
+    private Item checkWeapon(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
+        if(item.containsKey("tossable")) {
+            return(new Weapon(itemId, itemName, itemDesc,(Room) tempRoom));
+        } else {
+            return(null);
+        }
+    }
+
+    private Item checkFood(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
+        if(item.containsKey("edible") && item.containsKey("tossable")) {
+            return(new SmallFood(itemId, itemName, itemDesc,(Room) tempRoom));
+        } else if(item.containsKey("edible")) {
+            return(new Food(itemId, itemName, itemDesc,(Room) tempRoom));
+        } else {
+            return(null);
+        }
+    }
+
+    private Item checkSpell(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
+        if(item.containsKey("readable")) {
+            return(new Spell(itemId, itemName, itemDesc,(Room) tempRoom));
+        } else {
+            return(null);
+        }
+    }
+
 
     /**
      * puts an entrance into the room entrance hashmap

@@ -189,54 +189,13 @@ public class Adventure implements java.io.Serializable{
             long itemId = Long.parseLong(item.get("id").toString());
             String itemName = item.get("name").toString();
             String itemDesc = item.get("desc").toString();
-            checkItemKind(itemId, itemName, itemDesc, (Room) tempRoom, item);
+            allItems.add(tempRoom.checkItemKind(itemId, itemName, itemDesc, (Room) tempRoom, item));
             return(true);
         }
         return(false);
     }
 
-    private void checkItemKind(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        checkFood(itemId, itemName, itemDesc,(Room) tempRoom, item);
-        checkClothing(itemId, itemName, itemDesc,(Room) tempRoom, item);
-        checkWeapon(itemId, itemName, itemDesc,(Room) tempRoom, item);
-        checkSpell(itemId, itemName, itemDesc,(Room) tempRoom, item);
-        if(!item.containsKey("tossable") && !item.containsKey("readable")) {
-            if(!item.containsKey("edible") && !item.containsKey("wearable")) {
-                allItems.add(new Item(itemId, itemName, itemDesc,(Room) tempRoom));
-            }
-        }
-    }
-
-    private void checkClothing(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("wearable") && item.containsKey("readable")) {
-            allItems.add(new BrandedClothing(itemId, itemName, itemDesc,(Room) tempRoom));
-        } else if(item.containsKey("wearable")) {
-            allItems.add(new Clothing(itemId, itemName, itemDesc,(Room) tempRoom));
-        }
-    }
-
-    private void checkWeapon(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("tossable")) {
-            allItems.add(new Weapon(itemId, itemName, itemDesc,(Room) tempRoom));
-        }
-    }
-
-    private boolean checkFood(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("edible") && item.containsKey("tossable")) {
-            allItems.add(new SmallFood(itemId, itemName, itemDesc,(Room) tempRoom));
-        } else if(item.containsKey("edible")) {
-            allItems.add(new Food(itemId, itemName, itemDesc,(Room) tempRoom));
-        } else {
-            return(false);
-        }
-        return(true);
-    }
-
-    private void checkSpell(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
-        if(item.containsKey("readable")) {
-            allItems.add(new Spell(itemId, itemName, itemDesc,(Room) tempRoom));
-        }
-    }
+    
 
     /**
      * set the entrances of the current room

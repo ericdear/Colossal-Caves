@@ -180,11 +180,14 @@ public class Player implements java.io.Serializable {
     }
 
     public String read(Command command) {
-        Item item = findItem(command.getNoun());
-        if(item != null) {
-            return(item.read());
+        if(findItem(command.getNoun()) instanceof BrandedClothing) {
+            return(((BrandedClothing)findItem(command.getNoun())).read());
+        } else if(findItem(command.getNoun()) instanceof Spell) {
+            return(((Spell)findItem(command.getNoun())).read());
+        } else if(findItem(command.getNoun()) instanceof Item) {
+            return(findItem(command.getNoun()).read());
         } else {
-            return("Item " + command.getNoun() + " not found in inventory");
+            return("Item not found in inventory");
         }
     }
 
