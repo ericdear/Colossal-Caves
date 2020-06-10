@@ -4,8 +4,8 @@
 |:----------:|:--------------:|:------------------:|:--------------------------:|:------------------------------:|:-------------:|
 |Item()|initializes Item|none|Item(long, String, String, Room)|this|3|
 |Item(long, String, String, Room)|initializes Item|none|setId(long), setName(String), setLongDescription(String), setContainingRoom(Room)|this|6|
-|getId()|returns the item id|id|none|none|3|
-|setId(long)|sets the item id|id|none|none|3|
+|getId()|returns the item id|long id|none|none|3|
+|setId(long)|sets the item id|long id|none|none|3|
 |getName()|returns the item name|String name|none|none|3|
 |setName(String)|sets the item name|String name|none|none|3|
 |getLongDescription()|returns the items description|String longDescription|none|none|3|
