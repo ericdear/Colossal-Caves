@@ -432,7 +432,7 @@ public class Game implements java.io.Serializable {
         try {
             Parser parser = new Parser();
             Command command = parser.parseUserCommand(inputLine);
-            output = output + doCommand(command, player) + "\n" + movedRooms(room, player);
+            output = output + doCommand1(command, player) + doCommand2(command, player) + "\n" + movedRooms(room, player);
 
         } catch(InvalidCommandException e) {
             output = e.getMessage() + "\n";
@@ -459,7 +459,7 @@ public class Game implements java.io.Serializable {
      * @param player : the player
      * @return the string of what they player did
      */
-    public String doCommand(Command command, Player player) {
+    public String doCommand1(Command command, Player player) {
         String output = "";
         if(command.getActionWord().equals("look")) {
             output = player.look(command);
@@ -469,6 +469,14 @@ public class Game implements java.io.Serializable {
             output = player.take(command);
         } else if(command.getActionWord().equals("inventory")) {
             output = player.inventory(command);
+        }
+        return(output);
+    }
+
+    public String doCommand2(Command command, Player player) {
+        String output = "";
+        if(command.getActionWord().equals("read")) {
+            output = player.read(command);
         }
         return(output);
     }

@@ -170,6 +170,24 @@ public class Player implements java.io.Serializable {
         return(inventoryString);
     }
 
+    private Item findItem(String itemName) {
+        for(Item item : inventory) {
+            if(item.getName().equals(itemName)) {
+                return(item);
+            }
+        }
+        return(null);
+    }
+
+    public String read(Command command) {
+        Item item = findItem(command.getNoun());
+        if(item != null) {
+            return(item.read());
+        } else {
+            return("Item " + command.getNoun() + " not found in inventory");
+        }
+    }
+
     /**
      * @return the name of the player and what room they are in
      */

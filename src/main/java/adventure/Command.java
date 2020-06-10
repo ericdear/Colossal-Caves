@@ -16,6 +16,7 @@ public class Command {
         COMMANDS.add("exit");
         COMMANDS.add("quit");
         COMMANDS.add("inventory");
+        COMMANDS.add("read");
 
         DIRECTIONS.add("n");
         DIRECTIONS.add("e");
@@ -70,6 +71,13 @@ public class Command {
             throw new InvalidCommandException("You must provide the item to be picked up.");
         } else if(command.equals("inventory") && what != null) {
             throw new InvalidCommandException("To see your inventory, type \"inventory\".");
+        }
+        validateCommand2(command, what);
+    }
+
+    private void validateCommand2(String command, String what) throws InvalidCommandException {
+        if(command.equals("read") && what == null) {
+            throw new InvalidCommandException("You must provide an item to read");
         }
         setCommands(command, what);
     }
