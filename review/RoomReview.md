@@ -2,5 +2,5 @@
 
 | method sig | responsibility | instance vars used | other class methods called | objects used with method calls | lines of code |
 |:----------:|:--------------:|:------------------:|:--------------------------:|:------------------------------:|:-------------:|
-|Room()| initialize |list here|probably your setters|do you use objects of other classes?| lines of code not counting whitespace or comment lines|
-|Room(JSONObject)
+|Room()| initialize |roomItems, roomEntrances, allRooms|setId(Long), setName(String), setShortDescription(String), setLongDescription(String)|this|9|
+|Room(JSONObject)|set up room|roomItems, roomEntrances, allRooms|setId(Long), setName(String), setShortDescription(String), setLongDescription(String)|this|9|
