@@ -70,6 +70,9 @@ public class JsonTest implements java.io.Serializable {
         }
     }
 
+    /**
+     * @return the error message
+     */
     private String missingItem() {
         if(!missingItem) {
             return("");
@@ -77,6 +80,9 @@ public class JsonTest implements java.io.Serializable {
         return("There is an loot without a corresponding item.\n");
     }
 
+    /**
+     * @return the error message
+     */
     private String equalExits() {
         if(!equalExits) {
             return("");
@@ -84,6 +90,9 @@ public class JsonTest implements java.io.Serializable {
         return("There is a room without correct exits.\n");
     }
 
+    /**
+     * @return the error message
+     */
     private String missingRoom() {
         if(!missingRoom) {
             return("");
@@ -91,6 +100,9 @@ public class JsonTest implements java.io.Serializable {
         return("There is a missing room.\n");
     }
 
+    /**
+     * @return the error message
+     */
     private String noExits() {
         if(!noExits) {
             return("");

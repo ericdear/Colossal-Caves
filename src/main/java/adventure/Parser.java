@@ -4,6 +4,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Parser {
+
+    /**
+     * initializes Parser
+     */
     public Parser() {}
 
     /**
