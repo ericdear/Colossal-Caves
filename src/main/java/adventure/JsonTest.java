@@ -137,4 +137,11 @@ public class JsonTest implements java.io.Serializable {
         }
     }
 
+    /**
+     * @return the error message
+     */
+    public String toString() {
+        return(test());
+    }
+
 }
