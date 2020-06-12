@@ -165,11 +165,17 @@ public class Player implements java.io.Serializable {
             return("Inventory empty.");
         }
         for(Item item : inventory) {
-            inventoryString = inventoryString + " - " + item.getName() + "\n";
+            inventoryString = inventoryString + "\n - " + item.getName();
         }
+        inventoryString = inventoryString.replaceFirst("\\n", "");
         return(inventoryString);
     }
 
+    /**
+     * finds the item in inventory
+     * @param itemName - the name of the item
+     * @return the item or null if item not found
+     */
     private Item findItem(String itemName) {
         for(Item item : inventory) {
             if(item.getName().equals(itemName)) {
@@ -179,16 +185,61 @@ public class Player implements java.io.Serializable {
         return(null);
     }
 
+    /**
+     * read the item if it is readable
+     * @param command - the command
+     * @return the string from reading the item
+     */
     public String read(Command command) {
-        if(findItem(command.getNoun()) instanceof BrandedClothing) {
-            return(((BrandedClothing)findItem(command.getNoun())).read());
-        } else if(findItem(command.getNoun()) instanceof Spell) {
-            return(((Spell)findItem(command.getNoun())).read());
-        } else if(findItem(command.getNoun()) instanceof Item) {
-            return(findItem(command.getNoun()).read());
+        Item item = findItem(command.getNoun());
+        if(item instanceof Readable) {
+            return(((Readable)item).read());
+        } else if(item != null) {
+            return("Item is not of type readable");
         } else {
             return("Item not found in inventory");
         }
+    }
+
+    /**
+     * puts the item into the room of the room the player is in
+     * @param command
+     * @return the string from tossing the item
+     */
+    public String toss(Command command) {
+        Item item = findItem(command.getNoun());
+        if(item instanceof Tossable) {
+            inventory.remove(item);
+            room.addItem(item);
+            return(((Tossable)item).toss());
+        } else if(item != null) {
+            return("Item is not of type tossable");
+        } else {
+            return("Item not found in inventory");
+        }
+    }
+
+    /**
+     * erases the item from ever existing
+     * @param command - the command
+     * @param adventure - the adventure object
+     * @return the string from eating the item
+     */
+    public String eat(Command command, Adventure adventure) {
+        Item item = findItem(command.getNoun());
+        if(item instanceof Edible) {
+            inventory.remove(item);
+            adventure.removeItem(item);
+            return(((Edible)item).eat());
+        } else if(item != null) {
+            return("Item is not of type edible");
+        } else {
+            return("Item not found in inventory");
+        }
+    }
+
+    public String wear(Command command) {
+        return("");
     }
 
     /**

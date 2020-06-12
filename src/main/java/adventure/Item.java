@@ -97,9 +97,4 @@ public class Item implements java.io.Serializable{
     public String toString() {
         return(name);
     }
-
-    
-    public String read() {
-        return("Item is not of type readable");
-    }
 }

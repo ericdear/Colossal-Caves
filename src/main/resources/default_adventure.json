@@ -168,7 +168,8 @@
         {
             "id": 6,
           "name": "stick",
-          "desc": "A wet stick about 4 feet long and 2 inches in diameter"
+          "desc": "A wet stick about 4 feet long and 2 inches in diameter",
+          "edible": true
         }
       ]
     }

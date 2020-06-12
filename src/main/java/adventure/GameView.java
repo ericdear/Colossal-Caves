@@ -219,7 +219,7 @@ public class GameView extends JFrame {
     }
 
     private void doCommand(JTextField textField) {
-        String output = game.checkCommand(textField.getText(), adventure.getPlayer());
+        String output = game.checkCommand(textField.getText(), adventure.getPlayer(), adventure);
         outputArea.append(textField.getText() + "\n" + output + "\n");
         setInventory();
         checkExit(textField.getText());
@@ -229,7 +229,7 @@ public class GameView extends JFrame {
     }
 
     private void setInventory() {
-        inventory.setText("Inventory:\n" + game.checkCommand("inventory", adventure.getPlayer()));
+        inventory.setText("Inventory:\n" + game.checkCommand("inventory", adventure.getPlayer(), adventure));
     }
 
     private void loadFile(String flag) {

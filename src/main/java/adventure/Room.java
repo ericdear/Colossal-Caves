@@ -107,6 +107,14 @@ public class Room implements java.io.Serializable {
         roomItems.add(item);
     }
 
+    /**
+     * adds the item to the list of items in the room
+     * @param item - the item to be added
+     */
+    public void addItem(Item item) {
+        roomItems.add(item);
+    }
+
 
     public Item checkItemKind(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
         if(checkFood(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {

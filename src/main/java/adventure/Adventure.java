@@ -262,6 +262,22 @@ public class Adventure implements java.io.Serializable{
     }
 
     /**
+     * removes the item from the list of all items
+     * used for eat()
+     * has to iterate because item will have different memory than the one in arraylist
+     * @param item - the item to be removed
+     */
+    public void removeItem(Item item) {
+        Item itemToRemove = null;
+        for(Item tempItem : allItems) {
+            if(tempItem.getId() == item.getId()) {
+                itemToRemove = tempItem;
+            }
+        }
+        allItems.remove(itemToRemove);
+    }
+
+    /**
      * @return the current room description
      */
     public String getCurrentRoomDescription(){

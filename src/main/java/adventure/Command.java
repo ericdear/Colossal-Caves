@@ -81,6 +81,12 @@ public class Command {
     private void validateCommand2(String command, String what) throws InvalidCommandException {
         if(command.equals("read") && what == null) {
             throw new InvalidCommandException("You must provide an item to read");
+        } else if(command.equals("toss") && what == null) {
+            throw new InvalidCommandException("You must provide an item to toss");
+        } else if(command.equals("eat") && what == null) {
+            throw new InvalidCommandException("You must provide an item to eat");
+        } else if(command.equals("wear") && what == null) {
+            throw new InvalidCommandException("You must provide an item to wear");
         }
         setCommands(command, what);
     }

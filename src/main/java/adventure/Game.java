@@ -90,7 +90,7 @@ public class Game implements java.io.Serializable {
             inputLine = scnr.nextLine();
             inputLine = inputLine.toLowerCase();
 
-            System.out.println(checkCommand(inputLine, player));
+            System.out.println(checkCommand(inputLine, player, adventure));
             running = exit(scnr, inputLine, adventure, player);
             //System.out.println("");
         }
@@ -125,7 +125,7 @@ public class Game implements java.io.Serializable {
             askUserToSave(scnr, adventure, player);
             return(false);
         } else {
-            System.out.println("You are back in the game!");
+            System.out.println("You are back in the game!\n");
             return(true);
         }
     }
@@ -426,13 +426,13 @@ public class Game implements java.io.Serializable {
      * @param player : the player
      * @return the string telling the user what they did
      */
-    public String checkCommand(String inputLine, Player player) {
+    public String checkCommand(String inputLine, Player player, Adventure adventure) {
         Room room = player.getCurrentRoom();
         String output = "";
         try {
             Parser parser = new Parser();
             Command command = parser.parseUserCommand(inputLine);
-            output = output + doCommand1(command, player) + doCommand2(command, player) + "\n" + movedRooms(room, player);
+            output = output + doCommand1(command, player) + doCommand2(command, player, adventure) + doCommand3(command, player) + "\n" + movedRooms(room, player);
 
         } catch(InvalidCommandException e) {
             output = e.getMessage() + "\n";
@@ -467,20 +467,26 @@ public class Game implements java.io.Serializable {
             output = player.go(command);
         } else if(command.getActionWord().equals("take")) {
             output = player.take(command);
-        } else if(command.getActionWord().equals("inventory")) {
-            output = player.inventory(command);
         }
         return(output);
     }
 
-    public String doCommand2(Command command, Player player) {
+    public String doCommand2(Command command, Player player, Adventure adventure) {
         String output = "";
         if(command.getActionWord().equals("read")) {
             output = player.read(command);
         } else if(command.getActionWord().equals("toss")) {
             output = player.toss(command);
         } else if(command.getActionWord().equals("eat")) {
-            output = player.eat(command);
+            output = player.eat(command, adventure);
+        }
+        return(output);
+    }
+
+    public String doCommand3(Command command, Player player) {
+        String output = "";
+        if(command.getActionWord().equals("inventory")) {
+            output = player.inventory(command);
         } else if(command.getActionWord().equals("wear")) {
             output = player.wear(command);
         }
