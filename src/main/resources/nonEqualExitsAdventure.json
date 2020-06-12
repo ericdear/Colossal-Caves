@@ -1,0 +1,174 @@
+{
+    "adventure": {
+      "room": [
+        {
+          "id": 100,
+          "start": "true",
+          "name": "the living room",
+          "short_description": "this is the living room of an old house",
+          "long_description": "The living room looks very old and run down, there's a couch in the corner with cuts in it, and cobwebs all over the walls",
+          "entrance": [
+            {
+              "id": 101,
+              "dir": "S"
+            },
+            {
+                "id": 102,
+                "dir": "E"
+            },
+            {
+              "id": 1060,
+              "dir": "up"
+            }
+          ],
+          "loot": [
+              {
+                  "id": 1337
+              }
+          ]
+        },
+        {
+          "id": 101,
+          "name": "the bed room",
+          "short_description": "a small dirty bed room",
+          "long_description": "The small dirty bed room of the house with walls painted dark blue",
+          "entrance": [
+            {
+              "id": 100,
+              "dir": "N"
+            },
+            {
+              "id": 103,
+              "dir": "S"
+            }
+          ],
+          "loot": [
+            {
+              "id": 2
+            },
+            {
+                "id": 4
+            }
+          ]
+        },
+        {
+          "id": 102,
+          "name": "the kitchen",
+          "short_description": "a big all white kitchen",
+          "long_description": "The kitchen has many white cabinets with every single door ripped off",
+          "entrance": [
+            {
+              "id": 100,
+              "dir": "W"
+            },
+            {
+                "id": 104,
+                "dir": "S"
+            }
+          ],
+          "loot": [
+            {
+              "id": 3
+            }
+          ]
+        },
+        {
+            "id": 103,
+            "name": "the bathroom",
+            "short_description": "this is the small bathroom of the house",
+            "long_description": "The bathroom is just big enough you can squeeze through, the toilet has been ripped out of the floor",
+            "entrance": [
+              {
+                "id": 101,
+                "dir": "N"
+              }
+            ]
+          },
+          {
+            "id": 104,
+            "name": "the garage",
+            "short_description": "this is the garrage attached to the house",
+            "long_description": "The wet garage has many rats running into the cracks in the walls",
+            "entrance": [
+              {
+                "id": 102,
+                "dir": "N"
+              }
+            ],
+            "loot": [
+                {
+                    "id": 5
+                }
+            ]
+          },
+          {
+            "id": 105,
+            "name": "the deck",
+            "short_description": "this is the deck about 2 feet off the ground",
+            "long_description": "The old deck has many loose boards, as you look down you can see something is living under it",
+            "entrance": [
+              {
+                "id": 104,
+                "dir": "W"
+              }
+            ],
+            "loot": [
+                {
+                    "id": 6
+                }
+            ]
+          },
+          {
+            "id": 1060,
+            "name": "the rec room",
+            "short_description": "this is the rec room of an old house",
+            "long_description": "The rec room looks similar to the living room, there are many holes in the floor where you can actualy see the living room",
+            "entrance": [
+              {
+                "id": 100,
+                "dir": "down"
+              }
+            ]
+          }
+      ],
+      "item": [
+        {
+          "id": 1337,
+          "name": "tv remote",
+          "desc": "An old tv remote with the batteries missing",
+          "tossable": true
+        },
+        {
+          "id": 2,
+          "name": "battery",
+          "desc": "4 batteries that don't look too old"
+        },
+        {
+            "id": 3,
+          "name": "fork",
+          "desc": "A strong silver dirty fork",
+          "tossable": true
+        },
+        {
+            "id": 4,
+          "name": "teddy bear",
+          "desc": "A small brown teddy bear with two different coloured eyes",
+          "wearable": true
+        },
+        {
+            "id": 5,
+          "name": "t-shirt",
+          "desc": "A t-shirt that says hello",
+          "wearable": true,
+          "readable": true
+        },
+        {
+            "id": 6,
+          "name": "apple",
+          "desc": "A wet soggy apple",
+          "edible": true,
+          "tossable": true
+        }
+      ]
+    }
+  }
