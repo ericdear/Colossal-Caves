@@ -78,14 +78,19 @@ public class GameView extends JFrame {
     private void checkNullAdventure() {
         outputArea.setText("");
         if(adventure == null) {
-            adventure = game.gameIntro(new String[] {""});
-            filename = "default_adventure.json";
-            outputArea.append(game.getErrorMessage() + "\nFile could not be opened.\nPlease use the menu to load a file or use our default adventure.\n\n");
+            loadDefaultAdventure();
             game.possibleNewPlayer(adventure, "No name", filename);
         } else {
             game.possibleNewPlayer(adventure, "No name", filename);
             filename = adventure.getPlayer().getSaveGameName();
         }
+    }
+
+    private void loadDefaultAdventure() {
+        adventure = game.gameIntro(new String[] {""});
+        filename = "default_adventure.json";
+        outputArea.append(game.getErrorMessage() + "\nFile could not be opened.\n");
+        outputArea.append("Please use the menu to load a file, or use our default adventure.\n\n");
     }
 
     private void setUpSize() {

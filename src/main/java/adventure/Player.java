@@ -165,10 +165,24 @@ public class Player implements java.io.Serializable {
             return("Inventory empty.");
         }
         for(Item item : inventory) {
-            inventoryString = inventoryString + "\n - " + item.getName();
+            inventoryString = inventoryString + "\n - " + item.getName() + wearing(item);
         }
         inventoryString = inventoryString.replaceFirst("\\n", "");
         return(inventoryString);
+    }
+
+    /**
+     * checks if the item is being worn
+     * @param item - the item
+     * @return the string of the item being worn
+     */
+    private String wearing(Item item) {
+        if(item instanceof Wearable) {
+            if(((Clothing)item).getBeingWorn()) {
+                return(" (Wearing)");
+            }
+        }
+        return("");
     }
 
     /**
@@ -238,8 +252,21 @@ public class Player implements java.io.Serializable {
         }
     }
 
+    /**
+     * set beingWorn to true if the item is wearable
+     * @param command - the command
+     * @return the string of what the user did
+     */
     public String wear(Command command) {
-        return("");
+        Item item = findItem(command.getNoun());
+        if(item instanceof Wearable) {
+            ((Clothing)item).setBeingWorn(true);
+            return(((Wearable)item).wear());
+        } else if(item != null) {
+            return("Item is not of type wearable");
+        } else {
+            return("Item not found in inventory");
+        }
     }
 
     /**

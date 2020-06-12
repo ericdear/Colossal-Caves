@@ -51,7 +51,9 @@ public class Game implements java.io.Serializable {
      * @return the adventure if no errors and null if there are errors
      */
     public Adventure checkJsonErrors(Adventure adventure) {
-        if(adventure.getJsonTest().test().equals("")) {
+        if(adventure == null) {
+            return(null);
+        } else if(adventure.getJsonTest().test().equals("")) {
             return(adventure);
         } else {
             setErrorMessage("Problems with JSON file!\n" + adventure.getJsonTest().test());
@@ -424,6 +426,7 @@ public class Game implements java.io.Serializable {
      * checkCommand creates a command
      * @param inputLine : the line that the user inputed
      * @param player : the player
+     * @param adventure : the adventure object
      * @return the string telling the user what they did
      */
     public String checkCommand(String inputLine, Player player, Adventure adventure) {
@@ -432,7 +435,7 @@ public class Game implements java.io.Serializable {
         try {
             Parser parser = new Parser();
             Command command = parser.parseUserCommand(inputLine);
-            output = output + doCommand1(command, player) + doCommand2(command, player, adventure) + doCommand3(command, player) + "\n" + movedRooms(room, player);
+            output = output + doCommand1(command, player, adventure) + "\n" + movedRooms(room, player);
 
         } catch(InvalidCommandException e) {
             output = e.getMessage() + "\n";
@@ -457,9 +460,10 @@ public class Game implements java.io.Serializable {
      * doCommand tells the player class what command to execute
      * @param command : the command the user entered
      * @param player : the player
+     * @param adventure : the adventure object
      * @return the string of what they player did
      */
-    public String doCommand1(Command command, Player player) {
+    public String doCommand1(Command command, Player player, Adventure adventure) {
         String output = "";
         if(command.getActionWord().equals("look")) {
             output = player.look(command);
@@ -468,9 +472,16 @@ public class Game implements java.io.Serializable {
         } else if(command.getActionWord().equals("take")) {
             output = player.take(command);
         }
-        return(output);
+        return(output + doCommand2(command, player, adventure));
     }
 
+    /**
+     * tells the player class what command to execute
+     * @param command - the command object
+     * @param player - the player object
+     * @param adventure - the adventure object
+     * @return the string of what the player did
+     */
     public String doCommand2(Command command, Player player, Adventure adventure) {
         String output = "";
         if(command.getActionWord().equals("read")) {
@@ -480,9 +491,15 @@ public class Game implements java.io.Serializable {
         } else if(command.getActionWord().equals("eat")) {
             output = player.eat(command, adventure);
         }
-        return(output);
+        return(output + doCommand3(command, player));
     }
 
+    /**
+     * tells the player class what command to execute
+     * @param command - the command object
+     * @param player - the player
+     * @return the string of what the player did
+     */
     public String doCommand3(Command command, Player player) {
         String output = "";
         if(command.getActionWord().equals("inventory")) {
@@ -494,17 +511,10 @@ public class Game implements java.io.Serializable {
     }
 
     /**
-     * printItem prints the items it a certain room
-     * @param room : the current room
+     * gets the list of items from the current room
+     * @param room - the current room
+     * @return the string of items in the room
      */
-    /*public void printItems(Room room) {
-        //print items in the room
-        ArrayList<Item> itemList = room.listItems();
-        for(Item tempItem : itemList) {
-            System.out.println("There is a " + tempItem.getName() + " here.");
-        }
-    }*/
-
     public String getItems(Room room) {
         String items = "";
         ArrayList<Item> itemList = room.listItems();

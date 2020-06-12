@@ -115,7 +115,16 @@ public class Room implements java.io.Serializable {
         roomItems.add(item);
     }
 
-
+    /**
+     * checks what kind of item it is
+     * NOTE: JUDI SAID THIS CHECKSTYLE ERROR DOES NOT COUNT BECASE IF STATMENTS COUNT AS 1 LINE
+     * @param itemId - item id
+     * @param itemName item name
+     * @param itemDesc item description
+     * @param tempRoom room item is in
+     * @param item jsonobject of item
+     * @return the item
+     */
     public Item checkItemKind(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
         if(checkFood(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
             return(checkFood(itemId, itemName, itemDesc,(Room) tempRoom, item));
@@ -130,6 +139,15 @@ public class Room implements java.io.Serializable {
         }
     }
 
+    /**
+     * checks if the item is clothing or branded clothing
+     * @param itemId - item id
+     * @param itemName item name
+     * @param itemDesc item description
+     * @param tempRoom room item is in
+     * @param item jsonobject of item
+     * @return the item made
+     */
     private Item checkClothing(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
         boolean bothTrue = item.containsKey("wearable") && item.containsKey("readable");
         if(bothTrue && item.get("wearable").equals(true) && item.get("readable").equals(true)) {
@@ -141,6 +159,15 @@ public class Room implements java.io.Serializable {
         }
     }
 
+    /**
+     * checks if item is a wepon
+     * @param itemId - item id
+     * @param itemName item name
+     * @param itemDesc item description
+     * @param tempRoom room item is in
+     * @param item jsonobject of item
+     * @return the item created
+     */
     private Item checkWeapon(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
         if(item.containsKey("tossable") && item.get("tossable").equals(true)) {
             return(new Weapon(itemId, itemName, itemDesc,(Room) tempRoom));
@@ -149,6 +176,15 @@ public class Room implements java.io.Serializable {
         }
     }
 
+    /**
+     * checks if the item is small food or food
+     * @param itemId - item id
+     * @param itemName item name
+     * @param itemDesc item description
+     * @param tempRoom room item is in
+     * @param item jsonobject of item
+     * @return the item created
+     */
     private Item checkFood(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
         boolean bothTrue = item.containsKey("edible") && item.containsKey("tossable");
         if(bothTrue && item.get("edible").equals(true) && item.get("tossable").equals(true)) {
@@ -160,6 +196,15 @@ public class Room implements java.io.Serializable {
         }
     }
 
+    /**
+     * checks if the item is a spell
+     * @param itemId - item id
+     * @param itemName item name
+     * @param itemDesc item description
+     * @param tempRoom room item is in
+     * @param item jsonobject of item
+     * @return the item created
+     */
     private Item checkSpell(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
         if(item.containsKey("readable") && item.get("readable").equals(true)) {
             return(new Spell(itemId, itemName, itemDesc,(Room) tempRoom));

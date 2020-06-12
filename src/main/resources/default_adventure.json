@@ -156,7 +156,8 @@
         {
             "id": 4,
           "name": "teddy bear",
-          "desc": "A small brown teddy bear with two different coloured eyes"
+          "desc": "A small brown teddy bear with two different coloured eyes",
+          "wearable": true
         },
         {
             "id": 5,
@@ -167,9 +168,10 @@
         },
         {
             "id": 6,
-          "name": "stick",
-          "desc": "A wet stick about 4 feet long and 2 inches in diameter",
-          "edible": true
+          "name": "apple",
+          "desc": "A wet soggy apple",
+          "edible": true,
+          "tossable": true
         }
       ]
     }
