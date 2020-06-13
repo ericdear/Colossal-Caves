@@ -16,8 +16,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Insets;
-import java.io.File;
-import java.io.IOException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -333,15 +331,8 @@ public class GameView extends JFrame {
     private void loadFile(String flag) {
         askToSave();
         String file = "";
-        JFileChooser fileChooser = new JFileChooser();
-        // fileChooser.setFileSelectionMode(JFileChooser.);
-        int fileChooserVal = fileChooser.showOpenDialog(this);
-        if (fileChooserVal == JFileChooser.APPROVE_OPTION) {
-            file = fileChooser.getSelectedFile().getAbsolutePath();
-            System.out.println(file);
-        }
+        file = fileChooser();
 
-        //String file = JOptionPane.showInputDialog("Enter the file path and name.");
         if(file == null || file.equals("")) {
             return;
         }
@@ -349,6 +340,20 @@ public class GameView extends JFrame {
         adventure = game.gameIntro(arguments);
         setAdventure(arguments);
     }
+
+    /**
+     * @return the string of the file chosen
+     */
+    private String fileChooser() {
+        JFileChooser fileChooser = new JFileChooser();
+        int fileChooserVal = fileChooser.showOpenDialog(this);
+        if (fileChooserVal == JFileChooser.APPROVE_OPTION) {
+            return(fileChooser.getSelectedFile().getAbsolutePath());
+        }
+        return("");
+    }
+
+
 
     /**
      * serialize the game

@@ -25,7 +25,8 @@
 |changeName()|changes the players name|String name, Adventure adventure, Game game, JLabel playerName, JTextArea outputArea|none|JoptionPane, Game game, JLabel playerName, JTextArea outputArea|9|
 |doCommand(JTextArea)|does the command the user enters|JTextArea outputArea, Adventure adventure|setInventory(), checkExit(String)|JTextArea outputArea, JTextField textField, Adventure adventure|8|
 |setInventory()|sets the inventory of the player|JTextArea inventory, Adventure adventure, Game game|none|JTextArea inventory, Game game, Adventure adventure|3|
-|loadFile(String)|load the file the user wants|Adventure adventure, Game game|askToSave(), setAdventure(String[])|JOptionPane, String file, Game game|10|
+|loadFile(String)|load the file the user wants|Adventure adventure, Game game|askToSave(), setAdventure(String[]), fileChooser()|JOptionPane, String file, Game game|11|
+|fileChooser()|returns the string of the file chosen|none|none|JFileChooser fileChooser|8|
 |save()|serializes the game|String filename, Adventure adventure, Game game|none|JOptionPane, Adventure adventure, Game game, String filename|8|
 |checkExit(String)|check if the user wants to exit|none|exit()|String command|6|
 |exit()|exit if the user wants to|none|askToSave()|JOptionPane, String saveAnswer|12|
