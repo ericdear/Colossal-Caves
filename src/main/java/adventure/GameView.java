@@ -271,7 +271,7 @@ public class GameView extends JFrame {
     }
 
     /**
-     * @return the inventory text area
+     * @return the inventory text area scroll pane
      */
     private JScrollPane inventory() {
         inventory.setColumns(SMALLCOL);
