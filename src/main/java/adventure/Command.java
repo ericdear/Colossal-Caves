@@ -78,6 +78,7 @@ public class Command {
         validateCommand2(command, what);
     }
 
+    //checks if command is valid
     private void validateCommand2(String command, String what) throws InvalidCommandException {
         if(command.equals("read") && what == null) {
             throw new InvalidCommandException("You must provide an item to read");

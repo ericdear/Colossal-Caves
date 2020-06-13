@@ -364,8 +364,8 @@ public class GameView extends JFrame {
             return;
         }
         adventure.getPlayer().setSaveGameName(filename);
-
         game.saveGame(adventure, adventure.getPlayer(), filename);
+        outputArea.append("Game Saved as \"" + filename + "\"\n");
     }
 
     /**
@@ -391,7 +391,7 @@ public class GameView extends JFrame {
             } else if(saveAnswer.equals("yes")) {
                 askToSave();
                 //JFrame.dispatchEvent(new WindowEvent(JFrame, WindowEvent.WINDOW_CLOSING));
-                System.exit(0);
+                outputArea.append("Please click the red X to exit\n");
             }
         }
     }

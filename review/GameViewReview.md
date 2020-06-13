@@ -27,7 +27,7 @@
 |setInventory()|sets the inventory of the player|JTextArea inventory, Adventure adventure, Game game|none|JTextArea inventory, Game game, Adventure adventure|3|
 |loadFile(String)|load the file the user wants|Adventure adventure, Game game|askToSave(), setAdventure(String[]), fileChooser()|JOptionPane, String file, Game game|11|
 |fileChooser()|returns the string of the file chosen|none|none|JFileChooser fileChooser|8|
-|save()|serializes the game|String filename, Adventure adventure, Game game|none|JOptionPane, Adventure adventure, Game game, String filename|8|
+|save()|serializes the game|String filename, Adventure adventure, Game game, JTextArea outputArea|none|JOptionPane, Adventure adventure, Game game, String filename, JTextArea outputArea|9|
 |checkExit(String)|check if the user wants to exit|none|exit()|String command|6|
-|exit()|exit if the user wants to|none|askToSave()|JOptionPane, String saveAnswer|12|
+|exit()|exit if the user wants to|JTextArea outputArea|askToSave()|JOptionPane, String saveAnswer, JTextArea outputArea|12|
 |askToSave()|ask the user to save|none|save()|String saveAnswer, JOptionPane|11|
