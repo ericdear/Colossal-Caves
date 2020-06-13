@@ -9,7 +9,7 @@
 |loadDefaultAdventure()|loads the default adventure json|Adventure adventure, String filename, JTextArea outputArea|none|Game game, JTextArea outputArea|6|
 |setUpSize()|sets up the size of the gui|none|none|none|5|
 |setMainContainer()|sets the main container of the gui|Container contentPane|namePanel(), playPanel(), rightPanel(), bottomPanel()|Container contentPane|8|
-|bottomPanel()|returns the bottom JPanel||none|none|JPanel bottomPanel|5|
+|bottomPanel()|returns the bottom JPanel|none|none|JPanel bottomPanel|5|
 |namePanel()|returns the name JPanel|JLabel playerName|none|JPanel namePanel, Jlabel playerName|8|
 |playPanel()|returns the play JPanel|none|inputField(), outputArea()|JPanel playPanel|6|
 |inputField()|returns the input field JTextArea|JTextField inputField|doCommand(JTextField)|JTextField inputField|6|
