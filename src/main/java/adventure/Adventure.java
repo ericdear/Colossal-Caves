@@ -214,12 +214,14 @@ public class Adventure implements java.io.Serializable{
         }
     }
 
+    //check if room has no exits
     private void noExitCheck(JSONArray entrances) {
         if(entrances.isEmpty()) {
             jsonTest.setNoExits(true);
         }
     }
 
+    //adds an entrance to the room
     private void addEntrance(Room tempRoom, Object currentEntrance) {
         JSONObject entrance = (JSONObject) currentEntrance;
         boolean missing = true;

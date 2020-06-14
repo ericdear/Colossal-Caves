@@ -12,7 +12,8 @@
 |setRoomItems(ArrayList\<Item>)|sets the ArrayList of items in the room|ArrayList\<Item> roomItems|none|ArrayList\<Item> newRoomItems|3|
 |setRoomItem(JSONObject,Room)|adds an item to the roomItems ArrayList|ArrayList\<Item> roomItems|none|JSONObject tempItem|9|
 |addItem(Item)|ads the item to the list of items in the room|ArrayList\<Item> roomItems|none|ArrayList\<Item> roomItems|3|
-|checkItemKind(long, String, String, Room, JSONObject)|checks what kind the item is and returns it|none|checkFood(long, String, String, Room, JSONObject), checkClothing(long, String, String, Room, JSONObject), checkWeapon(long, String, String, Room, JSONObject), checkSpell(long, String, String, Room, JSONObject)|none|13(reason in README.md)|
+|checkItemKind(long, String, String, Room, JSONObject)|checks what kind the item is and returns it|none|checkFood(long, String, String, Room, JSONObject), checkClothing(long, String, String, Room, JSONObject), checkItemKind2(long, String, String, Room, JSONObject)|none|9|
+|checkItemKind2(long, String, String, Room, JSONObject)|checks what kind the item is and return it|none|checkWeapon(long, String, String, Room, JSONObject), checkSpell(long, String, String, Room, JSONObject)|none|9|
 |checkClothing(long, String, String, Room, JSONObject)|checks if the item is clothing|none|none|Item item|10|
 |checkWeapon(long, String, String, Room, JSONObject)|check if item is a weapon|none|none|Item item|7|
 |checkFood(long, String, String, Room, JSONObject)|checks if the item is food|none|none|Item item|10|

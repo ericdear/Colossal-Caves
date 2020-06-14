@@ -117,7 +117,6 @@ public class Room implements java.io.Serializable {
 
     /**
      * checks what kind of item it is
-     * NOTE: JUDI SAID THIS CHECKSTYLE ERROR DOES NOT COUNT BECASE IF STATMENTS COUNT AS 1 LINE
      * @param itemId - item id
      * @param itemName item name
      * @param itemDesc item description
@@ -130,7 +129,22 @@ public class Room implements java.io.Serializable {
             return(checkFood(itemId, itemName, itemDesc,(Room) tempRoom, item));
         } else if(checkClothing(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
             return(checkClothing(itemId, itemName, itemDesc,(Room) tempRoom, item));
-        } else if(checkWeapon(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
+        } else {
+            return(checkItemKind2(itemId, itemName, itemDesc, (Room) tempRoom, item));
+        }
+    }
+
+    /**
+     * check what item is and create it
+     * @param itemId - item id
+     * @param itemName item name
+     * @param itemDesc item description
+     * @param tempRoom room item is in
+     * @param item jsonobject of item
+     * @return the item
+     */
+    private Item checkItemKind2(long itemId, String itemName, String itemDesc, Room tempRoom, JSONObject item) {
+        if(checkWeapon(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
             return(checkWeapon(itemId, itemName, itemDesc,(Room) tempRoom, item));
         } else if(checkSpell(itemId, itemName, itemDesc,(Room) tempRoom, item) != null) {
             return(checkSpell(itemId, itemName, itemDesc,(Room) tempRoom, item));
