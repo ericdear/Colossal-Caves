@@ -6,7 +6,7 @@
 |setJsonTest(JsonTest)|sets the jsonText object|JsonTest jsonTest|none|none|3|
 |getJsonTest()|returns the json test object|JsonTest jsonTest|none|none|3|
 |setAdventure(ArrayList\<JSONObject> newRooms, ArrayList\<JSONObject> items)|sets up each room in the adventure|ArrayList\<Room> roomList|setRoomArrayList(ArrayList\<JSONObject>), checkForStart(JSONObject, int), setLoot(JSONObject, Room, ArrayList\<JSONObject>), setEntrance(JSONObject, Room)|ArrayList\<Room> roomList, ArrayList\<JSONObject> newRooms|11|
-|checkForStart(JSONObject, int)|checks each rooms for the start key|Room currentRoom, ArrayList\<Room> roomList|JSONObject roomObject, ArrayList\<Room> roomList|5|
+|checkForStart(JSONObject, int)|checks each rooms for the start key|Room currentRoom, ArrayList\<Room> roomList|none|JSONObject roomObject, ArrayList\<Room> roomList|5|
 |setPlayer(Player)|sets the player of the game|Player player|none|none|3|
 |getPlayer()|gets the player of the game|Player player|none|none|3|
 setRoomArray(ArrayList<JSONObject>)|sets up the arraylist of rooms|ArrayList\<Room> roomList|none|ArrayList\<Room> roomList|7|
