@@ -5,10 +5,10 @@
 
 ## How to operate your program
 compile: mvn assembly:assembly  
-Run Terminal: java -cp target/2430_A2-1.0-jar-with-dependencies.jar adventure.Game <flag> <file>  
-Run GUI: java -jar target/2430_A2-1.0-jar-with-dependencies.jar <flag> <file>  
-flag/file options: -l <game save name>  
-                   -a <json file name>  
+Run Terminal: java -cp target/2430_A2-1.0-jar-with-dependencies.jar adventure.Game "flag" "file"  
+Run GUI: java -jar target/2430_A2-1.0-jar-with-dependencies.jar "flag" "file"  
+flag/file options: -l (game save name)  
+                   -a (json file name)  
                    or no flags to run with default json file  
 
 commands:
